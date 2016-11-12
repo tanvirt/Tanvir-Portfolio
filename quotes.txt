@@ -1,0 +1,15 @@
+"Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program." - Linus Torvalds
+
+"Computers themselves, and software yet to be developed, will revolutionize the way we learn." - Steve Jobs
+
+"Software is a great combination between artistry and engineering." Bill Gates
+
+"The way to be successful in the software world is to come up with breakthrough software, and so whether it's Microsoft Office or Windows, its pushing that forward. New ideas, surprising the marketplace, so good engineering and good business are one in the same." Bill Gates
+
+"I was lucky to be involved and get to contribute to something that was important, which is empowering people with software." Bill Gates
+
+"Some people, through luck and skill, end up with a lot of assets. If you're good at kicking a ball, writing software, investing in stocks, it pays extremely well." Bill Gates
+
+"The only way to prove that your software is easy to change is to make easy changes to it. And when you find that the changes aren’t as easy as you thought, you refine the design so that the next change is easier." - Robert C. Martin
+
+"Any fool can write code that a computer can understand. Good programmers write code that humans can understand." - Martin Fowler

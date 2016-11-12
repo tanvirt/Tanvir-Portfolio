@@ -1,0 +1,19 @@
+/* flip when hovered */
+.flipper:hover {
+	transform: rotateY(180deg);
+}
+
+/* flip speed  */
+.flipper {
+	transition: 0.5s;
+	transform-style: preserve-3d;
+
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* flip toggle */
+.flipper.flip {
+	/* transform: rotateY(180deg); */
+}
