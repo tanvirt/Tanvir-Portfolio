@@ -865,8 +865,9 @@ aside.cta-quote span.quote {
   border-color: #41C4AB;
 }
 #portfoliolist .mix {
-  width: 31%;
-  margin: 1%;
+  /*width: 31%;
+  margin: 1%;*/
+  width: 33.33%;
   display: none;
   float: left;
   overflow: hidden;
@@ -875,7 +876,7 @@ aside.cta-quote span.quote {
   overflow: hidden;
   position: relative !important;
   background: #222;
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 #portfoliolist .mix .portfolio-wrapper img {
   max-width: 100%;
@@ -926,8 +927,9 @@ aside.cta-quote span.quote {
 /*  #Mobile (Portrait) - Note: Design for a width of 320px */
 @media only screen and (max-width: 767px) {
   #portfoliolist .mix {
-    width: 48%;
-    margin: 1%;
+    /*width: 48%;
+    margin: 1%;*/
+    width:50%;
   }
 }
 .pricing {

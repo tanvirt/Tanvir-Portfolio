@@ -17,3 +17,7 @@
 .flipper.flip {
 	/* transform: rotateY(180deg); */
 }
+
+.cross-cursor {
+	cursor: url(../img/creative/cross.png) 40 40, auto;
+}
