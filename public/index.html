@@ -28,6 +28,7 @@
     <!-- Vitality Theme CSS -->
     <link href="css/vitality-turquoise.css" rel="stylesheet" type="text/css">
 
+    <!-- Main CSS -->
     <link href="css/main.css" rel="stylesheet" type="text/css">
 
     <!-- IE8 support for HTML5 elements and media queries -->
@@ -36,7 +37,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body id="page-top" class="modern" onload="document.querySelector('#logo').classList.toggle('flip');">
+<body id="page-top" class="modern" onload="document.querySelector('#logo').classList.toggle('flip');" ng-app="main">
     <!-- Navigation -->
     <!-- Note: navbar-default and navbar-inverse are both supported with this theme. -->
     <nav class="navbar navbar-inverse navbar-fixed-top navbar-expanded">
@@ -46,7 +47,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     <i class="fa fa-bars"></i> Menu
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top" style="margin-left:0.5rem;">
+                <a class="navbar-brand page-scroll" href="#page-top" style="margin-left:0.5rem;" ng-click="flipLogo();">
                     Tanvir Talukder
                 </a>
             </div>
@@ -78,7 +79,7 @@
     <!-- Header -->
     <header id="app-header" style="background-image: url('img/creative/backgrounds/bg-header.jpg');">
         <div class="intro-content">
-            <img id="logo" src="img/creative/logo.svg" class="img-responsive img-centered flipper" style="filter: invert(100%);" alt="">
+            <img id="logo" src="img/creative/logo.svg" class="img-responsive img-centered flipper" style="filter: invert(100%);" alt="" ng-click="flipLogo();">
             <div class="brand-name">Developer</div>
             <hr class="colored">
             <div class="brand-name-subtext">Creative. Passionate. Driven.</div>
@@ -911,6 +912,7 @@
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/classie.js"></script>
     <script src="js/cbpAnimatedHeader.js"></script>
+    <script src="vendor/angular/angular.min.js"></script>
 
     <!-- Plugin Scripts -->
     <script src="vendor/jquery.easing/jquery.easing.min.js"></script>
@@ -927,10 +929,13 @@
     <script src="js/contact_me.js"></script>
     <script src="js/jqBootstrapValidation.js"></script>
 
-    <!-- Vitality Theme Scripts -->
+    <!-- Vitality Theme Script -->
     <script src="js/vitality.js"></script>
 
-    <!-- Particle Scripts -->
+    <!-- Particle Script -->
     <script src="js/particles_config.js"></script>
+
+    <!-- Main Script -->
+    <script src="js/main.js"></script>
 </body>
 </html>
