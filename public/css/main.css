@@ -1,11 +1,6 @@
-/* flip when hovered */
-.flipper:hover {
-	transform: rotateY(180deg);
-}
-
 /* flip speed  */
 .flipper {
-	transition: 0.5s;
+	transition: 2s;
 	transform-style: preserve-3d;
 
 	z-index: 2;
@@ -15,9 +10,9 @@
 
 /* flip toggle */
 .flipper.flip {
-	/* transform: rotateY(180deg); */
+	transform: rotateY(360deg);
 }
 
 .cross-cursor {
-	cursor: url(../img/creative/cross.png) 40 40, auto;
+	cursor: url(../img/creative/cross.PNG) 40 40, auto;
 }
