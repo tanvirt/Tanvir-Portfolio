@@ -62,7 +62,8 @@ function VisiNeatAPI()
 	"vn.gui",
 	"vn.server",
 	"vn.media",
-	"vn.cloud"
+	"vn.cloud",
+	"vn.animation"
 	];
 	
 	this.progress=new VNProgress();
