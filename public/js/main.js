@@ -7,10 +7,13 @@ angular.module("main").run(function($rootScope) {
 	ContactForm.init();
 	FormValidation.init();
 	Theme.init();
-	Particles.init();
+	Particles.init("app-header");
 
 	$rootScope.flipLogo = function() {
-    	document.getElementById("logo").classList.toggle("flip");
+		var logo = document.getElementById("logo");
+		if(logo) {
+	    	logo.classList.toggle("flip");
+	    }
     }
 
 });

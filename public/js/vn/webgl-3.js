@@ -3824,7 +3824,7 @@ GLCamera.prototype.setStandardPointerInteraction=function()
 	this.canvas.handleTouchStart=function(event){var xx=self._getOffsetX()-self.left;var yy=self._getOffsetY()-self.top;event.preventDefault();var x=new Array();var y=new Array();for(var i=0;i<event.targetTouches.length;i++){x[i]=self.pixelDensity*(event.targetTouches[i].clientX+xx);y[i]=self.pixelDensity*(event.targetTouches[i].clientY+yy);} /*self.handlePointerMove(x,y);*/self.handlePointerDown(x,y);};
 	this.canvas.handleTouchEnd=function(event){var xx=self._getOffsetX()-self.left;var yy=self._getOffsetY()-self.top;event.preventDefault();var x=new Array();var y=new Array();for(var i=0;i<event.targetTouches.length;i++){x[i]=self.pixelDensity*(event.targetTouches[i].clientX+xx);y[i]=self.pixelDensity*(event.targetTouches[i].clientY+yy);}self.handlePointerUp(x,y);};
 	this.canvas.handleTouchMove=function(event){var xx=self._getOffsetX()-self.left;var yy=self._getOffsetY()-self.top;event.preventDefault();var x=new Array();var y=new Array();for(var i=0;i<event.targetTouches.length;i++){x[i]=self.pixelDensity*(event.targetTouches[i].clientX+xx);y[i]=self.pixelDensity*(event.targetTouches[i].clientY+yy);}self.handlePointerMove(x,y);};
-	this.canvas.handleMouseWheel=function(event){event.preventDefault();self.canvas.onScroll(event);};
+	this.canvas.handleMouseWheel=function(event){self.canvas.onScroll(event);};
 };
 
 
