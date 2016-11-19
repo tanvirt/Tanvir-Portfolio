@@ -16,3 +16,11 @@
 .cross-cursor {
 	cursor: url(../img/creative/cross.PNG) 40 40, auto;
 }
+
+#my_canvas {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}

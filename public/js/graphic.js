@@ -1,4 +1,4 @@
-function body_onload() {
+var body_onload = function() {
 
 	var keys = [];
 	for(var i = 0; i < 128; i++) {
@@ -21,6 +21,12 @@ function body_onload() {
 
 	// Create 3D canvas
 	var canvas = new GLCanvas("my_canvas");
+	canvas.getDiv().ondblclick = function() {
+		FullScreen.request(canvas.getDiv());
+	}
+	canvas.getDiv().ontouchend = function() {
+		FullScreen.request(canvas.getDiv());
+	}
 	var logo = new GLObject(canvas);
 
 	canvas.onSetup = function() {
@@ -50,8 +56,10 @@ function body_onload() {
 	};
 
 	canvas.onDraw = function() {
-		do_interaction();
-		me.orientation += 0.01;
+		interact();
+		if(!interactiveKeyDown()) {
+			me.orientation += 0.01;
+		}
 
 		var gl = canvas.getGL();
 		var cam = canvas.getCamera();
@@ -85,7 +93,11 @@ function body_onload() {
 		keys[keyCode] = false;
 	};
 
-	function do_interaction() {
+	var interactiveKeyDown = function() {
+		return keys[37] || keys[38] || keys[39] || keys[40] || keys[32];
+	}
+
+	var interact = function() {
 		if(keys[37]) {
 	    	// Left Arrow Key
 			me.orientation += 0.03;
