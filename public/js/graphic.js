@@ -11,7 +11,7 @@ var body_onload = function() {
 
 	me.pos_x = 0;
 	me.pos_y = 0;
-	me.pos_z = 1.5;
+	me.pos_z = 0;
 
 	me.orientation = 0;
 
