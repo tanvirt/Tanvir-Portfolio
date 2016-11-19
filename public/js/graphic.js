@@ -1,4 +1,4 @@
-function my_application() {
+function body_onload() {
 
 	var keys = [];
 	for(var i = 0; i < 128; i++) {
@@ -11,7 +11,7 @@ function my_application() {
 
 	me.pos_x = 0;
 	me.pos_y = 0;
-	me.pos_z = 0;
+	me.pos_z = 1.5;
 
 	me.orientation = 0;
 
@@ -23,23 +23,11 @@ function my_application() {
 	var canvas = new GLCanvas("my_canvas");
 	var logo = new GLObject(canvas);
 
-	var animation = new Animation();
-	animation.addKeyFrame(0, { rotation : 0 });
-	animation.addKeyFrame(1, { rotation : 0.5 });
-	animation.addKeyFrame(2, { rotation : 1 });
-	animation.addKeyFrame(3, { rotation : 0.5 });
-	animation.addKeyFrame(4, { rotation : 0 });
-	animation.setLoop(true);
-	animation.whenNewFrame().then(function(frame) {
-		//console.log('Time: '+ frame.time + ' rotation:' + frame.data.rotation);
-	});
-
 	canvas.onSetup = function() {
 		var object_maker = new GLObjectMaker(canvas);
-
 		object_maker.identity();
 		object_maker.translate([0, 0, 0]);
-	    object_maker.box(1, 1, 1);
+	    object_maker.box(0.25, 0.25, 0.25);
 	    logo = object_maker.flush();
 
 	    var material = new GLMaterial(canvas);
@@ -58,14 +46,12 @@ function my_application() {
 				{ radius:2, type:'polar' }
 			);
 		};
-
 		canvas.useRedCyanProjector();
-
-		animation.play();
 	};
 
 	canvas.onDraw = function() {
 		do_interaction();
+		me.orientation += 0.01;
 
 		var gl = canvas.getGL();
 		var cam = canvas.getCamera();
