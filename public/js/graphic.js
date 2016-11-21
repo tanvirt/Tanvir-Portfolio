@@ -120,7 +120,8 @@ var body_onload = function() {
 	    	object_maker,
 	    	0.5,
 	    	0.05,
-	    	[-0.5, 0.5, 0],
+	    	//[-0.5, 0.5, 0],
+	    	[-Math.sqrt(0.5)/2, Math.sqrt(0.5)/2, 0],
 	    	[0, 0, 0]
 	    );
 
@@ -129,14 +130,15 @@ var body_onload = function() {
 	    	object_maker,
 	    	1,
 	    	0.05,
-	    	[-0.5, 0.5, 0],
+	    	//[-0.5, 0.5, 0],
+	    	[-Math.sqrt(0.5)/2, Math.sqrt(0.5)/2, 0],
 	    	[0, 0, Math.PI/4]
 	    );
 
 	    // center Line
 	    appendLine(
 	    	object_maker,
-	    	2.125,
+	    	2.25,
 	    	0.05,
 	    	[0, 0, 0],
 	    	[0, 0, Math.PI/4]
@@ -147,7 +149,8 @@ var body_onload = function() {
 	    	object_maker,
 	    	0.5,
 	    	0.05,
-	    	[0.5, -0.5, 0],
+	    	//[0.5, -0.5, 0],
+	    	[Math.sqrt(0.5)/2, -Math.sqrt(0.5)/2, 0],
 	    	[0, 0, 0]
 	    );
 
@@ -156,7 +159,8 @@ var body_onload = function() {
 	    	object_maker,
 	    	1,
 	    	0.05,
-	    	[0.5, -0.5, 0],
+	    	//[0.5, -0.5, 0],
+	    	[Math.sqrt(0.5)/2, -Math.sqrt(0.5)/2, 0],
 	    	[0, 0, -3*Math.PI/4]
 	    );
 
@@ -179,8 +183,8 @@ var body_onload = function() {
 	    	else {
 	    		graphicSelected = true;
 	    		canvas.setBackgroundColor(0, 0, 0, 0.75);
-	    		canvas.useRedCyanProjector();
-	    		//logo.setDrawModeLines();
+	    		//canvas.useRedCyanProjector();
+	    		logo.setDrawModeLines();
 	    	}
 	    }
 
