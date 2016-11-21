@@ -8,7 +8,7 @@ function Logo(canvas) {
 	this._rotation = [0, 0, 0];
 	this._color = [1, 1, 1, 1];
 
-	this._graphic = this.createGraphic();
+	this._graphic = this._createGraphic();
 }
 
 Logo.prototype.getRotation = function() {
@@ -59,7 +59,7 @@ Logo.prototype.updatePosition = function() {
 	}
 }
 
-Logo.prototype.createGraphic = function() {
+Logo.prototype._createGraphic = function() {
 	var object_maker = new GLObjectMaker(this._canvas);
 	object_maker.identity();
 	this._appendObject(
@@ -82,6 +82,32 @@ Logo.prototype.createGraphic = function() {
     //this._graphic.setVideoTexture("js/img/abstract_light_hd.mp4");
 
     return graphic;
+}
+
+Logo.prototype._appendObject = function(object_maker, size, thickness, translation, rotation, callback) {
+    object_maker.translate(translation);
+    object_maker.rotateX(rotation[0]);
+    object_maker.rotateY(rotation[1]);
+    object_maker.rotateZ(rotation[2]);
+
+    callback(object_maker, size, thickness);
+
+    object_maker.rotateX(-rotation[0]);
+    object_maker.rotateY(-rotation[1]);
+    object_maker.rotateZ(-rotation[2]);
+    object_maker.translate([
+        -translation[0],
+        -translation[1],
+        -translation[2]
+    ]);
+}
+
+Logo.prototype._appendLogo = function(object_maker, size, thickness) {
+    this._appendTopLetter(object_maker, size, thickness);
+    this._appendTopSquare(object_maker, size, thickness);
+    this._appendCenterLine(object_maker, size, thickness);
+    this._appendBottomLetter(object_maker, size, thickness);
+    this._appendBottomSquare(object_maker, size, thickness);
 }
 
 Logo.prototype._appendLetter = function(object_maker, size, thickness) {
@@ -123,24 +149,6 @@ Logo.prototype._appendSquare = function(object_maker, size, thickness) {
 Logo.prototype._appendLine = function(object_maker, size, thickness) {
     // horizontal line
     object_maker.box(size, thickness, thickness);
-}
-
-Logo.prototype._appendObject = function(object_maker, size, thickness, translation, rotation, callback) {
-	object_maker.translate(translation);
-	object_maker.rotateX(rotation[0]);
-	object_maker.rotateY(rotation[1]);
-    object_maker.rotateZ(rotation[2]);
-
-    callback(object_maker, size, thickness);
-
-    object_maker.rotateX(-rotation[0]);
-	object_maker.rotateY(-rotation[1]);
-    object_maker.rotateZ(-rotation[2]);
-    object_maker.translate([
-    	-translation[0],
-    	-translation[1],
-    	-translation[2]
-    ]);
 }
 
 Logo.prototype._appendTopLetter = function(object_maker, size, thickness) {
@@ -196,12 +204,4 @@ Logo.prototype._appendBottomSquare = function(object_maker, size, thickness) {
     	[0, 0, -3*Math.PI/4],
 	    this._appendSquare
     );
-}
-
-Logo.prototype._appendLogo = function(object_maker, size, thickness) {
-	this._appendTopLetter(object_maker, size, thickness);
-	this._appendTopSquare(object_maker, size, thickness);
-	this._appendCenterLine(object_maker, size, thickness);
-	this._appendBottomLetter(object_maker, size, thickness);
-	this._appendBottomSquare(object_maker, size, thickness);
 }

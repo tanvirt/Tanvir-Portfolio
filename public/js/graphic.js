@@ -6,6 +6,37 @@ var body_onload = function() {
 	var logo = null;
 	var graphicToggle = false;
 
+	var handleKeys = function() {
+		if(keys.leftArrowIsDown()) {
+			logo.rotate([0, 0.03, 0]);
+		}
+		if(keys.upArrowIsDown()) {
+			logo.translate([
+				Math.cos(logo.getRotation()[1])*0.1,
+				0,
+				-Math.sin(logo.getRotation()[1])*0.1
+			]);
+		}
+		if(keys.rightArrowIsDown()) {
+			logo.rotate([0, -0.03, 0]);
+		}
+		if(keys.downArrowIsDown()) {
+			logo.translate([
+				-Math.cos(logo.getRotation()[1])*0.1,
+				0,
+				Math.sin(logo.getRotation()[1])*0.1
+			]);
+		}
+	}
+
+	var interactiveKeyDown = function() {
+		return keys.leftArrowIsDown() || 
+			keys.upArrowIsDown() || 
+			keys.rightArrowIsDown() || 
+			keys.downArrowIsDown() || 
+			keys.spaceBarIsDown();
+	}
+
 	canvas.onSetup = function() {
 		keys.addEventListener(canvas);
 		
@@ -56,36 +87,5 @@ var body_onload = function() {
 	};
 
 	canvas.start();
-
-	var handleKeys = function() {
-		if(keys.leftArrowIsDown()) {
-			logo.rotate([0, 0.03, 0]);
-		}
-		if(keys.upArrowIsDown()) {
-			logo.translate([
-				Math.cos(logo.getRotation()[1])*0.1,
-				0,
-				-Math.sin(logo.getRotation()[1])*0.1
-			]);
-		}
-		if(keys.rightArrowIsDown()) {
-			logo.rotate([0, -0.03, 0]);
-		}
-		if(keys.downArrowIsDown()) {
-			logo.translate([
-				-Math.cos(logo.getRotation()[1])*0.1,
-				0,
-				Math.sin(logo.getRotation()[1])*0.1
-			]);
-		}
-	}
-
-	var interactiveKeyDown = function() {
-		return keys.leftArrowIsDown() || 
-			keys.upArrowIsDown() || 
-			keys.rightArrowIsDown() || 
-			keys.downArrowIsDown() || 
-			keys.spaceBarIsDown();
-	}
 
 }
