@@ -156,7 +156,7 @@ Logo.prototype._appendTopLetter = function(object_maker, size, thickness) {
     	object_maker,
     	size/2,
     	thickness,
-    	[-Math.sqrt(0.5)/2, Math.sqrt(0.5)/2, 0],
+    	[-Math.sqrt(size/2)/2, Math.sqrt(size/2)/2, 0],
     	[0, 0, 0],
     	this._appendLetter
     );
