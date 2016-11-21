@@ -40,7 +40,8 @@ var body_onload = function() {
 	canvas.onSetup = function() {
 		keys.addEventListener(canvas);
 		
-	    logo = new Logo(canvas);
+	    logo = new Logo(canvas, 1, 0.05);
+	    logo.translate([0, 0, -4]);
 	    logo.getGraphic().onTap = function(event) {
 	    	logo.jump();
 	    	if(graphicToggle) {
@@ -49,7 +50,6 @@ var body_onload = function() {
 	    	}
 	    	else {
 	    		canvas.useRedCyanProjector();
-	    		//logo.getGraphic().setDrawModeLines();
 	    	}
 	    	graphicToggle = !graphicToggle;
 	    }
@@ -70,10 +70,6 @@ var body_onload = function() {
 		if(!interactiveKeyDown()) {
 			logo.rotate([0, 0.03, 0]);
 		}
-
-		/*camera.translate([0, 0, -10]);
-		camera.rotateX(1);*/
-		camera.translate([0, 0, -2]);
 		logo.draw();
 	};
  

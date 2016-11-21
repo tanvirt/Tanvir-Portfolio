@@ -1,12 +1,15 @@
-function Logo(canvas) {
+function Logo(canvas, size, thickness) {
 	this._canvas = canvas;
 
 	this._amJumping = false;
 	this._jumpDir = 0;
 
-	this._position = [0, 0, -2];
+	this._position = [0, 0, 0];
 	this._rotation = [0, 0, 0];
 	this._color = [1, 1, 1, 1];
+
+    this._size = size;
+    this._thickness = thickness;
 
 	this._graphic = this._createGraphic();
 }
@@ -64,8 +67,8 @@ Logo.prototype._createGraphic = function() {
 	object_maker.identity();
 	this._appendObject(
 		object_maker, 
-		1,
-		0.05,
+		this._size,
+		this._thickness,
 		[0, 0, 0],
 		[0, 0, 0],
 		this._appendLogo.bind(this)
@@ -79,7 +82,6 @@ Logo.prototype._createGraphic = function() {
     material.setSpecularExponent(2);
     graphic.setMaterial(material);
     graphic.setTexture("js/img/white_square.png");
-    //this._graphic.setVideoTexture("js/img/abstract_light_hd.mp4");
 
     return graphic;
 }
@@ -129,11 +131,6 @@ Logo.prototype._appendSquare = function(object_maker, size, thickness) {
     object_maker.translate([0, delta, 0]);
     object_maker.box(size, thickness, thickness);
     object_maker.translate([0, -delta, 0]);
-
-    /*// bottom line
-    object_maker.translate([0, -delta, 0]);
-    object_maker.box(size, thickness, thickness);
-    object_maker.translate([0, delta, 0]);*/
 
     // right line
     object_maker.translate([delta, 0, 0]);
