@@ -28,12 +28,7 @@ var body_onload = function() {
 	var cam = canvas.getCamera();
 	var logo = new GLObject(canvas);
 
-	var appendLetter = function(object_maker, size, thickness, translation, rotation) {
-		object_maker.translate(translation);
-		object_maker.rotateX(rotation[0]);
-		object_maker.rotateY(rotation[1]);
-	    object_maker.rotateZ(rotation[2]);
-
+	var appendLetter = function(object_maker, size, thickness) {
 	    var delta = size/2 - thickness/2;
 
 	    // horizontal line
@@ -43,23 +38,9 @@ var body_onload = function() {
 
 	    // vertical line
 	    object_maker.box(thickness, size, thickness);
-
-	    object_maker.rotateX(-rotation[0]);
-		object_maker.rotateY(-rotation[1]);
-	    object_maker.rotateZ(-rotation[2]);
-	    object_maker.translate([
-	    	-translation[0],
-	    	-translation[1],
-	    	-translation[2]
-	    ]);
 	}
 
-	var appendSquare = function(object_maker, size, thickness, translation, rotation) {
-		object_maker.translate(translation);
-		object_maker.rotateX(rotation[0]);
-		object_maker.rotateY(rotation[1]);
-	    object_maker.rotateZ(rotation[2]);
-
+	var appendSquare = function(object_maker, size, thickness) {
 	    var delta = size/2 - thickness/2;
 
 	    // top line
@@ -81,27 +62,20 @@ var body_onload = function() {
 	    object_maker.translate([-delta, 0, 0]);
 	    object_maker.box(thickness, size, thickness);
 	    object_maker.translate([delta, 0, 0]);
-
-	    object_maker.rotateX(-rotation[0]);
-		object_maker.rotateY(-rotation[1]);
-	    object_maker.rotateZ(-rotation[2]);
-	    object_maker.translate([
-	    	-translation[0],
-	    	-translation[1],
-	    	-translation[2]
-	    ]);
 	}
 
-	var appendLine = function(object_maker, size, thickness, translation, rotation) {
+	var appendLine = function(object_maker, size, thickness) {
+	    // horizontal line
+	    object_maker.box(size, thickness, thickness);
+	}
+
+	var appendObject = function(object_maker, size, thickness, translation, rotation, callback) {
 		object_maker.translate(translation);
 		object_maker.rotateX(rotation[0]);
 		object_maker.rotateY(rotation[1]);
 	    object_maker.rotateZ(rotation[2]);
 
-	    var delta = size/2 - thickness/2;
-
-	    // horizontal line
-	    object_maker.box(size, thickness, thickness);
+	    callback(object_maker, size, thickness);
 
 	    object_maker.rotateX(-rotation[0]);
 		object_maker.rotateY(-rotation[1]);
@@ -113,59 +87,80 @@ var body_onload = function() {
 	    ]);
 	}
 
+	var appendTopLetter = function(object_maker, size, thickness) {
+		appendObject(
+	    	object_maker,
+	    	size/2,
+	    	thickness,
+	    	[-Math.sqrt(0.5)/2, Math.sqrt(0.5)/2, 0],
+	    	[0, 0, 0],
+	    	appendLetter
+	    );
+	}
+
+	var appendTopSquare = function(object_maker, size, thickness) {
+		appendObject(
+	    	object_maker,
+	    	size,
+			thickness,
+	    	[-Math.sqrt(size/2)/2, Math.sqrt(size/2)/2, 0],
+	    	[0, 0, Math.PI/4],
+		    appendSquare
+	    );
+	}
+
+	var appendCenterLine = function(object_maker, size, thickness) {
+		appendObject(
+	    	object_maker,
+	    	size*2.25,
+			thickness,
+	    	[0, 0, 0],
+	    	[0, 0, Math.PI/4],
+		    appendLine
+	    );
+	}
+
+	var appendBottomLetter = function(object_maker, size, thickness) {
+		appendObject(
+	    	object_maker,
+	    	size/2,
+	    	thickness,
+	    	[Math.sqrt(size/2)/2, -Math.sqrt(size/2)/2, 0],
+	    	[0, 0, 0],
+	    	appendLetter
+	    );
+	}
+
+	var appendBottomSquare = function(object_maker, size, thickness) {
+		appendObject(
+	    	object_maker,
+	    	size,
+			thickness,
+	    	[Math.sqrt(size/2)/2, -Math.sqrt(size/2)/2, 0],
+	    	[0, 0, -3*Math.PI/4],
+		    appendSquare
+	    );
+	}
+
+	var appendLogo = function(object_maker, size, thickness) {
+		appendTopLetter(object_maker, size, thickness);
+		appendTopSquare(object_maker, size, thickness);
+		appendCenterLine(object_maker, size, thickness);
+		appendBottomLetter(object_maker, size, thickness);
+		appendBottomSquare(object_maker, size, thickness);
+	}
+
 	canvas.onSetup = function() {
 		var object_maker = new GLObjectMaker(canvas);
 		object_maker.identity();
-
-		// top letter
-		appendLetter(
-	    	object_maker,
-	    	0.5,
-	    	0.05,
-	    	//[-0.5, 0.5, 0],
-	    	[-Math.sqrt(0.5)/2, Math.sqrt(0.5)/2, 0],
-	    	[0, 0, 0]
-	    );
-
-	    // top square
-	    appendSquare(
-	    	object_maker,
-	    	1,
-	    	0.05,
-	    	//[-0.5, 0.5, 0],
-	    	[-Math.sqrt(0.5)/2, Math.sqrt(0.5)/2, 0],
-	    	[0, 0, Math.PI/4]
-	    );
-
-	    // center Line
-	    appendLine(
-	    	object_maker,
-	    	2.25,
-	    	0.05,
-	    	[0, 0, 0],
-	    	[0, 0, Math.PI/4]
-	    );
-
-	    // bottom letter
-	    appendLetter(
-	    	object_maker,
-	    	0.5,
-	    	0.05,
-	    	//[0.5, -0.5, 0],
-	    	[Math.sqrt(0.5)/2, -Math.sqrt(0.5)/2, 0],
-	    	[0, 0, 0]
-	    );
-
-	    // bottom square
-	    appendSquare(
-	    	object_maker,
-	    	1,
-	    	0.05,
-	    	//[0.5, -0.5, 0],
-	    	[Math.sqrt(0.5)/2, -Math.sqrt(0.5)/2, 0],
-	    	[0, 0, -3*Math.PI/4]
-	    );
-
+		appendObject(
+			object_maker, 
+			1, 
+			0.05, 
+			[0, 0, 0], 
+			[0, 0, 0],
+			appendLogo
+		)
 	    logo = object_maker.flush();
 
 	    var material = new GLMaterial(canvas);
