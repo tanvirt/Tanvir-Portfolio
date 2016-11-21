@@ -1,21 +1,15 @@
 var body_onload = function() {
 
+	var canvas = new GLCanvas("graphic-canvas");
+	var camera = canvas.getCamera();
+	var keys = new Keys();
+	var logo = null;
 	var graphicToggle = false;
 
-	var keys = [];
-	for(var i = 0; i < 128; i++) {
-		keys.push(false);
-	}
-
-	var canvas = new GLCanvas("graphic-canvas");
-	var gl = canvas.getGL();
-	var cam = canvas.getCamera();
-
-	var logo = null;
-
 	canvas.onSetup = function() {
+		keys.addEventListener(canvas);
+		
 	    logo = new Logo(canvas);
-
 	    logo.getGraphic().onTap = function(event) {
 	    	logo.jump();
 	    	if(graphicToggle) {
@@ -40,55 +34,44 @@ var body_onload = function() {
 	};
 
 	canvas.onDraw = function() {
-		interact();
+		handleKeys();
 		logo.updatePosition();
 		if(!interactiveKeyDown()) {
 			logo.rotate([0, 0.03, 0]);
 		}
 
-		/*cam.translate([0, 0, -10]);
-		cam.rotateX(1);*/
-		cam.translate([0, 0, -2]);
+		/*camera.translate([0, 0, -10]);
+		camera.rotateX(1);*/
+		camera.translate([0, 0, -2]);
 		logo.draw();
 	};
-
+ 
 	canvas.onKeyDown = function(keyCode, event) {
-		keys[keyCode] = true;
 		if(interactiveKeyDown()) {
 			event.preventDefault();
 		}
-		if(keys[32]) {
+		if(keys.spaceBarIsDown()) {
 			logo.jump();
 		}
 	};
 
-	canvas.onKeyUp = function(keyCode, event) {
-		keys[keyCode] = false;
-	};
+	canvas.start();
 
-	var interactiveKeyDown = function() {
-		return keys[37] || keys[38] || keys[39] || keys[40] || keys[32];
-	}
-
-	var interact = function() {
-		if(keys[37]) {
-	    	// Left Arrow Key
+	var handleKeys = function() {
+		if(keys.leftArrowIsDown()) {
 			logo.rotate([0, 0.03, 0]);
 		}
-		if(keys[38]) {
-		    // Up Arrow Key
+		if(keys.upArrowIsDown()) {
 			logo.translate([
 				Math.cos(logo.getRotation()[1])*0.1,
 				0,
 				-Math.sin(logo.getRotation()[1])*0.1
 			]);
 		}
-		if(keys[39]) {
-		    // Right Arrow Key
+		if(keys.rightArrowIsDown()) {
 			logo.rotate([0, -0.03, 0]);
 		}
-		if(keys[40]) {
-		    // Down Arrow Key
+		if(keys.downArrowIsDown()) {
 			logo.translate([
 				-Math.cos(logo.getRotation()[1])*0.1,
 				0,
@@ -97,6 +80,12 @@ var body_onload = function() {
 		}
 	}
 
-	canvas.start();
+	var interactiveKeyDown = function() {
+		return keys.leftArrowIsDown() || 
+			keys.upArrowIsDown() || 
+			keys.rightArrowIsDown() || 
+			keys.downArrowIsDown() || 
+			keys.spaceBarIsDown();
+	}
 
 }

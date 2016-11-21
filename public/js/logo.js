@@ -32,7 +32,6 @@ Logo.prototype.translate = function(translation) {
 }
 
 Logo.prototype.draw = function() {
-	console.log(this._position);
 	var camera = this._canvas.getCamera();
 
 	camera.pushMatrix();
