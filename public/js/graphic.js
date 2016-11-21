@@ -1,5 +1,7 @@
 var body_onload = function() {
 
+	var graphicSelected = false;
+
 	var keys = [];
 	for(var i = 0; i < 128; i++) {
 		keys.push(false);
@@ -39,6 +41,20 @@ var body_onload = function() {
 	    logo.setMaterial(material);
 	    logo.setTexture("js/img/white_square.png");
 
+	    //logo.setDrawModeLines();
+	    logo.onTap = function(event) {
+	    	if(graphicSelected) {
+	    		graphicSelected = false;
+	    		canvas.setBackgroundColor(0, 0, 0, 0);
+	    		canvas.useRegularProjector();
+	    	}
+	    	else {
+	    		graphicSelected = true;
+	    		canvas.setBackgroundColor(0, 0, 0, 0.75);
+	    		canvas.useRedCyanProjector();
+	    	}
+	    }
+
 		canvas.setBackgroundColor(0, 0, 0, 0);
 		canvas.setLoadingStatus(false);
 		canvas.onDrag = function(event) {
@@ -47,7 +63,6 @@ var body_onload = function() {
 				{ radius: 2, type: 'polar' }
 			);
 		};
-		canvas.useRedCyanProjector();
 	};
 
 	canvas.onDraw = function() {

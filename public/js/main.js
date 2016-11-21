@@ -10,10 +10,13 @@ angular.module("main").run(function($rootScope) {
 	Particles.init("app-header");
 
 	$rootScope.flipLogo = function() {
-		var logo = document.getElementById("logo");
-		if(logo) {
-	    	logo.classList.toggle("flip");
-	    }
+		flipLogo();
     }
 
 });
+
+var flipLogo = function() {
+	if(document.getElementById('logo')) {
+		document.getElementById('logo').classList.toggle('flip');
+	}
+}
