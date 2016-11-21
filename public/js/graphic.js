@@ -1,6 +1,6 @@
 var body_onload = function() {
 
-	var graphicSelected = false;
+	var graphicToggle = false;
 
 	var keys = [];
 	for(var i = 0; i < 128; i++) {
@@ -24,6 +24,8 @@ var body_onload = function() {
 
 	// Create 3D canvas
 	var canvas = new GLCanvas("graphic-canvas");
+	var gl = canvas.getGL();
+	var cam = canvas.getCamera();
 	var logo = new GLObject(canvas);
 
 	var appendLetter = function(object_maker, size, thickness, translation, rotation) {
@@ -173,22 +175,22 @@ var body_onload = function() {
 	    material.setSpecularExponent(2);
 	    logo.setMaterial(material);
 	    logo.setTexture("js/img/white_square.png");
+	    //logo.setVideoTexture("js/img/abstract_light_hd.mp4");
 
 	    logo.onTap = function(event) {
-	    	if(graphicSelected) {
-	    		graphicSelected = false;
-	    		canvas.setBackgroundColor(0, 0, 0, 0);
+	    	jump();
+	    	if(graphicToggle) {
 	    		canvas.useRegularProjector();
+	    		logo.setDrawModeTriangles();
 	    	}
 	    	else {
-	    		graphicSelected = true;
-	    		canvas.setBackgroundColor(0, 0, 0, 0.75);
-	    		//canvas.useRedCyanProjector();
-	    		logo.setDrawModeLines();
+	    		canvas.useRedCyanProjector();
+	    		//logo.setDrawModeLines();
 	    	}
+	    	graphicToggle = !graphicToggle;
 	    }
 
-		canvas.setBackgroundColor(0, 0, 0, 0);
+		canvas.setBackgroundColor(0, 0, 0, 0.75);
 		canvas.setLoadingStatus(false);
 		canvas.onDrag = function(event) {
 			canvas.getCamera().oneFingerRotate(
@@ -201,11 +203,8 @@ var body_onload = function() {
 	canvas.onDraw = function() {
 		interact();
 		if(!interactiveKeyDown()) {
-			//me.orientation += 0.01;
+			me.orientation += 0.03;
 		}
-
-		var gl = canvas.getGL();
-		var cam = canvas.getCamera();
 
 		/*cam.translate([0, 0, -10]);
 		cam.rotateX(1);*/
@@ -230,12 +229,16 @@ var body_onload = function() {
 			event.preventDefault();
 		}
 		if(keys[32]) {
-			if(!am_jumping) {
-				am_jumping = true;
-				jump_dir = 0.2;
-			}
+			jump();
 		}
 	};
+
+	var jump = function() {
+		if(!am_jumping) {
+			am_jumping = true;
+			jump_dir = 0.2;
+		}
+	}
 
 	canvas.onKeyUp = function(keyCode, event) {
 		keys[keyCode] = false;

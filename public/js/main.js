@@ -9,13 +9,17 @@ angular.module("main").run(function($rootScope) {
 	Theme.init();
 	Particles.init("app-header");
 
-	$rootScope.flipLogo = function() {
-		flipLogo();
+    $rootScope.showGraphic = false;
+
+    $rootScope.flipLogo = function() {
+		if(!$rootScope.showGraphic) {
+			flipAppLogo();
+		}
     }
 
 });
 
-var flipLogo = function() {
+var flipAppLogo = function() {
 	if(document.getElementById('logo')) {
 		document.getElementById('logo').classList.toggle('flip');
 	}
