@@ -7,7 +7,18 @@
 function Theme() {}
 
 Theme.init = function() {
+    Theme.initWow();
+    Theme.initSmoothScrolling();
+    Theme.initContactFormHeadings();
+    Theme.initResponsiveMenu();
+    Theme.initOwlCarouselSettings();
+    Theme.initMagnificPopupSettings();
+    Theme.initVideoBackground();
+    Theme.initScrollSpy();
+    Theme.initPortfolioFiltering();
+}
 
+Theme.initWow = function() {
     // Load WOW.js on non-touch devices
     var isPhoneDevice = "ontouchstart" in document.documentElement;
     $(document).ready(function() {
@@ -22,7 +33,9 @@ Theme.init = function() {
             wow.init();
         }
     });
+}
 
+Theme.initSmoothScrolling = function() {
     (function($) {
         "use strict"; // Start of use strict
 
@@ -35,6 +48,12 @@ Theme.init = function() {
             }, 1250, 'easeInOutExpo');
             event.preventDefault();
         });
+    })(jQuery); // End of use strict
+}
+
+Theme.initContactFormHeadings = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Activates floating label headings for the contact form.
         $("body").on("input propertychange", ".floating-label-form-group", function(e) {
@@ -44,11 +63,23 @@ Theme.init = function() {
         }).on("blur", ".floating-label-form-group", function() {
             $(this).removeClass("floating-label-form-group-with-focus");
         });
+    })(jQuery); // End of use strict
+}
+
+Theme.initResponsiveMenu = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Closes the Responsive Menu on Menu Item Click
         $('.navbar-collapse ul li a').click(function() {
             $('.navbar-toggle:visible').click();
         });
+    })(jQuery); // End of use strict
+}
+
+Theme.initOwlCarouselSettings = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Owl Carousel Settings
         $(".about-carousel").owlCarousel({
@@ -90,6 +121,12 @@ Theme.init = function() {
         $(".portfolio-gallery").owlCarousel({
             items: 3,
         });
+    })(jQuery); // End of use strict
+}
+
+Theme.initMagnificPopupSettings = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Magnific Popup jQuery Lightbox Gallery Settings
         $('.gallery-link').magnificPopup({
@@ -108,6 +145,12 @@ Theme.init = function() {
                 titleSrc: 'title'
             }
         });
+    })(jQuery); // End of use strict
+}
+
+Theme.initVideoBackground = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Formstone Background - Video Background Settings
         $("header.video").background({
@@ -116,26 +159,33 @@ Theme.init = function() {
                 mp4: "mp4/camera.mp4"
             }
         });
+    })(jQuery); // End of use strict
+}
+
+Theme.initScrollSpy = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Scrollspy: Highlights the navigation menu items while scrolling.
         $('body').scrollspy({
             target: '.navbar-fixed-top',
             offset: 51
         })
+    })(jQuery); // End of use strict
+}
+
+Theme.initPortfolioFiltering = function() {
+    (function($) {
+        "use strict"; // Start of use strict
 
         // Portfolio Filtering Scripts & Hover Effect
         var filterList = {
             init: function() {
-
                 // MixItUp plugin
                 $('#portfoliolist').mixItUp();
-
-            },
-
+            }
         };
 
         filterList.init();
-
     })(jQuery); // End of use strict
-
 }
