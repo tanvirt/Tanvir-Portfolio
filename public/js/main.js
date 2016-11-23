@@ -8,12 +8,12 @@ angular.module("main").run(function($rootScope, $timeout) {
 
     $rootScope.showGraphic = false;
 
-    var numIncludes = 2;
-    var numLoadedIncludes = 0;
+    var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
+
     $rootScope.$on('$includeContentLoaded', function() {
 		$timeout(function() {
-			numLoadedIncludes++;
-			if(numLoadedIncludes == numIncludes) {
+			numIncludesToBeLoaded--;
+			if(numIncludesToBeLoaded == 0) {
 				AnimatedHeader.init();
 				Theme.init();
 				Particles.init("app-header");
