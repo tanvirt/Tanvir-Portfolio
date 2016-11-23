@@ -11,6 +11,7 @@ function Logo(canvas, size, thickness) {
     this._size = size;
     this._thickness = thickness;
 
+    this._object_maker = new GLObjectMaker(this._canvas);
 	this._graphic = this._createGraphic();
 }
 
@@ -79,17 +80,15 @@ Logo.prototype.updatePosition = function() {
 }
 
 Logo.prototype._createGraphic = function() {
-	var object_maker = new GLObjectMaker(this._canvas);
-	object_maker.identity();
+	this._object_maker.identity();
 	this._appendObject(
-		object_maker, 
 		this._size,
 		this._thickness,
 		[0, 0, 0],
 		[0, 0, 0],
 		this._appendLogo.bind(this)
 	)
-    var graphic = object_maker.flush();
+    var graphic = this._object_maker.flush();
 
     var material = new GLMaterial(this._canvas);
     material.setAmbientColor([0.2, 0.2, 0.2]);
@@ -102,119 +101,114 @@ Logo.prototype._createGraphic = function() {
     return graphic;
 }
 
-Logo.prototype._appendObject = function(object_maker, size, thickness, translation, rotation, callback) {
-    object_maker.translate(translation);
-    object_maker.rotateX(rotation[0]);
-    object_maker.rotateY(rotation[1]);
-    object_maker.rotateZ(rotation[2]);
+Logo.prototype._appendObject = function(size, thickness, translation, rotation, callback) {
+    this._object_maker.translate(translation);
+    this._object_maker.rotateX(rotation[0]);
+    this._object_maker.rotateY(rotation[1]);
+    this._object_maker.rotateZ(rotation[2]);
 
-    callback(object_maker, size, thickness);
+    callback(size, thickness);
 
-    object_maker.rotateX(-rotation[0]);
-    object_maker.rotateY(-rotation[1]);
-    object_maker.rotateZ(-rotation[2]);
-    object_maker.translate([
+    this._object_maker.rotateX(-rotation[0]);
+    this._object_maker.rotateY(-rotation[1]);
+    this._object_maker.rotateZ(-rotation[2]);
+    this._object_maker.translate([
         -translation[0],
         -translation[1],
         -translation[2]
     ]);
 }
 
-Logo.prototype._appendLogo = function(object_maker, size, thickness) {
-    this._appendTopLetter(object_maker, size, thickness);
-    this._appendTopSquare(object_maker, size, thickness);
-    this._appendCenterLine(object_maker, size, thickness);
-    this._appendBottomLetter(object_maker, size, thickness);
-    this._appendBottomSquare(object_maker, size, thickness);
+Logo.prototype._appendLogo = function(size, thickness) {
+    this._appendTopLetter(size, thickness);
+    this._appendTopSquare(size, thickness);
+    this._appendCenterLine(size, thickness);
+    this._appendBottomLetter(size, thickness);
+    this._appendBottomSquare(size, thickness);
 }
 
-Logo.prototype._appendLetter = function(object_maker, size, thickness) {
+Logo.prototype._appendLetter = function(size, thickness) {
     var delta = size/2 - thickness/2;
 
     // horizontal line
-    object_maker.translate([0, delta, 0]);
-    object_maker.box(size*0.75, thickness, thickness);
-    object_maker.translate([0, -delta, 0]);
+    this._object_maker.translate([0, delta, 0]);
+    this._object_maker.box(size*0.75, thickness, thickness);
+    this._object_maker.translate([0, -delta, 0]);
 
     // vertical line
-    object_maker.box(thickness, size, thickness);
+    this._object_maker.box(thickness, size, thickness);
 }
 
-Logo.prototype._appendSquare = function(object_maker, size, thickness) {
+Logo.prototype._appendSquare = function(size, thickness) {
     var delta = size/2 - thickness/2;
 
     // top line
-    object_maker.translate([0, delta, 0]);
-    object_maker.box(size, thickness, thickness);
-    object_maker.translate([0, -delta, 0]);
+    this._object_maker.translate([0, delta, 0]);
+    this._object_maker.box(size, thickness, thickness);
+    this._object_maker.translate([0, -delta, 0]);
 
     // right line
-    object_maker.translate([delta, 0, 0]);
-    object_maker.box(thickness, size, thickness);
-    object_maker.translate([-delta, 0, 0]);
+    this._object_maker.translate([delta, 0, 0]);
+    this._object_maker.box(thickness, size, thickness);
+    this._object_maker.translate([-delta, 0, 0]);
 
     // left line
-    object_maker.translate([-delta, 0, 0]);
-    object_maker.box(thickness, size, thickness);
-    object_maker.translate([delta, 0, 0]);
+    this._object_maker.translate([-delta, 0, 0]);
+    this._object_maker.box(thickness, size, thickness);
+    this._object_maker.translate([delta, 0, 0]);
 }
 
-Logo.prototype._appendLine = function(object_maker, size, thickness) {
+Logo.prototype._appendLine = function(size, thickness) {
     // horizontal line
-    object_maker.box(size, thickness, thickness);
+    this._object_maker.box(size, thickness, thickness);
 }
 
-Logo.prototype._appendTopLetter = function(object_maker, size, thickness) {
+Logo.prototype._appendTopLetter = function(size, thickness) {
 	this._appendObject(
-    	object_maker,
     	size/2,
     	thickness,
     	[-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, 0],
-    	this._appendLetter
+    	this._appendLetter.bind(this)
     );
 }
 
-Logo.prototype._appendTopSquare = function(object_maker, size, thickness) {
+Logo.prototype._appendTopSquare = function(size, thickness) {
 	this._appendObject(
-    	object_maker,
     	size,
 		thickness,
     	[-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, Math.PI/4],
-	    this._appendSquare
+	    this._appendSquare.bind(this)
     );
 }
 
-Logo.prototype._appendCenterLine = function(object_maker, size, thickness) {
+Logo.prototype._appendCenterLine = function(size, thickness) {
 	this._appendObject(
-    	object_maker,
     	size*2.25,
 		thickness,
     	[0, 0, 0],
     	[0, 0, Math.PI/4],
-	    this._appendLine
+	    this._appendLine.bind(this)
     );
 }
 
-Logo.prototype._appendBottomLetter = function(object_maker, size, thickness) {
+Logo.prototype._appendBottomLetter = function(size, thickness) {
 	this._appendObject(
-    	object_maker,
     	size/2,
     	thickness,
     	[Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, 0],
-    	this._appendLetter
+    	this._appendLetter.bind(this)
     );
 }
 
-Logo.prototype._appendBottomSquare = function(object_maker, size, thickness) {
+Logo.prototype._appendBottomSquare = function(size, thickness) {
 	this._appendObject(
-    	object_maker,
     	size,
 		thickness,
     	[Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, -3*Math.PI/4],
-	    this._appendSquare
+	    this._appendSquare.bind(this)
     );
 }
