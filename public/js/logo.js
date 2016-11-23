@@ -39,7 +39,9 @@ Logo.prototype.draw = function() {
 
 	camera.pushMatrix();
 	camera.translate(this._position);
+    camera.rotateX(this._rotation[0]);
 	camera.rotateY(this._rotation[1]);
+    camera.rotateZ(this._rotation[2]);
 	this._graphic.getShader().setColorMask(this._color);
 	this._graphic.updateShader();
 	this._graphic.draw();
@@ -56,8 +58,11 @@ Logo.prototype.jump = function() {
 Logo.prototype.updatePosition = function() {
 	this._jumpDir -= 0.01;
 	this._position[1] += this._jumpDir;
+    //this._rotation[2] += this._jumpDir;
+    //this._rotation[2] += 0.2 - this._jumpDir;
 	if(this._position[1] <= 0) {
 	   this._position[1] = 0;
+       //this._rotation[2] = 0;
 	   this._amJumping = false;
 	}
 }
@@ -153,7 +158,7 @@ Logo.prototype._appendTopLetter = function(object_maker, size, thickness) {
     	object_maker,
     	size/2,
     	thickness,
-    	[-Math.sqrt(size/2)/2, Math.sqrt(size/2)/2, 0],
+    	[-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, 0],
     	this._appendLetter
     );
@@ -164,7 +169,7 @@ Logo.prototype._appendTopSquare = function(object_maker, size, thickness) {
     	object_maker,
     	size,
 		thickness,
-    	[-Math.sqrt(size/2)/2, Math.sqrt(size/2)/2, 0],
+    	[-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, Math.PI/4],
 	    this._appendSquare
     );
@@ -186,7 +191,7 @@ Logo.prototype._appendBottomLetter = function(object_maker, size, thickness) {
     	object_maker,
     	size/2,
     	thickness,
-    	[Math.sqrt(size/2)/2, -Math.sqrt(size/2)/2, 0],
+    	[Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, 0],
     	this._appendLetter
     );
@@ -197,7 +202,7 @@ Logo.prototype._appendBottomSquare = function(object_maker, size, thickness) {
     	object_maker,
     	size,
 		thickness,
-    	[Math.sqrt(size/2)/2, -Math.sqrt(size/2)/2, 0],
+    	[Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
     	[0, 0, -3*Math.PI/4],
 	    this._appendSquare
     );
