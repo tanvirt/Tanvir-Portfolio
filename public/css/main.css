@@ -67,3 +67,7 @@ header .floating-container {
 	color: white;
 	text-align: center;
 }
+
+#app-header {
+	background-image: url('../img/creative/backgrounds/bg-header.jpg');
+}

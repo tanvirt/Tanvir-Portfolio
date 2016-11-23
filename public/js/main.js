@@ -1,15 +1,25 @@
 angular.module("main", []);
 
-angular.module("main").run(function($rootScope) {
+angular.module("main").run(function($rootScope, $timeout) {
 
 	ClassHelpers.init();
 	AnimatedHeader.init();
 	ContactForm.init();
 	FormValidation.init();
-	Theme.init();
-	Particles.init("app-header");
 
     $rootScope.showGraphic = false;
+
+    var numIncludes = 2;
+    var numLoadedIncludes = 0;
+    $rootScope.$on('$includeContentLoaded', function() {
+		$timeout(function() {
+			numLoadedIncludes++;
+			if(numLoadedIncludes == numIncludes) {
+				Theme.init();
+				Particles.init("app-header");
+			}
+		});
+	});
 
     $rootScope.flipLogo = function() {
 		if(!$rootScope.showGraphic) {

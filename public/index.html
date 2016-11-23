@@ -38,7 +38,6 @@
     <![endif]-->
 </head>
 <body id="page-top" class="modern" onload="flipAppLogo(); vn.run(body_onload);" ng-app="main">
-    
     <!-- Navigation -->
     <!-- Note: navbar-default and navbar-inverse are both supported with this theme. -->
     <nav class="navbar navbar-inverse navbar-fixed-top navbar-expanded">
@@ -77,61 +76,7 @@
         </div>
     </nav>
 
-    <!-- Header -->
-    <header id="app-header" style="background-image: url('img/creative/backgrounds/bg-header.jpg');">
-        <div ng-show="showGraphic" class="floating-container">
-            <div class="floating-content">
-                <div class="floating-section dark-transparent">
-                    <div class="text-white-center">
-                        Move
-                    </div>
-                    <img src="img/creative/arrow_keys.svg" style="filter: invert(100%);" alt="">
-                </div>
-                <br>
-                <div ng-click="clickJump()" class="floating-section dark-transparent">
-                    <div class="text-white-center">
-                        Jump
-                    </div>
-                    <img src="img/creative/spacebar.svg" style="filter: invert(100%);" alt="">
-                </div>
-                <br>
-                <div class="floating-section dark-transparent">
-                    <div class="text-white-center">
-                        Drag
-                    </div>
-                    <img src="img/creative/pointer.svg" style="filter: invert(100%);" alt="">
-                </div>
-                <br>
-                <div ng-click="viewRedCyan();" class="floating-section dark-transparent">
-                    <div class="text-white-center">
-                        View
-                    </div>
-                </div>
-                <!-- <br>
-                <div class="floating-section dark-transparent">
-                    <div class="text-white-center">
-                        Mode
-                    </div>
-                </div>
-                <br>
-                <div class="floating-section dark-transparent">
-                    <div class="text-white-center">
-                        Animate
-                    </div>
-                </div> -->
-            </div>
-        </div>
-        <div ng-show="showGraphic" id="graphic-canvas"></div>
-        <div class="intro-content">
-            <img id="logo" src="img/creative/logo.svg" class="img-responsive img-centered flipper" style="filter: invert(100%);" alt="" ng-click="flipLogo();">
-            <div class="brand-name">Developer</div>
-            <hr class="colored">
-            <div class="brand-name-subtext">Creative. Passionate. Driven.</div>
-        </div>
-        <div class="scroll-down">
-            <a class="btn page-scroll" href="#about"><i class="fa fa-angle-down fa-fw"></i></a>
-        </div>
-    </header>
+    <ng-include src="'headerView.html'"></ng-include>
 
     <!-- About Section -->
     <section id="about">
@@ -969,12 +914,12 @@
     <script src="vendor/wow/wow.min.js"></script>
     <script src="vendor/particles/particles.min.js"></script>
 
+    <!-- Custom Event Scripts -->
+    <script src="js/EventDispatcher.js"></script>
+
     <!-- Contact Form Scripts -->
     <script src="js/contact_me.js"></script>
     <script src="js/jqBootstrapValidation.js"></script>
-
-    <!-- Custom Event Scripts -->
-    <script src="js/EventDispatcher.js"></script>
 
     <!-- Vitality Theme Script -->
     <script src="js/vitality.js"></script>
