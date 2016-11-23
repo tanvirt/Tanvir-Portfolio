@@ -127,6 +127,56 @@ Logo.prototype._appendLogo = function(size, thickness) {
     this._appendBottomSquare(size, thickness);
 }
 
+Logo.prototype._appendTopLetter = function(size, thickness) {
+    this._appendObject(
+        size/2,
+        thickness,
+        [-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
+        [0, 0, 0],
+        this._appendLetter.bind(this)
+    );
+}
+
+Logo.prototype._appendTopSquare = function(size, thickness) {
+    this._appendObject(
+        size,
+        thickness,
+        [-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
+        [0, 0, Math.PI/4],
+        this._appendSquare.bind(this)
+    );
+}
+
+Logo.prototype._appendCenterLine = function(size, thickness) {
+    this._appendObject(
+        size*2.25,
+        thickness,
+        [0, 0, 0],
+        [0, 0, Math.PI/4],
+        this._appendLine.bind(this)
+    );
+}
+
+Logo.prototype._appendBottomLetter = function(size, thickness) {
+    this._appendObject(
+        size/2,
+        thickness,
+        [Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
+        [0, 0, 0],
+        this._appendLetter.bind(this)
+    );
+}
+
+Logo.prototype._appendBottomSquare = function(size, thickness) {
+    this._appendObject(
+        size,
+        thickness,
+        [Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
+        [0, 0, -3*Math.PI/4],
+        this._appendSquare.bind(this)
+    );
+}
+
 Logo.prototype._appendLetter = function(size, thickness) {
     var delta = size/2 - thickness/2;
 
@@ -161,54 +211,4 @@ Logo.prototype._appendSquare = function(size, thickness) {
 Logo.prototype._appendLine = function(size, thickness) {
     // horizontal line
     this._object_maker.box(size, thickness, thickness);
-}
-
-Logo.prototype._appendTopLetter = function(size, thickness) {
-	this._appendObject(
-    	size/2,
-    	thickness,
-    	[-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
-    	[0, 0, 0],
-    	this._appendLetter.bind(this)
-    );
-}
-
-Logo.prototype._appendTopSquare = function(size, thickness) {
-	this._appendObject(
-    	size,
-		thickness,
-    	[-Math.sqrt(Math.pow(size, 2)/2)/2, Math.sqrt(Math.pow(size, 2)/2)/2, 0],
-    	[0, 0, Math.PI/4],
-	    this._appendSquare.bind(this)
-    );
-}
-
-Logo.prototype._appendCenterLine = function(size, thickness) {
-	this._appendObject(
-    	size*2.25,
-		thickness,
-    	[0, 0, 0],
-    	[0, 0, Math.PI/4],
-	    this._appendLine.bind(this)
-    );
-}
-
-Logo.prototype._appendBottomLetter = function(size, thickness) {
-	this._appendObject(
-    	size/2,
-    	thickness,
-    	[Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
-    	[0, 0, 0],
-    	this._appendLetter.bind(this)
-    );
-}
-
-Logo.prototype._appendBottomSquare = function(size, thickness) {
-	this._appendObject(
-    	size,
-		thickness,
-    	[Math.sqrt(Math.pow(size, 2)/2)/2, -Math.sqrt(Math.pow(size, 2)/2)/2, 0],
-    	[0, 0, -3*Math.PI/4],
-	    this._appendSquare.bind(this)
-    );
 }
