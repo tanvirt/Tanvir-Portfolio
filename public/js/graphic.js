@@ -55,6 +55,8 @@ var body_onload = function() {
 	    }
 
 		canvas.setBackgroundColor(0, 0, 0, 0.75);
+		//canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
+
 		canvas.setLoadingStatus(false);
 		canvas.onDrag = function(event) {
 			canvas.getCamera().oneFingerRotate(

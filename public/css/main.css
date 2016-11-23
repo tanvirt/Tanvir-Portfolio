@@ -45,6 +45,11 @@ header .floating-container {
 	border-radius: 5px;
 }
 
+.floating-content .floating-section:hover {
+	background-color: rgba(4, 27, 55, 0.75);
+	cursor: pointer;
+}
+
 .floating-content img {
 	/*height: auto;
 	width: auto;
