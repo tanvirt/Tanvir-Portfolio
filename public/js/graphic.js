@@ -62,7 +62,7 @@ var body_onload = function() {
 	canvas.onSetup = function() {
 		keys.addEventListener(canvas);
 
-	    logo = new Logo(canvas, 1, 0.05);
+	    logo = new Logo(canvas, 1, 0.05, 1);
 	    logo.translate([0, 0, -4]);
 	    logo.getGraphic().onTap = function(event) {
 	    	logo.jump();
@@ -82,7 +82,6 @@ var body_onload = function() {
 
 	canvas.onDraw = function() {
 		handleKeys();
-		logo.updatePosition();
 		if(!interactiveKeyDown()) {
 			logo.rotate([0, 0.03, 0]);
 		}

@@ -1,4 +1,4 @@
-function Logo(canvas, size, thickness) {
+function Logo(canvas, size, thickness, movementSpeed) {
 	this._canvas = canvas;
 
 	this._amJumping = false;
@@ -10,6 +10,8 @@ function Logo(canvas, size, thickness) {
 
     this._size = size;
     this._thickness = thickness;
+
+    this._movementSpeed = movementSpeed;
 
     this._object_maker = new GLObjectMaker(this._canvas);
 	this._graphic = this._createGraphic();
@@ -47,6 +49,8 @@ Logo.prototype.translate = function(translation) {
 }
 
 Logo.prototype.draw = function() {
+    this._updatePosition();
+
 	var camera = this._canvas.getCamera();
 
 	camera.pushMatrix();
@@ -67,7 +71,7 @@ Logo.prototype.jump = function() {
 	}
 }
 
-Logo.prototype.updatePosition = function() {
+Logo.prototype._updatePosition = function() {
 	this._jumpDir -= 0.01;
 	this._position[1] += this._jumpDir;
     //this._rotation[2] += this._jumpDir;
