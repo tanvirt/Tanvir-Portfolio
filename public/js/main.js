@@ -17,6 +17,24 @@ angular.module("main").run(function($rootScope) {
 		}
     }
 
+    $rootScope.resetGraphic = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("resetGraphic"));
+	    }
+    }
+
+    $rootScope.clickJump = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("clickJump"));
+	    }
+    }
+
+    $rootScope.viewRedCyan = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("viewRedCyan"));
+	    }
+    }
+
 });
 
 var flipAppLogo = function() {

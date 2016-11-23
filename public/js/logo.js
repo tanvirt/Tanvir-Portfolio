@@ -14,6 +14,17 @@ function Logo(canvas, size, thickness) {
 	this._graphic = this._createGraphic();
 }
 
+Logo.prototype.reset = function() {
+    this._amJumping = false;
+    this._jumpDir = 0;
+
+    this._position = [0, 0, 0];
+    this._rotation = [0, 0, 0];
+    this._color = [1, 1, 1, 1];
+
+    // TODO: reset camera
+}
+
 Logo.prototype.getRotation = function() {
 	return this._rotation;
 }

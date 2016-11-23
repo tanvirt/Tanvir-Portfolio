@@ -6,6 +6,28 @@ var body_onload = function() {
 	var logo = null;
 	var graphicToggle = false;
 
+	EventDispatcher.addEventHandler("resetGraphic", function(event) {
+		canvas.useRegularProjector();
+		logo.reset();
+		logo.translate([0, 0, -4]);
+		logo.getGraphic().setDrawModeTriangles();
+	});
+
+	EventDispatcher.addEventHandler("clickJump", function(event) {
+		logo.jump();
+	});
+
+	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
+		logo.jump();
+		if(graphicToggle) {
+    		canvas.useRegularProjector();
+    	}
+    	else {
+    		canvas.useRedCyanProjector();
+    	}
+    	graphicToggle = !graphicToggle;
+	});
+
 	var handleKeys = function() {
 		if(keys.leftArrowIsDown()) {
 			logo.rotate([0, 0.03, 0]);
@@ -39,19 +61,11 @@ var body_onload = function() {
 
 	canvas.onSetup = function() {
 		keys.addEventListener(canvas);
-		
+
 	    logo = new Logo(canvas, 1, 0.05);
 	    logo.translate([0, 0, -4]);
 	    logo.getGraphic().onTap = function(event) {
 	    	logo.jump();
-	    	if(graphicToggle) {
-	    		canvas.useRegularProjector();
-	    		logo.getGraphic().setDrawModeTriangles();
-	    	}
-	    	else {
-	    		canvas.useRedCyanProjector();
-	    	}
-	    	graphicToggle = !graphicToggle;
 	    }
 
 		canvas.setBackgroundColor(0, 0, 0, 0.75);

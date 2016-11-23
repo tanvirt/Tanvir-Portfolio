@@ -48,7 +48,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     <i class="fa fa-bars"></i> Menu
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top" style="margin-left:0.5rem;" ng-click="showGraphic = !showGraphic; flipLogo();">
+                <a class="navbar-brand page-scroll" href="#page-top" style="margin-left:0.5rem;" ng-click="showGraphic = !showGraphic; flipLogo(); resetGraphic();">
                     Tanvir Talukder
                 </a>
             </div>
@@ -88,7 +88,7 @@
                     <img src="img/creative/arrow_keys.svg" style="filter: invert(100%);" alt="">
                 </div>
                 <br>
-                <div class="floating-section dark-transparent">
+                <div ng-click="clickJump()" class="floating-section dark-transparent">
                     <div class="text-white-center">
                         Jump
                     </div>
@@ -102,7 +102,7 @@
                     <img src="img/creative/pointer.svg" style="filter: invert(100%);" alt="">
                 </div>
                 <br>
-                <div class="floating-section dark-transparent">
+                <div ng-click="viewRedCyan();" class="floating-section dark-transparent">
                     <div class="text-white-center">
                         View
                     </div>
@@ -972,6 +972,9 @@
     <!-- Contact Form Scripts -->
     <script src="js/contact_me.js"></script>
     <script src="js/jqBootstrapValidation.js"></script>
+
+    <!-- Custom Event Scripts -->
+    <script src="js/EventDispatcher.js"></script>
 
     <!-- Vitality Theme Script -->
     <script src="js/vitality.js"></script>
