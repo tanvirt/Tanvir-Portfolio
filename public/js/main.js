@@ -3,7 +3,6 @@ angular.module("main", []);
 angular.module("main").run(function($rootScope, $timeout) {
 
 	ClassHelpers.init();
-	AnimatedHeader.init();
 	ContactForm.init();
 	FormValidation.init();
 
@@ -15,6 +14,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 		$timeout(function() {
 			numLoadedIncludes++;
 			if(numLoadedIncludes == numIncludes) {
+				AnimatedHeader.init();
 				Theme.init();
 				Particles.init("app-header");
 			}
@@ -25,6 +25,10 @@ angular.module("main").run(function($rootScope, $timeout) {
 		if(!$rootScope.showGraphic) {
 			flipAppLogo();
 		}
+    }
+
+    $rootScope.toggleGraphic = function() {
+    	$rootScope.showGraphic = !$rootScope.showGraphic;
     }
 
     $rootScope.resetGraphic = function() {
