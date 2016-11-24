@@ -115,7 +115,6 @@ MovementDirector.prototype.rotateTowardInitialRoll = function() {
 }
 
 MovementDirector.prototype.rotateTowardInitialPitch = function() {
-    // y-axis rotation
     if(Math.abs(this._movingObject.getYRotation()) >= this._rotationDelta*this._movementSpeed) {
         this._movingObject.rotateY(
         	-this._rotationDelta*Math.sign(this._movingObject.getYRotation()*this._movementSpeed)
@@ -127,7 +126,6 @@ MovementDirector.prototype.rotateTowardInitialPitch = function() {
 }
 
 MovementDirector.prototype.rotateTowardInitialYaw = function() {
-    // z-axis rotation
     if(Math.abs(this._movingObject.getZRotation()) >= this._rotationDelta*this._movementSpeed) {
         this._movingObject.rotateZ(
 			-this._rotationDelta*Math.sign(this._movingObject.getZRotation()*this._movementSpeed)
