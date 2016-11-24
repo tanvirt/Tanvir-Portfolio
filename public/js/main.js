@@ -28,12 +28,12 @@ angular.module("main").run(function($rootScope, $timeout) {
     }
 
     $rootScope.toggleGraphic = function() {
-	    EventDispatcher.dispatch(new Event("toggleGraphic"));
-    }
-
-    EventDispatcher.addEventHandler("toggleGraphic", function(event) {
     	$rootScope.showGraphic = !$rootScope.showGraphic;
-    });
+	    EventDispatcher.dispatch(new Event(
+	    	"toggleGraphic",
+	    	{ showGraphic: $rootScope.showGraphic }
+	    ));
+    }
 
     $rootScope.resetGraphic = function() {
     	if($rootScope.showGraphic) {
@@ -61,17 +61,18 @@ var flipAppLogo = function() {
 	}
 }
 
-var isVisibleInViewport = function(elem) {
-    var y = elem.offsetTop;
-    var height = elem.offsetHeight;
+var isVisibleInViewport = function(element) {
+    var y = element.offsetTop;
+    var height = element.offsetHeight;
 
-    while(elem = elem.offsetParent) {
-        y += elem.offsetTop;
+    while(element = element.offsetParent) {
+        y += element.offsetTop;
     }
 
     var maxHeight = y + height;
     var isVisible = 
     	(y < ( window.pageYOffset + window.innerHeight)) && 
     	(maxHeight >= window.pageYOffset);
+
     return isVisible; 
 }

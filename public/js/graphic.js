@@ -5,16 +5,15 @@ var body_onload = function() {
 	var logo = null;
 	var projectorToggle = false;
 	var showGraphic = false;
+	var showLogo = false;
 
 	EventDispatcher.addEventHandler("toggleGraphic", function(event) {
-		showGraphic = !showGraphic;
+		showGraphic = event.getData().showGraphic;
+		showLogo = showGraphic;
 	});
 
 	EventDispatcher.addEventHandler("resetGraphic", function(event) {
-		canvas.useRegularProjector();
-		logo.reset();
-		logo.translate([0, 0, -4]);
-		logo.getGraphic().setDrawModeTriangles();
+		reset();
 	});
 
 	EventDispatcher.addEventHandler("clickJump", function(event) {
@@ -31,6 +30,13 @@ var body_onload = function() {
     	}
     	projectorToggle = !projectorToggle;
 	});
+
+	var reset = function() {
+		canvas.useRegularProjector();
+		logo.reset();
+		logo.translate([0, 0, -4]);
+		logo.getGraphic().setDrawModeTriangles();
+	}
 
 	var handleKeys = function() {
 		if(keys.leftArrowIsDown()) {
@@ -63,6 +69,20 @@ var body_onload = function() {
 			keys.spaceBarIsDown();
 	}
 
+	var updateCanvasVisibility = function() {
+		if(showLogo && !isVisibleInViewport(canvas.getDiv())) {
+			showLogo = false;
+			reset();
+		}
+		else if(!showLogo && isVisibleInViewport(canvas.getDiv())) {
+			showLogo = true;
+		}
+	}
+
+	var canvasNotVisible = function() {
+		return !showGraphic || !showLogo;
+	}
+
 	canvas.onSetup = function() {
 		keys.addEventListener(canvas);
 
@@ -85,7 +105,8 @@ var body_onload = function() {
 	};
 
 	canvas.onDraw = function() {
-		if(!showGraphic) {
+		updateCanvasVisibility();
+		if(canvasNotVisible()) {
 			return;
 		}
 		handleKeys();
@@ -96,7 +117,7 @@ var body_onload = function() {
 	};
 
 	canvas.onKeyDown = function(keyCode, event) {
-		if(!showGraphic) {
+		if(canvasNotVisible()) {
 			return;
 		}
 		if(interactiveKeyDown()) {
