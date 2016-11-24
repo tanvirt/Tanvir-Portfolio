@@ -1043,8 +1043,8 @@ GLCanvas.prototype.getFrameID=function(){return this.frame_counter;};
 
 GLCanvas.prototype.init=function()
 {
-	console.log('%cVisiNeat - Open 3D Data Toolbox', 'padding:28px 82px;line-height:90px;color:rgb(255,255,255);background-color:rgb(120,120,120);text-shadow: 0.5px 1px 0 #888, 1px 2px 0 #898989, 1.5px 3px 0 #777, 2px 4px 0 #797979, 2.5px 5px 0 #666, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);font-size: 40px;');
-	console.log('%cwww.visineat.com - Share your 3D world','padding:28px 46px;font-size: 18px;');
+	//console.log('%cVisiNeat - Open 3D Data Toolbox', 'padding:28px 82px;line-height:90px;color:rgb(255,255,255);background-color:rgb(120,120,120);text-shadow: 0.5px 1px 0 #888, 1px 2px 0 #898989, 1.5px 3px 0 #777, 2px 4px 0 #797979, 2.5px 5px 0 #666, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);font-size: 40px;');
+	//console.log('%cwww.visineat.com - Share your 3D world','padding:28px 46px;font-size: 18px;');
    
         try {
             this.gl = this.canvas.getContext("experimental-webgl",{antialias:false});
