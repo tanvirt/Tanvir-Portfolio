@@ -21,6 +21,14 @@ MovementDirector.prototype.reset = function() {
     this._movingObject.setZRotation(0);
 }
 
+MovementDirector.prototype.setJumpHeight = function(height) {
+	this._jumpHeight = height;
+}
+
+MovementDirector.prototype.setMovementSpeed = function(speed) {
+	this._movementSpeed = speed;
+}
+
 MovementDirector.prototype.jump = function() {
 	if(!this._amJumping) {
 		this._amJumping = true;

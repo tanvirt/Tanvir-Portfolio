@@ -96,7 +96,7 @@ var body_onload = function() {
 	canvas.onSetup = function() {
 		keys.addEventListener(canvas);
 
-	    logo = new Logo(canvas, 1, 0.05, 1);
+	    logo = new Logo(canvas, 1, 0.05);
 	    logoMovement = new MovementDirector(logo);
 	    logo.translateZ(-4);
 	    logo.getGraphic().onTap = function(event) {

@@ -1,4 +1,4 @@
-function Logo(canvas, size, thickness, movementSpeed) {
+function Logo(canvas, size, thickness) {
 	this._canvas = canvas;
 
     this._jumpHeight = 0.2;
@@ -9,8 +9,6 @@ function Logo(canvas, size, thickness, movementSpeed) {
 
     this._size = size;
     this._thickness = thickness;
-
-    this._movementSpeed = movementSpeed;
 
     this._object_maker = new GLObjectMaker(this._canvas);
 	this._graphic = this._createGraphic();
