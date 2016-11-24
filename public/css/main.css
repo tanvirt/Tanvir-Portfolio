@@ -46,8 +46,15 @@ header .floating-container {
 }
 
 .floating-content .floating-section:hover {
-	background-color: rgba(4, 27, 55, 0.75);
 	cursor: pointer;
+}
+
+.blue-hover:hover {
+	background-color: rgba(4, 27, 55, 0.5);
+}
+
+.red-hover:hover {
+	background-color: rgba(55, 0, 0, 0.5);
 }
 
 .floating-content img {
