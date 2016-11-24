@@ -3,7 +3,6 @@ angular.module("main", []);
 angular.module("main").run(function($rootScope, $timeout) {
 
 	ClassHelpers.init();
-	
 	FormValidation.init();
 
     $rootScope.showGraphic = false;
