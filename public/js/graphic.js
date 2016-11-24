@@ -1,7 +1,6 @@
 var body_onload = function() {
 
 	var canvas = new GLCanvas("graphic-canvas");
-	var camera = canvas.getCamera();
 	var keys = new Keys();
 	var logo = null;
 	var graphicToggle = false;
@@ -87,7 +86,7 @@ var body_onload = function() {
 		}
 		logo.draw();
 	};
- 
+
 	canvas.onKeyDown = function(keyCode, event) {
 		if(interactiveKeyDown()) {
 			event.preventDefault();

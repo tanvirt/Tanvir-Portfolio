@@ -3,7 +3,7 @@ angular.module("main", []);
 angular.module("main").run(function($rootScope, $timeout) {
 
 	ClassHelpers.init();
-	ContactForm.init();
+	
 	FormValidation.init();
 
     $rootScope.showGraphic = false;
@@ -15,6 +15,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 			numIncludesToBeLoaded--;
 			if(numIncludesToBeLoaded == 0) {
 				AnimatedHeader.init();
+				ContactForm.init();
 				Theme.init();
 				Particles.init("app-header");
 			}
