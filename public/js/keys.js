@@ -52,6 +52,22 @@ Keys.prototype.downArrowIsDown = function() {
 	return this.isDown(40); 
 }
 
+Keys.prototype.wIsDown = function() {
+	return this.isDown(87); 
+}
+
+Keys.prototype.aIsDown = function() {
+	return this.isDown(65); 
+}
+
+Keys.prototype.sIsDown = function() {
+	return this.isDown(83); 
+}
+
+Keys.prototype.dIsDown = function() {
+	return this.isDown(68); 
+}
+
 Keys.prototype._onDown = function(keyCode, event) {
 	this._pressed[keyCode] = true;
 	for(i in this._listeners) {

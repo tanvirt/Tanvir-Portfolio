@@ -59,6 +59,18 @@ var body_onload = function() {
 				Math.sin(logo.getRotation()[1])*0.1
 			]);
 		}
+		if(keys.wIsDown()) {
+			logo.rotate([-0.03, 0, 0]);
+		}
+		if(keys.aIsDown()) {
+			logo.rotate([0, 0, 0.03]);
+		}
+		if(keys.sIsDown()) {
+			logo.rotate([0.03, 0, 0]);
+		}
+		if(keys.dIsDown()) {
+			logo.rotate([0, 0, -0.03]);
+		}
 	}
 
 	var interactiveKeyDown = function() {
@@ -66,7 +78,11 @@ var body_onload = function() {
 			keys.upArrowIsDown() || 
 			keys.rightArrowIsDown() || 
 			keys.downArrowIsDown() || 
-			keys.spaceBarIsDown();
+			keys.spaceBarIsDown() ||
+			keys.wIsDown() ||
+			keys.aIsDown() ||
+			keys.sIsDown() ||
+			keys.dIsDown();
 	}
 
 	var updateCanvasVisibility = function() {
@@ -111,10 +127,53 @@ var body_onload = function() {
 		}
 		handleKeys();
 		if(!interactiveKeyDown()) {
-			logo.rotate([0, 0.03, 0]);
+			rotateLogoPositivePitch();
+			rotateLogoToStartingRoll();
+			rotateLogoToStartingYaw();
 		}
 		logo.draw();
 	};
+
+	var rotateLogoPositivePitch = function() {
+		// y-axis rotation
+		logo.rotate([0, 0.03, 0]);
+	}
+
+	var rotateLogoToStartingRoll = function() {
+		// x-axis rotation
+		if(Math.abs(logo.getRotation()[0]) >= 0.03) {
+			logo.rotate([
+				-0.03*Math.sign(logo.getRotation()[0]),
+				0,
+				0
+			]);
+		}
+		else {
+			logo.setRotation([
+				0,
+				logo.getRotation()[1],
+				logo.getRotation()[2]
+			]);
+		}
+	}
+
+	var rotateLogoToStartingYaw = function() {
+		// z-axis rotation
+		if(Math.abs(logo.getRotation()[2]) >= 0.03) {
+			logo.rotate([
+				0,
+				0,
+				-0.03*Math.sign(logo.getRotation()[2])
+			]);
+		}
+		else {
+			logo.setRotation([
+				logo.getRotation()[0],
+				logo.getRotation()[1],
+				0
+			]);
+		}
+	}
 
 	canvas.onKeyDown = function(keyCode, event) {
 		if(canvasNotVisible()) {

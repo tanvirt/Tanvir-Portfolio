@@ -70,9 +70,8 @@ var isVisibleInViewport = function(element) {
     }
 
     var maxHeight = y + height;
-    var isVisible = 
-    	(y < ( window.pageYOffset + window.innerHeight)) && 
-    	(maxHeight >= window.pageYOffset);
+    var isVisible = (y < ( window.pageYOffset + window.innerHeight)) && 
+    				(maxHeight >= window.pageYOffset);
 
     return isVisible; 
 }

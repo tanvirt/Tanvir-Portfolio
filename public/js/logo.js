@@ -28,6 +28,10 @@ Logo.prototype.reset = function() {
     // TODO: reset camera
 }
 
+Logo.prototype.setRotation = function(rotation) {
+    this._rotation = rotation;
+}
+
 Logo.prototype.getRotation = function() {
 	return this._rotation;
 }
