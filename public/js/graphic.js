@@ -36,7 +36,7 @@ var body_onload = function() {
 		canvas.useRegularProjector();
 		logoMovement.reset();
 		logo.reset();
-		logo.translate([0, 0, -4]);
+		logo.translateZ(-4);
 		logo.getGraphic().setDrawModeTriangles();
 	}
 
@@ -98,7 +98,7 @@ var body_onload = function() {
 
 	    logo = new Logo(canvas, 1, 0.05, 1);
 	    logoMovement = new MovementDirector(logo);
-	    logo.translate([0, 0, -4]);
+	    logo.translateZ(-4);
 	    logo.getGraphic().onTap = function(event) {
 	    	logoMovement.jump();
 	    }

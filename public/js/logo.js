@@ -24,45 +24,35 @@ Logo.prototype.reset = function() {
     // TODO: reset camera
 }
 
-Logo.prototype.getPosition = function(position) {
-    return this._position;
-}
+Logo.prototype.getGraphic = function() { return this._graphic; }
 
-Logo.prototype.setPosition = function(position) {
-    this._position = position;
-}
+Logo.prototype.getPosition = function() { return this._position; }
+Logo.prototype.getXPosition = function() { return this._position[0]; }
+Logo.prototype.getYPosition = function() { return this._position[1]; }
+Logo.prototype.getZPosition = function() { return this._position[2]; }
 
-Logo.prototype.getRotation = function() {
-    return this._rotation;
-}
+Logo.prototype.setPosition = function(position) { this._position = position; }
+Logo.prototype.setXPosition = function(x) { this._position[0] = x; }
+Logo.prototype.setYPosition = function(y) { this._position[1] = y; }
+Logo.prototype.setZPosition = function(z) { this._position[2] = z; }
 
-Logo.prototype.setRotation = function(rotation) {
-    this._rotation = rotation;
-}
+Logo.prototype.getRotation = function() { return this._rotation; }
+Logo.prototype.getXRotation = function() { return this._rotation[0]; }
+Logo.prototype.getYRotation = function() { return this._rotation[1]; }
+Logo.prototype.getZRotation = function() { return this._rotation[2]; }
 
-Logo.prototype.getMovementSpeed = function() {
-    return this._movementSpeed;
-}
+Logo.prototype.setRotation = function(rotation) { this._rotation = rotation; }
+Logo.prototype.setXRotation = function(x) { this._rotation[0] = x; }
+Logo.prototype.setYRotation = function(y) { this._rotation[1] = y; }
+Logo.prototype.setZRotation = function(z) { this._rotation[2] = z; }
 
-Logo.prototype.getJumpHeight = function() {
-    return this._jumpHeight;
-}
+Logo.prototype.rotateX = function(x) { this._rotation[0] += x; }
+Logo.prototype.rotateY = function(y) { this._rotation[1] += y; }
+Logo.prototype.rotateZ = function(z) { this._rotation[2] += z; }
 
-Logo.prototype.getGraphic = function() {
-	return this._graphic;
-}
-
-Logo.prototype.rotate = function(rotation) {
-	this._rotation[0] += rotation[0];
-	this._rotation[1] += rotation[1];
-	this._rotation[2] += rotation[2];
-}
-
-Logo.prototype.translate = function(translation) {
-	this._position[0] += translation[0];
-	this._position[1] += translation[1];
-	this._position[2] += translation[2];
-}
+Logo.prototype.translateX = function(x) { this._position[0] += x; }
+Logo.prototype.translateY = function(y) { this._position[1] += y; }
+Logo.prototype.translateZ = function(z) { this._position[2] += z; }
 
 Logo.prototype.draw = function() {
 	var camera = this._canvas.getCamera();
