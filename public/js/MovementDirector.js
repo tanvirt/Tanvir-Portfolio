@@ -6,6 +6,9 @@ function MovementDirector(movingObject) {
 	this._jumpHeight = 0.2; // default
 
 	this._movementSpeed = 1; // default
+
+	this._translationDelta = 0.1;
+	this._rotationDelta = 0.03;
 }
 
 MovementDirector.prototype.reset = function() {
@@ -52,19 +55,19 @@ MovementDirector.prototype.update = function() {
 
 MovementDirector.prototype.moveForward = function() {
     this._movingObject.translateX(
-    	Math.cos(this._movingObject.getYRotation())*0.1*this._movementSpeed
+    	Math.cos(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
     );
     this._movingObject.translateZ(
-    	-Math.sin(this._movingObject.getYRotation())*0.1*this._movementSpeed
+    	-Math.sin(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
     );
 }
 
 MovementDirector.prototype.moveBackward = function() {
     this._movingObject.translateX(
-    	-Math.cos(this._movingObject.getYRotation())*0.1*this._movementSpeed
+    	-Math.cos(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
     );
     this._movingObject.translateZ(
-    	Math.sin(this._movingObject.getYRotation())*0.1*this._movementSpeed
+    	Math.sin(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
     );
 }
 
@@ -77,33 +80,33 @@ MovementDirector.prototype.turnRight = function() {
 }
 
 MovementDirector.prototype.rollForward = function() {
-    this._movingObject.rotateX(-0.03*this._movementSpeed);
+    this._movingObject.rotateX(-this._rotationDelta*this._movementSpeed);
 }
 
 MovementDirector.prototype.rollBackward = function() {
-    this._movingObject.rotateX(0.03*this._movementSpeed);
+    this._movingObject.rotateX(this._rotationDelta*this._movementSpeed);
 }
 
 MovementDirector.prototype.pitchForward = function() {
-    this._movingObject.rotateY(0.03*this._movementSpeed);
+    this._movingObject.rotateY(this._rotationDelta*this._movementSpeed);
 }
 
 MovementDirector.prototype.pitchBackward = function() {
-    this._movingObject.rotateY(-0.03*this._movementSpeed);
+    this._movingObject.rotateY(-this._rotationDelta*this._movementSpeed);
 }
 
 MovementDirector.prototype.yawForward = function() {
-    this._movingObject.rotateZ(-0.03*this._movementSpeed);
+    this._movingObject.rotateZ(-this._rotationDelta*this._movementSpeed);
 }
 
 MovementDirector.prototype.yawBackward = function() {
-    this._movingObject.rotateZ(0.03*this._movementSpeed);
+    this._movingObject.rotateZ(this._rotationDelta*this._movementSpeed);
 }
 
 MovementDirector.prototype.rotateTowardInitialRoll = function() {
-    if(Math.abs(this._movingObject.getXRotation()) >= 0.03*this._movementSpeed) {
+    if(Math.abs(this._movingObject.getXRotation()) >= this._rotationDelta*this._movementSpeed) {
         this._movingObject.rotateX(
-        	-0.03*Math.sign(this._movingObject.getXRotation()*this._movementSpeed)
+        	-this._rotationDelta*Math.sign(this._movingObject.getXRotation()*this._movementSpeed)
         );
     }
     else {
@@ -113,9 +116,9 @@ MovementDirector.prototype.rotateTowardInitialRoll = function() {
 
 MovementDirector.prototype.rotateTowardInitialPitch = function() {
     // y-axis rotation
-    if(Math.abs(this._movingObject.getYRotation()) >= 0.03*this._movementSpeed) {
+    if(Math.abs(this._movingObject.getYRotation()) >= this._rotationDelta*this._movementSpeed) {
         this._movingObject.rotateY(
-        	-0.03*Math.sign(this._movingObject.getYRotation()*this._movementSpeed)
+        	-this._rotationDelta*Math.sign(this._movingObject.getYRotation()*this._movementSpeed)
         );
     }
     else {
@@ -125,9 +128,9 @@ MovementDirector.prototype.rotateTowardInitialPitch = function() {
 
 MovementDirector.prototype.rotateTowardInitialYaw = function() {
     // z-axis rotation
-    if(Math.abs(this._movingObject.getZRotation()) >= 0.03*this._movementSpeed) {
+    if(Math.abs(this._movingObject.getZRotation()) >= this._rotationDelta*this._movementSpeed) {
         this._movingObject.rotateZ(
-			-0.03*Math.sign(this._movingObject.getZRotation()*this._movementSpeed)
+			-this._rotationDelta*Math.sign(this._movingObject.getZRotation()*this._movementSpeed)
         );
     }
     else {
