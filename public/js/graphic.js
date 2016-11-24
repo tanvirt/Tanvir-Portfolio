@@ -3,6 +3,7 @@ var body_onload = function() {
 	var canvas = new GLCanvas("graphic-canvas");
 	var keys = new Keys();
 	var logo = null;
+	var logoMovement = null;
 	var projectorToggle = false;
 	var showGraphic = false;
 	var showLogo = false;
@@ -17,11 +18,11 @@ var body_onload = function() {
 	});
 
 	EventDispatcher.addEventHandler("clickJump", function(event) {
-		logo.jump();
+		logoMovement.jump();
 	});
 
 	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
-		logo.jump();
+		logoMovement.jump();
 		if(projectorToggle) {
     		canvas.useRegularProjector();
     	}
@@ -33,6 +34,7 @@ var body_onload = function() {
 
 	var reset = function() {
 		canvas.useRegularProjector();
+		logoMovement.reset();
 		logo.reset();
 		logo.translate([0, 0, -4]);
 		logo.getGraphic().setDrawModeTriangles();
@@ -40,28 +42,28 @@ var body_onload = function() {
 
 	var handleKeys = function() {
 		if(keys.leftArrowIsDown()) {
-			logo.turnLeft();
+			logoMovement.turnLeft();
 		}
 		if(keys.rightArrowIsDown()) {
-			logo.turnRight();
+			logoMovement.turnRight();
 		}
 		if(keys.upArrowIsDown()) {
-			logo.moveForward();
+			logoMovement.moveForward();
 		}
 		if(keys.downArrowIsDown()) {
-			logo.moveBackward();
+			logoMovement.moveBackward();
 		}
 		if(keys.wIsDown()) {
-			logo.rollForward();
+			logoMovement.rollForward();
 		}
 		if(keys.aIsDown()) {
-			logo.yawBackward();
+			logoMovement.yawBackward();
 		}
 		if(keys.sIsDown()) {
-			logo.rollBackward();
+			logoMovement.rollBackward();
 		}
 		if(keys.dIsDown()) {
-			logo.yawForward();
+			logoMovement.yawForward();
 		}
 	}
 
@@ -95,9 +97,10 @@ var body_onload = function() {
 		keys.addEventListener(canvas);
 
 	    logo = new Logo(canvas, 1, 0.05, 1);
+	    logoMovement = new MovementDirector(logo);
 	    logo.translate([0, 0, -4]);
 	    logo.getGraphic().onTap = function(event) {
-	    	logo.jump();
+	    	logoMovement.jump();
 	    }
 
 		canvas.setBackgroundColor(0, 0, 0, 0.75);
@@ -119,10 +122,11 @@ var body_onload = function() {
 		}
 		handleKeys();
 		if(!interactiveKeyDown()) {
-			logo.pitchForward();
-			logo.rotateTowardInitialRoll();
-			logo.rotateTowardInitialYaw();
+			logoMovement.pitchForward();
+			logoMovement.rotateTowardInitialRoll();
+			logoMovement.rotateTowardInitialYaw();
 		}
+		logoMovement.update();
 		logo.draw();
 	};
 
@@ -134,7 +138,7 @@ var body_onload = function() {
 			event.preventDefault();
 		}
 		if(keys.spaceBarIsDown()) {
-			logo.jump();
+			logoMovement.jump();
 		}
 	};
 

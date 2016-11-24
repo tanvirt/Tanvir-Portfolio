@@ -1,8 +1,6 @@
 function Logo(canvas, size, thickness, movementSpeed) {
 	this._canvas = canvas;
 
-	this._amJumping = false;
-	this._jumpDir = 0;
     this._jumpHeight = 0.2;
 
 	this._position = [0, 0, 0];
@@ -19,9 +17,6 @@ function Logo(canvas, size, thickness, movementSpeed) {
 }
 
 Logo.prototype.reset = function() {
-    this._amJumping = false;
-    this._jumpDir = 0;
-
     this._position = [0, 0, 0];
     this._rotation = [0, 0, 0];
     this._color = [1, 1, 1, 1];
@@ -29,102 +24,28 @@ Logo.prototype.reset = function() {
     // TODO: reset camera
 }
 
-Logo.prototype.moveForward = function() {
-    this.translate([
-        Math.cos(this.getRotation()[1])*0.1*this._movementSpeed,
-        0,
-        -Math.sin(this.getRotation()[1])*0.1*this._movementSpeed
-    ]);
+Logo.prototype.getPosition = function(position) {
+    return this._position;
 }
 
-Logo.prototype.moveBackward = function() {
-    this.translate([
-        -Math.cos(this.getRotation()[1])*0.1*this._movementSpeed,
-        0,
-        Math.sin(this.getRotation()[1])*0.1*this._movementSpeed
-    ]);
+Logo.prototype.setPosition = function(position) {
+    this._position = position;
 }
 
-Logo.prototype.turnLeft = function() {
-    this.pitchForward();
-}
-
-Logo.prototype.turnRight = function() {
-    this.pitchBackward();
-}
-
-Logo.prototype.rollForward = function() {
-    // x-axis rotation
-    this.rotate([-0.03*this._movementSpeed, 0, 0]);
-}
-
-Logo.prototype.rollBackward = function() {
-    // x-axis rotation
-    this.rotate([0.03*this._movementSpeed, 0, 0]);
-}
-
-Logo.prototype.pitchForward = function() {
-    // y-axis rotation
-    this.rotate([0, 0.03*this._movementSpeed, 0]);
-}
-
-Logo.prototype.pitchBackward = function() {
-    // y-axis rotation
-    this.rotate([0, -0.03*this._movementSpeed, 0]);
-}
-
-Logo.prototype.yawForward = function() {
-    // z-axis rotation
-    this.rotate([0, 0, -0.03*this._movementSpeed]);
-}
-
-Logo.prototype.yawBackward = function() {
-    // z-axis rotation
-    this.rotate([0, 0, 0.03*this._movementSpeed]);
-}
-
-Logo.prototype.rotateTowardInitialRoll = function() {
-    // x-axis rotation
-    if(Math.abs(this.getRotation()[0]) >= 0.03*this._movementSpeed) {
-        this.rotate([
-            -0.03*Math.sign(this.getRotation()[0]*this._movementSpeed),
-            0,
-            0
-        ]);
-    }
-    else {
-        this.setRotation([
-            0,
-            this.getRotation()[1],
-            this.getRotation()[2]
-        ]);
-    }
-}
-
-Logo.prototype.rotateTowardInitialYaw = function() {
-    // z-axis rotation
-    if(Math.abs(this.getRotation()[2]) >= 0.03*this._movementSpeed) {
-        this.rotate([
-            0,
-            0,
-            -0.03*Math.sign(this.getRotation()[2]*this._movementSpeed)
-        ]);
-    }
-    else {
-        this.setRotation([
-            this.getRotation()[0],
-            this.getRotation()[1],
-            0
-        ]);
-    }
+Logo.prototype.getRotation = function() {
+    return this._rotation;
 }
 
 Logo.prototype.setRotation = function(rotation) {
     this._rotation = rotation;
 }
 
-Logo.prototype.getRotation = function() {
-	return this._rotation;
+Logo.prototype.getMovementSpeed = function() {
+    return this._movementSpeed;
+}
+
+Logo.prototype.getJumpHeight = function() {
+    return this._jumpHeight;
 }
 
 Logo.prototype.getGraphic = function() {
@@ -144,8 +65,6 @@ Logo.prototype.translate = function(translation) {
 }
 
 Logo.prototype.draw = function() {
-    this._updatePosition();
-
 	var camera = this._canvas.getCamera();
 
 	camera.pushMatrix();
@@ -157,27 +76,6 @@ Logo.prototype.draw = function() {
 	this._graphic.updateShader();
 	this._graphic.draw();
 	camera.popMatrix();
-}
-
-Logo.prototype.jump = function() {
-	if(!this._amJumping) {
-		this._amJumping = true;
-		this._jumpDir = this._jumpHeight;
-	}
-}
-
-Logo.prototype._updatePosition = function() {
-    if(this._jumpDir > -this._jumpHeight) {
-        this._jumpDir -= 0.01*this._movementSpeed;
-        this._position[1] += this._jumpDir*this._movementSpeed;
-    }
-    else {
-        this._jumpDir = -this._jumpHeight;
-    }
-	if(this._position[1] <= 0) {
-	   this._position[1] = 0;
-	   this._amJumping = false;
-	}
 }
 
 Logo.prototype._createGraphic = function() {
