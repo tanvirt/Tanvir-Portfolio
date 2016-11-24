@@ -9,7 +9,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 
     var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
 
-    $rootScope.$on('$includeContentLoaded', function() {
+    $rootScope.$on('$includeContentLoaded', function(event, templateName) {
 		$timeout(function() {
 			numIncludesToBeLoaded--;
 			if(numIncludesToBeLoaded == 0) {
@@ -28,8 +28,12 @@ angular.module("main").run(function($rootScope, $timeout) {
     }
 
     $rootScope.toggleGraphic = function() {
-    	$rootScope.showGraphic = !$rootScope.showGraphic;
+	    EventDispatcher.dispatch(new Event("toggleGraphic"));
     }
+
+    EventDispatcher.addEventHandler("toggleGraphic", function(event) {
+    	$rootScope.showGraphic = !$rootScope.showGraphic;
+    });
 
     $rootScope.resetGraphic = function() {
     	if($rootScope.showGraphic) {
@@ -55,4 +59,19 @@ var flipAppLogo = function() {
 	if(document.getElementById('logo')) {
 		document.getElementById('logo').classList.toggle('flip');
 	}
+}
+
+var isVisibleInViewport = function(elem) {
+    var y = elem.offsetTop;
+    var height = elem.offsetHeight;
+
+    while(elem = elem.offsetParent) {
+        y += elem.offsetTop;
+    }
+
+    var maxHeight = y + height;
+    var isVisible = 
+    	(y < ( window.pageYOffset + window.innerHeight)) && 
+    	(maxHeight >= window.pageYOffset);
+    return isVisible; 
 }

@@ -3,7 +3,12 @@ var body_onload = function() {
 	var canvas = new GLCanvas("graphic-canvas");
 	var keys = new Keys();
 	var logo = null;
-	var graphicToggle = false;
+	var projectorToggle = false;
+	var showGraphic = false;
+
+	EventDispatcher.addEventHandler("toggleGraphic", function(event) {
+		showGraphic = !showGraphic;
+	});
 
 	EventDispatcher.addEventHandler("resetGraphic", function(event) {
 		canvas.useRegularProjector();
@@ -18,13 +23,13 @@ var body_onload = function() {
 
 	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
 		logo.jump();
-		if(graphicToggle) {
+		if(projectorToggle) {
     		canvas.useRegularProjector();
     	}
     	else {
     		canvas.useRedCyanProjector();
     	}
-    	graphicToggle = !graphicToggle;
+    	projectorToggle = !projectorToggle;
 	});
 
 	var handleKeys = function() {
@@ -80,6 +85,9 @@ var body_onload = function() {
 	};
 
 	canvas.onDraw = function() {
+		if(!showGraphic) {
+			return;
+		}
 		handleKeys();
 		if(!interactiveKeyDown()) {
 			logo.rotate([0, 0.03, 0]);
@@ -88,6 +96,9 @@ var body_onload = function() {
 	};
 
 	canvas.onKeyDown = function(keyCode, event) {
+		if(!showGraphic) {
+			return;
+		}
 		if(interactiveKeyDown()) {
 			event.preventDefault();
 		}
