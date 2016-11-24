@@ -3,6 +3,7 @@ function Logo(canvas, size, thickness, movementSpeed) {
 
 	this._amJumping = false;
 	this._jumpDir = 0;
+    this._jumpHeight = 0.2;
 
 	this._position = [0, 0, 0];
 	this._rotation = [0, 0, 0];
@@ -26,6 +27,96 @@ Logo.prototype.reset = function() {
     this._color = [1, 1, 1, 1];
 
     // TODO: reset camera
+}
+
+Logo.prototype.moveForward = function() {
+    this.translate([
+        Math.cos(this.getRotation()[1])*0.1*this._movementSpeed,
+        0,
+        -Math.sin(this.getRotation()[1])*0.1*this._movementSpeed
+    ]);
+}
+
+Logo.prototype.moveBackward = function() {
+    this.translate([
+        -Math.cos(this.getRotation()[1])*0.1*this._movementSpeed,
+        0,
+        Math.sin(this.getRotation()[1])*0.1*this._movementSpeed
+    ]);
+}
+
+Logo.prototype.turnLeft = function() {
+    this.pitchForward();
+}
+
+Logo.prototype.turnRight = function() {
+    this.pitchBackward();
+}
+
+Logo.prototype.rollForward = function() {
+    // x-axis rotation
+    this.rotate([-0.03*this._movementSpeed, 0, 0]);
+}
+
+Logo.prototype.rollBackward = function() {
+    // x-axis rotation
+    this.rotate([0.03*this._movementSpeed, 0, 0]);
+}
+
+Logo.prototype.pitchForward = function() {
+    // y-axis rotation
+    this.rotate([0, 0.03*this._movementSpeed, 0]);
+}
+
+Logo.prototype.pitchBackward = function() {
+    // y-axis rotation
+    this.rotate([0, -0.03*this._movementSpeed, 0]);
+}
+
+Logo.prototype.yawForward = function() {
+    // z-axis rotation
+    this.rotate([0, 0, -0.03*this._movementSpeed]);
+}
+
+Logo.prototype.yawBackward = function() {
+    // z-axis rotation
+    this.rotate([0, 0, 0.03*this._movementSpeed]);
+}
+
+Logo.prototype.rotateTowardInitialRoll = function() {
+    // x-axis rotation
+    if(Math.abs(this.getRotation()[0]) >= 0.03*this._movementSpeed) {
+        this.rotate([
+            -0.03*Math.sign(this.getRotation()[0]*this._movementSpeed),
+            0,
+            0
+        ]);
+    }
+    else {
+        this.setRotation([
+            0,
+            this.getRotation()[1],
+            this.getRotation()[2]
+        ]);
+    }
+}
+
+Logo.prototype.rotateTowardInitialYaw = function() {
+    // z-axis rotation
+    if(Math.abs(this.getRotation()[2]) >= 0.03*this._movementSpeed) {
+        this.rotate([
+            0,
+            0,
+            -0.03*Math.sign(this.getRotation()[2]*this._movementSpeed)
+        ]);
+    }
+    else {
+        this.setRotation([
+            this.getRotation()[0],
+            this.getRotation()[1],
+            0
+        ]);
+    }
 }
 
 Logo.prototype.setRotation = function(rotation) {
@@ -71,18 +162,20 @@ Logo.prototype.draw = function() {
 Logo.prototype.jump = function() {
 	if(!this._amJumping) {
 		this._amJumping = true;
-		this._jumpDir = 0.2;
+		this._jumpDir = this._jumpHeight;
 	}
 }
 
 Logo.prototype._updatePosition = function() {
-	this._jumpDir -= 0.01;
-	this._position[1] += this._jumpDir;
-    //this._rotation[2] += this._jumpDir;
-    //this._rotation[2] += 0.2 - this._jumpDir;
+    if(this._jumpDir > -this._jumpHeight) {
+        this._jumpDir -= 0.01*this._movementSpeed;
+        this._position[1] += this._jumpDir*this._movementSpeed;
+    }
+    else {
+        this._jumpDir = -this._jumpHeight;
+    }
 	if(this._position[1] <= 0) {
 	   this._position[1] = 0;
-       //this._rotation[2] = 0;
 	   this._amJumping = false;
 	}
 }

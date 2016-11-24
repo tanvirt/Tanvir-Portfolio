@@ -40,36 +40,28 @@ var body_onload = function() {
 
 	var handleKeys = function() {
 		if(keys.leftArrowIsDown()) {
-			logo.rotate([0, 0.03, 0]);
-		}
-		if(keys.upArrowIsDown()) {
-			logo.translate([
-				Math.cos(logo.getRotation()[1])*0.1,
-				0,
-				-Math.sin(logo.getRotation()[1])*0.1
-			]);
+			logo.turnLeft();
 		}
 		if(keys.rightArrowIsDown()) {
-			logo.rotate([0, -0.03, 0]);
+			logo.turnRight();
+		}
+		if(keys.upArrowIsDown()) {
+			logo.moveForward();
 		}
 		if(keys.downArrowIsDown()) {
-			logo.translate([
-				-Math.cos(logo.getRotation()[1])*0.1,
-				0,
-				Math.sin(logo.getRotation()[1])*0.1
-			]);
+			logo.moveBackward();
 		}
 		if(keys.wIsDown()) {
-			logo.rotate([-0.03, 0, 0]);
+			logo.rollForward();
 		}
 		if(keys.aIsDown()) {
-			logo.rotate([0, 0, 0.03]);
+			logo.yawBackward();
 		}
 		if(keys.sIsDown()) {
-			logo.rotate([0.03, 0, 0]);
+			logo.rollBackward();
 		}
 		if(keys.dIsDown()) {
-			logo.rotate([0, 0, -0.03]);
+			logo.yawForward();
 		}
 	}
 
@@ -127,53 +119,12 @@ var body_onload = function() {
 		}
 		handleKeys();
 		if(!interactiveKeyDown()) {
-			rotateLogoPositivePitch();
-			rotateLogoToStartingRoll();
-			rotateLogoToStartingYaw();
+			logo.pitchForward();
+			logo.rotateTowardInitialRoll();
+			logo.rotateTowardInitialYaw();
 		}
 		logo.draw();
 	};
-
-	var rotateLogoPositivePitch = function() {
-		// y-axis rotation
-		logo.rotate([0, 0.03, 0]);
-	}
-
-	var rotateLogoToStartingRoll = function() {
-		// x-axis rotation
-		if(Math.abs(logo.getRotation()[0]) >= 0.03) {
-			logo.rotate([
-				-0.03*Math.sign(logo.getRotation()[0]),
-				0,
-				0
-			]);
-		}
-		else {
-			logo.setRotation([
-				0,
-				logo.getRotation()[1],
-				logo.getRotation()[2]
-			]);
-		}
-	}
-
-	var rotateLogoToStartingYaw = function() {
-		// z-axis rotation
-		if(Math.abs(logo.getRotation()[2]) >= 0.03) {
-			logo.rotate([
-				0,
-				0,
-				-0.03*Math.sign(logo.getRotation()[2])
-			]);
-		}
-		else {
-			logo.setRotation([
-				logo.getRotation()[0],
-				logo.getRotation()[1],
-				0
-			]);
-		}
-	}
 
 	canvas.onKeyDown = function(keyCode, event) {
 		if(canvasNotVisible()) {
