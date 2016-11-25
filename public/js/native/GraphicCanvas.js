@@ -1,160 +1,193 @@
 function GraphicCanvas(elementId) {
-	this.canvas = new GLCanvas(elementId);
-	this.keys = new Keys();
-	this.logo = null;
-	this.logoMovement = null;
-	this.projectorToggle = false;
-	this.showGraphic = false;
-	this.showLogo = false;
+	this._canvas = new GLCanvas(elementId);
+	this._keys = new Keys();
+	this._logo = null;
+	this._logoMovement = null;
+	this._projectorToggle = false;
+	this._showGraphic = false;
+	this._showLogo = false;
 
 	this._init();
 }
 
 GraphicCanvas.prototype._init = function() {
-	this.addEventHandlers();
-	this.setCanvasEvents();
+	this._addEventHandlers();
+	this._setCanvasEvents();
 
-	this.canvas.start();
+	this._canvas.start();
 }
 
-GraphicCanvas.prototype.addEventHandlers = function() {
+GraphicCanvas.prototype._reset = function() {
+	this._canvas.useRegularProjector();
+	this._logoMovement.reset();
+	this._logo.reset();
+	this._logo.translateZ(-4);
+	this._logo.getGraphic().setDrawModeTriangles();
+}
+
+GraphicCanvas.prototype._addEventHandlers = function() {
+	this._addToggleGraphicEventHandler();
+	this._addResetGraphicEventHandler();
+	this._addJumpLogoEventHandler();
+	this._addViewRedCyanEventHandler();
+}
+
+GraphicCanvas.prototype._setCanvasEvents = function() {
+	this._setCanvasSetupEvent();
+	this._setCanvasDrawEvent();
+	this._setCanvasKeyDownEvent();
+}
+
+GraphicCanvas.prototype._addToggleGraphicEventHandler = function() {
 	var self = this;
 
 	EventDispatcher.addEventHandler("toggleGraphic", function(event) {
-		self.showGraphic = event.getData().showGraphic;
-		self.showLogo = self.showGraphic;
-	});
-
-	EventDispatcher.addEventHandler("resetGraphic", function(event) {
-		self.reset();
-	});
-
-	EventDispatcher.addEventHandler("clickJump", function(event) {
-		self.logoMovement.jump();
-	});
-
-	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
-		self.logoMovement.jump();
-		if(self.projectorToggle) {
-    		self.canvas.useRegularProjector();
-    	}
-    	else {
-    		self.canvas.useRedCyanProjector();
-    	}
-    	self.projectorToggle = !self.projectorToggle;
+		self._showGraphic = event.getData().showGraphic;
+		self._showLogo = self._showGraphic;
 	});
 }
 
-GraphicCanvas.prototype.setCanvasEvents = function() {
+GraphicCanvas.prototype._addResetGraphicEventHandler = function() {
 	var self = this;
 
-	this.canvas.onSetup = function() {
-		self.keys.addEventListener(self.canvas);
+	EventDispatcher.addEventHandler("resetGraphic", function(event) {
+		self._reset();
+	});
+}
 
-	    self.logo = new Logo(self.canvas, 1, 0.05);
-	    self.logoMovement = new MovementDirector(self.logo);
-	    self.logo.translateZ(-4);
-	    self.logo.getGraphic().onTap = function(event) {
-	    	self.logoMovement.jump();
+GraphicCanvas.prototype._addJumpLogoEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("jumpLogo", function(event) {
+		self._logoMovement.jump();
+	});
+}
+
+GraphicCanvas.prototype._addViewRedCyanEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
+		self._logoMovement.jump();
+		if(self._projectorToggle) {
+    		self._canvas.useRegularProjector();
+    	}
+    	else {
+    		self._canvas.useRedCyanProjector();
+    	}
+    	self._projectorToggle = !self._projectorToggle;
+	});
+}
+
+GraphicCanvas.prototype._setCanvasSetupEvent = function() {
+	var self = this;
+
+	this._canvas.onSetup = function() {
+		self._keys.addEventListener(self._canvas);
+
+	    self._logo = new Logo(self._canvas, 1, 0.05);
+	    self._logoMovement = new MovementDirector(self._logo);
+	    self._logo.translateZ(-4);
+	    self._logo.getGraphic().onTap = function(event) {
+	    	self._logoMovement.jump();
 	    }
 
-		self.canvas.setBackgroundColor(0, 0, 0, 0.75);
-		//self.canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
+		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
+		//self._canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
 
-		self.canvas.setLoadingStatus(false);
-		self.canvas.onDrag = function(event) {
-			self.canvas.getCamera().oneFingerRotate(
+		self._canvas.setLoadingStatus(false);
+		self._canvas.onDrag = function(event) {
+			self._canvas.getCamera().oneFingerRotate(
 				event,
 				{ radius: 2, type: 'polar' }
 			);
 		};
 	};
+}
 
-	this.canvas.onDraw = function() {
-		self.updateCanvasVisibility();
-		if(self.canvasNotVisible()) {
+GraphicCanvas.prototype._setCanvasDrawEvent = function() {
+	var self = this;
+
+	this._canvas.onDraw = function() {
+		self._updateCanvasVisibility();
+		if(self._canvasNotVisible()) {
 			return;
 		}
-		self.handleKeys();
-		if(!self.interactiveKeyDown()) {
-			self.logoMovement.pitchForward();
-			self.logoMovement.rotateTowardInitialRoll();
-			self.logoMovement.rotateTowardInitialYaw();
+		self._handleKeys();
+		if(!self._interactiveKeyDown()) {
+			self._logoMovement.pitchForward();
+			self._logoMovement.rotateTowardInitialRoll();
+			self._logoMovement.rotateTowardInitialYaw();
 		}
-		self.logoMovement.update();
-		self.logo.draw();
+		self._logoMovement.update();
+		self._logo.draw();
 	};
+}
 
-	this.canvas.onKeyDown = function(keyCode, event) {
-		if(self.canvasNotVisible()) {
+GraphicCanvas.prototype._setCanvasKeyDownEvent = function() {
+	var self = this;
+
+	this._canvas.onKeyDown = function(keyCode, event) {
+		if(self._canvasNotVisible()) {
 			return;
 		}
-		if(self.interactiveKeyDown()) {
+		if(self._interactiveKeyDown()) {
 			event.preventDefault();
 		}
-		if(self.keys.spaceBarIsDown()) {
-			self.logoMovement.jump();
+		if(self._keys.spaceBarIsDown()) {
+			self._logoMovement.jump();
 		}
 	};
 }
 
-GraphicCanvas.prototype.reset = function() {
-	this.canvas.useRegularProjector();
-	this.logoMovement.reset();
-	this.logo.reset();
-	this.logo.translateZ(-4);
-	this.logo.getGraphic().setDrawModeTriangles();
-}
-
-GraphicCanvas.prototype.handleKeys = function() {
-	if(this.keys.leftArrowIsDown()) {
-		this.logoMovement.turnLeft();
+GraphicCanvas.prototype._handleKeys = function() {
+	if(this._keys.leftArrowIsDown()) {
+		this._logoMovement.turnLeft();
 	}
-	if(this.keys.rightArrowIsDown()) {
-		this.logoMovement.turnRight();
+	if(this._keys.rightArrowIsDown()) {
+		this._logoMovement.turnRight();
 	}
-	if(this.keys.upArrowIsDown()) {
-		this.logoMovement.moveForward();
+	if(this._keys.upArrowIsDown()) {
+		this._logoMovement.moveForward();
 	}
-	if(this.keys.downArrowIsDown()) {
-		this.logoMovement.moveBackward();
+	if(this._keys.downArrowIsDown()) {
+		this._logoMovement.moveBackward();
 	}
-	if(this.keys.wIsDown()) {
-		this.logoMovement.rollForward();
+	if(this._keys.wIsDown()) {
+		this._logoMovement.rollForward();
 	}
-	if(this.keys.aIsDown()) {
-		this.logoMovement.yawBackward();
+	if(this._keys.aIsDown()) {
+		this._logoMovement.yawBackward();
 	}
-	if(this.keys.sIsDown()) {
-		this.logoMovement.rollBackward();
+	if(this._keys.sIsDown()) {
+		this._logoMovement.rollBackward();
 	}
-	if(this.keys.dIsDown()) {
-		this.logoMovement.yawForward();
+	if(this._keys.dIsDown()) {
+		this._logoMovement.yawForward();
 	}
 }
 
-GraphicCanvas.prototype.interactiveKeyDown = function() {
-	return this.keys.leftArrowIsDown() || 
-		this.keys.upArrowIsDown() || 
-		this.keys.rightArrowIsDown() || 
-		this.keys.downArrowIsDown() || 
-		this.keys.spaceBarIsDown() ||
-		this.keys.wIsDown() ||
-		this.keys.aIsDown() ||
-		this.keys.sIsDown() ||
-		this.keys.dIsDown();
+GraphicCanvas.prototype._interactiveKeyDown = function() {
+	return this._keys.leftArrowIsDown() || 
+		this._keys.upArrowIsDown() || 
+		this._keys.rightArrowIsDown() || 
+		this._keys.downArrowIsDown() || 
+		this._keys.spaceBarIsDown() ||
+		this._keys.wIsDown() ||
+		this._keys.aIsDown() ||
+		this._keys.sIsDown() ||
+		this._keys.dIsDown();
 }
 
-GraphicCanvas.prototype.updateCanvasVisibility = function() {
-	if(this.showGraphic && this.showLogo && !isVisibleInViewport(this.canvas.getDiv())) {
-		this.showLogo = false;
-		this.reset();
+GraphicCanvas.prototype._updateCanvasVisibility = function() {
+	if(this._showGraphic && this._showLogo && !isVisibleInViewport(this._canvas.getDiv())) {
+		this._showLogo = false;
+		this._reset();
 	}
-	else if(this.showGraphic && !this.showLogo && isVisibleInViewport(this.canvas.getDiv())) {
-		this.showLogo = true;
+	else if(this._showGraphic && !this._showLogo && isVisibleInViewport(this._canvas.getDiv())) {
+		this._showLogo = true;
 	}
 }
 
-GraphicCanvas.prototype.canvasNotVisible = function() {
-	return !this.showGraphic || !this.showLogo;
+GraphicCanvas.prototype._canvasNotVisible = function() {
+	return !this._showGraphic || !this._showLogo;
 }

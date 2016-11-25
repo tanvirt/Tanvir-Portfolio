@@ -48,7 +48,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 
     $rootScope.clickJump = function() {
     	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("clickJump"));
+	    	EventDispatcher.dispatch(new Event("jumpLogo"));
 	    }
     }
 
