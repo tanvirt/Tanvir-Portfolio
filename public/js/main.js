@@ -8,11 +8,12 @@ angular.module("main").run(function($rootScope, $timeout) {
 	ClassHelpers.init();
 	FormValidation.init();
 
-    $rootScope.showGraphic = false;
+	$rootScope.showGraphic = false;
 
-    var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
+	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
+	var graphicCanvas = null;
 
-    $rootScope.$on('$includeContentLoaded', function(event, templateName) {
+	$rootScope.$on('$includeContentLoaded', function(event, templateName) {
 		$timeout(function() {
 			numIncludesToBeLoaded--;
 			if(numIncludesToBeLoaded == 0) {
@@ -20,6 +21,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 				ContactForm.init();
 				Theme.init();
 				Particles.init("app-header");
+				graphicCanvas = new GraphicCanvas("graphic-canvas");
 			}
 		});
 	});

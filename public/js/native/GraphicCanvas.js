@@ -1,6 +1,6 @@
-var body_onload = function() {
+function GraphicCanvas(elementId) {
 
-	var canvas = new GLCanvas("graphic-canvas");
+	var canvas = new GLCanvas(elementId);
 	var keys = new Keys();
 	var logo = null;
 	var logoMovement = null;
@@ -80,11 +80,11 @@ var body_onload = function() {
 	}
 
 	var updateCanvasVisibility = function() {
-		if(showLogo && !isVisibleInViewport(canvas.getDiv())) {
+		if(showGraphic && showLogo && !isVisibleInViewport(canvas.getDiv())) {
 			showLogo = false;
 			reset();
 		}
-		else if(!showLogo && isVisibleInViewport(canvas.getDiv())) {
+		else if(showGraphic && !showLogo && isVisibleInViewport(canvas.getDiv())) {
 			showLogo = true;
 		}
 	}
