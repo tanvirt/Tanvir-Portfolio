@@ -22,6 +22,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 				Theme.init();
 				Particles.init("app-header");
 				graphicCanvas = new GraphicCanvas("graphic-canvas");
+				graphicCanvas.render();
 			}
 		});
 	});

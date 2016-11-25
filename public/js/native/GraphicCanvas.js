@@ -13,12 +13,18 @@ function GraphicCanvas(elementId) {
 GraphicCanvas.prototype._init = function() {
 	this._addEventHandlers();
 	this._setCanvasEvents();
+}
 
+GraphicCanvas.prototype.render = function() {
 	this._canvas.start();
 }
 
 GraphicCanvas.prototype._reset = function() {
 	this._canvas.useRegularProjector();
+	this._resetLogo();
+}
+
+GraphicCanvas.prototype._resetLogo = function() {
 	this._logoMovement.reset();
 	this._logo.reset();
 	this._logo.translateZ(-4);
@@ -83,24 +89,35 @@ GraphicCanvas.prototype._setCanvasSetupEvent = function() {
 
 	this._canvas.onSetup = function() {
 		self._keys.addEventListener(self._canvas);
-
-	    self._logo = new Logo(self._canvas, 1, 0.05);
-	    self._logoMovement = new MovementDirector(self._logo);
-	    self._logo.translateZ(-4);
-	    self._logo.getGraphic().onTap = function(event) {
-	    	self._logoMovement.jump();
-	    }
+		self._createLogo();
 
 		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
 		//self._canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
 
 		self._canvas.setLoadingStatus(false);
-		self._canvas.onDrag = function(event) {
-			self._canvas.getCamera().oneFingerRotate(
-				event,
-				{ radius: 2, type: 'polar' }
-			);
-		};
+		self._setCanvasDragEvent();
+	};
+}
+
+GraphicCanvas.prototype._createLogo = function() {
+	var self = this;
+
+	this._logo = new Logo(self._canvas, 1, 0.05);
+    this._logoMovement = new MovementDirector(this._logo);
+    this._logo.translateZ(-4);
+    this._logo.getGraphic().onTap = function(event) {
+    	self._logoMovement.jump();
+    }
+}
+
+GraphicCanvas.prototype._setCanvasDragEvent = function() {
+	var self = this;
+
+	this._canvas.onDrag = function(event) {
+		self._canvas.getCamera().oneFingerRotate(
+			event,
+			{ radius: 2, type: 'polar' }
+		);
 	};
 }
 
