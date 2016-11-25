@@ -5,6 +5,7 @@ function Logo(canvas, size, thickness) {
 
 	this._position = [0, 0, 0];
 	this._rotation = [0, 0, 0];
+    this._scale = [1, 1, 1];
 	this._color = [1, 1, 1, 1];
 
     this._size = size;
@@ -40,13 +41,25 @@ Logo.prototype.setXRotation = function(x) { this._rotation[0] = x; }
 Logo.prototype.setYRotation = function(y) { this._rotation[1] = y; }
 Logo.prototype.setZRotation = function(z) { this._rotation[2] = z; }
 
-Logo.prototype.rotateX = function(x) { this._rotation[0] += x; }
-Logo.prototype.rotateY = function(y) { this._rotation[1] += y; }
-Logo.prototype.rotateZ = function(z) { this._rotation[2] += z; }
+Logo.prototype.getXScale = function() { return this._scale[0]; }
+Logo.prototype.getYScale = function() { return this._scale[1]; }
+Logo.prototype.getZScale = function() { return this._scale[2]; }
+
+Logo.prototype.setXScale = function(x) { this._scale[0] = x; }
+Logo.prototype.setYScale = function(y) { this._scale[1] = y; }
+Logo.prototype.setZScale = function(z) { this._scale[2] = z; }
 
 Logo.prototype.translateX = function(x) { this._position[0] += x; }
 Logo.prototype.translateY = function(y) { this._position[1] += y; }
 Logo.prototype.translateZ = function(z) { this._position[2] += z; }
+
+Logo.prototype.rotateX = function(x) { this._rotation[0] += x; }
+Logo.prototype.rotateY = function(y) { this._rotation[1] += y; }
+Logo.prototype.rotateZ = function(z) { this._rotation[2] += z; }
+
+Logo.prototype.scaleX = function(x) { this._scale[0] *= x; }
+Logo.prototype.scaleY = function(y) { this._scale[1] *= y; }
+Logo.prototype.scaleZ = function(z) { this._scale[2] *= z; }
 
 Logo.prototype.draw = function() {
 	var camera = this._canvas.getCamera();
@@ -56,6 +69,7 @@ Logo.prototype.draw = function() {
     camera.rotateX(this._rotation[0]);
 	camera.rotateY(this._rotation[1]);
     camera.rotateZ(this._rotation[2]);
+    camera.scale(this._scale);
 	this._graphic.getShader().setColorMask(this._color);
 	this._graphic.updateShader();
 	this._graphic.draw();
