@@ -1,147 +1,160 @@
 function GraphicCanvas(elementId) {
+	this.canvas = new GLCanvas(elementId);
+	this.keys = new Keys();
+	this.logo = null;
+	this.logoMovement = null;
+	this.projectorToggle = false;
+	this.showGraphic = false;
+	this.showLogo = false;
 
-	var canvas = new GLCanvas(elementId);
-	var keys = new Keys();
-	var logo = null;
-	var logoMovement = null;
-	var projectorToggle = false;
-	var showGraphic = false;
-	var showLogo = false;
+	this._init();
+}
+
+GraphicCanvas.prototype._init = function() {
+	this.addEventHandlers();
+	this.setCanvasEvents();
+
+	this.canvas.start();
+}
+
+GraphicCanvas.prototype.addEventHandlers = function() {
+	var self = this;
 
 	EventDispatcher.addEventHandler("toggleGraphic", function(event) {
-		showGraphic = event.getData().showGraphic;
-		showLogo = showGraphic;
+		self.showGraphic = event.getData().showGraphic;
+		self.showLogo = self.showGraphic;
 	});
 
 	EventDispatcher.addEventHandler("resetGraphic", function(event) {
-		reset();
+		self.reset();
 	});
 
 	EventDispatcher.addEventHandler("clickJump", function(event) {
-		logoMovement.jump();
+		self.logoMovement.jump();
 	});
 
 	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
-		logoMovement.jump();
-		if(projectorToggle) {
-    		canvas.useRegularProjector();
+		self.logoMovement.jump();
+		if(self.projectorToggle) {
+    		self.canvas.useRegularProjector();
     	}
     	else {
-    		canvas.useRedCyanProjector();
+    		self.canvas.useRedCyanProjector();
     	}
-    	projectorToggle = !projectorToggle;
+    	self.projectorToggle = !self.projectorToggle;
 	});
+}
 
-	var reset = function() {
-		canvas.useRegularProjector();
-		logoMovement.reset();
-		logo.reset();
-		logo.translateZ(-4);
-		logo.getGraphic().setDrawModeTriangles();
-	}
+GraphicCanvas.prototype.setCanvasEvents = function() {
+	var self = this;
 
-	var handleKeys = function() {
-		if(keys.leftArrowIsDown()) {
-			logoMovement.turnLeft();
-		}
-		if(keys.rightArrowIsDown()) {
-			logoMovement.turnRight();
-		}
-		if(keys.upArrowIsDown()) {
-			logoMovement.moveForward();
-		}
-		if(keys.downArrowIsDown()) {
-			logoMovement.moveBackward();
-		}
-		if(keys.wIsDown()) {
-			logoMovement.rollForward();
-		}
-		if(keys.aIsDown()) {
-			logoMovement.yawBackward();
-		}
-		if(keys.sIsDown()) {
-			logoMovement.rollBackward();
-		}
-		if(keys.dIsDown()) {
-			logoMovement.yawForward();
-		}
-	}
+	this.canvas.onSetup = function() {
+		self.keys.addEventListener(self.canvas);
 
-	var interactiveKeyDown = function() {
-		return keys.leftArrowIsDown() || 
-			keys.upArrowIsDown() || 
-			keys.rightArrowIsDown() || 
-			keys.downArrowIsDown() || 
-			keys.spaceBarIsDown() ||
-			keys.wIsDown() ||
-			keys.aIsDown() ||
-			keys.sIsDown() ||
-			keys.dIsDown();
-	}
-
-	var updateCanvasVisibility = function() {
-		if(showGraphic && showLogo && !isVisibleInViewport(canvas.getDiv())) {
-			showLogo = false;
-			reset();
-		}
-		else if(showGraphic && !showLogo && isVisibleInViewport(canvas.getDiv())) {
-			showLogo = true;
-		}
-	}
-
-	var canvasNotVisible = function() {
-		return !showGraphic || !showLogo;
-	}
-
-	canvas.onSetup = function() {
-		keys.addEventListener(canvas);
-
-	    logo = new Logo(canvas, 1, 0.05);
-	    logoMovement = new MovementDirector(logo);
-	    logo.translateZ(-4);
-	    logo.getGraphic().onTap = function(event) {
-	    	logoMovement.jump();
+	    self.logo = new Logo(self.canvas, 1, 0.05);
+	    self.logoMovement = new MovementDirector(self.logo);
+	    self.logo.translateZ(-4);
+	    self.logo.getGraphic().onTap = function(event) {
+	    	self.logoMovement.jump();
 	    }
 
-		canvas.setBackgroundColor(0, 0, 0, 0.75);
-		//canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
+		self.canvas.setBackgroundColor(0, 0, 0, 0.75);
+		//self.canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
 
-		canvas.setLoadingStatus(false);
-		canvas.onDrag = function(event) {
-			canvas.getCamera().oneFingerRotate(
+		self.canvas.setLoadingStatus(false);
+		self.canvas.onDrag = function(event) {
+			self.canvas.getCamera().oneFingerRotate(
 				event,
 				{ radius: 2, type: 'polar' }
 			);
 		};
 	};
 
-	canvas.onDraw = function() {
-		updateCanvasVisibility();
-		if(canvasNotVisible()) {
+	this.canvas.onDraw = function() {
+		self.updateCanvasVisibility();
+		if(self.canvasNotVisible()) {
 			return;
 		}
-		handleKeys();
-		if(!interactiveKeyDown()) {
-			logoMovement.pitchForward();
-			logoMovement.rotateTowardInitialRoll();
-			logoMovement.rotateTowardInitialYaw();
+		self.handleKeys();
+		if(!self.interactiveKeyDown()) {
+			self.logoMovement.pitchForward();
+			self.logoMovement.rotateTowardInitialRoll();
+			self.logoMovement.rotateTowardInitialYaw();
 		}
-		logoMovement.update();
-		logo.draw();
+		self.logoMovement.update();
+		self.logo.draw();
 	};
 
-	canvas.onKeyDown = function(keyCode, event) {
-		if(canvasNotVisible()) {
+	this.canvas.onKeyDown = function(keyCode, event) {
+		if(self.canvasNotVisible()) {
 			return;
 		}
-		if(interactiveKeyDown()) {
+		if(self.interactiveKeyDown()) {
 			event.preventDefault();
 		}
-		if(keys.spaceBarIsDown()) {
-			logoMovement.jump();
+		if(self.keys.spaceBarIsDown()) {
+			self.logoMovement.jump();
 		}
 	};
+}
 
-	canvas.start();
+GraphicCanvas.prototype.reset = function() {
+	this.canvas.useRegularProjector();
+	this.logoMovement.reset();
+	this.logo.reset();
+	this.logo.translateZ(-4);
+	this.logo.getGraphic().setDrawModeTriangles();
+}
 
+GraphicCanvas.prototype.handleKeys = function() {
+	if(this.keys.leftArrowIsDown()) {
+		this.logoMovement.turnLeft();
+	}
+	if(this.keys.rightArrowIsDown()) {
+		this.logoMovement.turnRight();
+	}
+	if(this.keys.upArrowIsDown()) {
+		this.logoMovement.moveForward();
+	}
+	if(this.keys.downArrowIsDown()) {
+		this.logoMovement.moveBackward();
+	}
+	if(this.keys.wIsDown()) {
+		this.logoMovement.rollForward();
+	}
+	if(this.keys.aIsDown()) {
+		this.logoMovement.yawBackward();
+	}
+	if(this.keys.sIsDown()) {
+		this.logoMovement.rollBackward();
+	}
+	if(this.keys.dIsDown()) {
+		this.logoMovement.yawForward();
+	}
+}
+
+GraphicCanvas.prototype.interactiveKeyDown = function() {
+	return this.keys.leftArrowIsDown() || 
+		this.keys.upArrowIsDown() || 
+		this.keys.rightArrowIsDown() || 
+		this.keys.downArrowIsDown() || 
+		this.keys.spaceBarIsDown() ||
+		this.keys.wIsDown() ||
+		this.keys.aIsDown() ||
+		this.keys.sIsDown() ||
+		this.keys.dIsDown();
+}
+
+GraphicCanvas.prototype.updateCanvasVisibility = function() {
+	if(this.showGraphic && this.showLogo && !isVisibleInViewport(this.canvas.getDiv())) {
+		this.showLogo = false;
+		this.reset();
+	}
+	else if(this.showGraphic && !this.showLogo && isVisibleInViewport(this.canvas.getDiv())) {
+		this.showLogo = true;
+	}
+}
+
+GraphicCanvas.prototype.canvasNotVisible = function() {
+	return !this.showGraphic || !this.showLogo;
 }
