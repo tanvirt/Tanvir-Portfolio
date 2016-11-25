@@ -1,61 +1,19 @@
-<div ng-show="showGraphic" class="floating-container">
-    <div class="floating-content">
-        <div class="floating-section dark-transparent blue-hover">
-            <div class="text-white-center">
-                Move
-            </div>
-            <img src="img/creative/arrow_keys.svg" style="filter: invert(100%);" alt="">
+<div ng-show="showGraphic" class="icon-menu-container">
+    <div class="icon-menu dark-transparent">
+        <div ng-click="resetGraphic();" class="icon-menu-item yellow-hover">
+            <img src="img/creative/reset_icon.png" style="filter: invert(100%);" alt="">
         </div>
-        <br>
-        <div class="floating-section dark-transparent blue-hover">
-            <div class="text-white-center">
-                Spin
-            </div>
-            <img src="img/creative/wasd_keys.svg" style="filter: invert(100%);" alt="">
+        <div class="icon-menu-item blue-hover">
+            <img src="img/creative/solid_icon.png" alt="">
         </div>
-        <br>
-        <div ng-click="clickJump()" class="floating-section dark-transparent blue-hover">
-            <div class="text-white-center">
-                Jump
-            </div>
-            <img src="img/creative/spacebar.svg" style="filter: invert(100%);" alt="">
+        <div class="icon-menu-item blue-hover">
+            <img src="img/creative/eye_icon.png" alt="">
         </div>
-        <br>
-        <div class="floating-section dark-transparent blue-hover">
-            <div class="text-white-center">
-                Drag
-            </div>
-            <img src="img/creative/pointer.svg" style="filter: invert(100%);" alt="">
+        <div class="icon-menu-item blue-hover">
+            <img src="img/creative/controls_icon.svg" style="filter: invert(100%);" alt="">
         </div>
-        <br>
-        <div ng-click="viewRedCyan();" class="floating-section dark-transparent red-hover">
-            <div class="text-white-center">
-                View
-            </div>
+        <div ng-click="toggleGraphic();" class="icon-menu-item red-hover">
+            <img src="img/creative/close_icon.svg" style="filter: invert(100%);" alt="">
         </div>
-        <!-- <br>
-        <div class="floating-section dark-transparent">
-            <div class="text-white-center">
-                Mode
-            </div>
-        </div>
-        <br>
-        <div class="floating-section dark-transparent">
-            <div class="text-white-center">
-                Animate
-            </div>
-        </div>
-        <br>
-        <div class="floating-section dark-transparent">
-            <div class="text-white-center">
-                Reset
-            </div>
-        </div>
-        <br>
-        <div class="floating-section dark-transparent">
-            <div class="text-white-center">
-                Close
-            </div>
-        </div> -->
     </div>
 </div>

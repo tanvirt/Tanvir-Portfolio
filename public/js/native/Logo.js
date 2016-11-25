@@ -24,22 +24,18 @@ Logo.prototype.reset = function() {
 
 Logo.prototype.getGraphic = function() { return this._graphic; }
 
-Logo.prototype.getPosition = function() { return this._position; }
 Logo.prototype.getXPosition = function() { return this._position[0]; }
 Logo.prototype.getYPosition = function() { return this._position[1]; }
 Logo.prototype.getZPosition = function() { return this._position[2]; }
 
-Logo.prototype.setPosition = function(position) { this._position = position; }
 Logo.prototype.setXPosition = function(x) { this._position[0] = x; }
 Logo.prototype.setYPosition = function(y) { this._position[1] = y; }
 Logo.prototype.setZPosition = function(z) { this._position[2] = z; }
 
-Logo.prototype.getRotation = function() { return this._rotation; }
 Logo.prototype.getXRotation = function() { return this._rotation[0]; }
 Logo.prototype.getYRotation = function() { return this._rotation[1]; }
 Logo.prototype.getZRotation = function() { return this._rotation[2]; }
 
-Logo.prototype.setRotation = function(rotation) { this._rotation = rotation; }
 Logo.prototype.setXRotation = function(x) { this._rotation[0] = x; }
 Logo.prototype.setYRotation = function(y) { this._rotation[1] = y; }
 Logo.prototype.setZRotation = function(z) { this._rotation[2] = z; }

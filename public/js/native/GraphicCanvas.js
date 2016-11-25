@@ -57,6 +57,9 @@ GraphicCanvas.prototype._addResetGraphicEventHandler = function() {
 	var self = this;
 
 	EventDispatcher.addEventHandler("resetGraphic", function(event) {
+		/*if(self._logo.getXPosition() != 0 || self._logo.getYPosition() != 0 || self._logo.getZPosition() == 0) {
+			self._reset();
+		}*/
 		self._reset();
 	});
 }

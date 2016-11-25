@@ -17,6 +17,40 @@
 	cursor: url(../img/creative/cross.PNG) 40 40, auto;
 }
 
+.horizontal-vertical-center {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.icon-menu-container {
+	position: absolute;
+	z-index: 2;
+	bottom: 0;
+	margin-bottom: 1.5rem;
+	width: 100%;
+}
+
+.icon-menu {
+	margin-left: auto;
+	margin-right: auto;
+	color: white;
+	text-align: center;
+	width: 31.72rem;
+}
+
+.icon-menu-item {
+	display: inline-block;
+	padding: 1rem;
+	cursor: pointer;
+}
+
+.icon-menu-item img {
+	height: 4rem;
+	width: 4rem;
+}
+
 #graphic-canvas {
 	position: absolute;
 	width: 100%;
@@ -26,35 +60,19 @@
 	z-index: 1;
 }
 
-header .floating-container {
-	position: relative;
-	z-index: 1029;
-	top: 10rem;
-	max-width: 10rem;
-	margin-left: 5%;
-}
-
-.floating-container .floating-content {
-	position: absolute;
-	color: white;
-}
-
-.floating-content .floating-section {
-	text-align: center;
-	padding: 1rem;
-	border-radius: 5px;
-}
-
-.floating-content .floating-section:hover {
-	cursor: pointer;
-}
-
 .blue-hover:hover {
-	background-color: rgba(4, 27, 55, 0.5);
+	/*background-color: rgba(4, 27, 55, 0.5);*/
+	background-color: rgba(4, 27, 55, 0.9);
 }
 
 .red-hover:hover {
-	background-color: rgba(55, 0, 0, 0.5);
+	/*background-color: rgba(55, 0, 0, 0.5);*/
+	background-color: rgba(55, 0, 0, 0.9);
+}
+
+.yellow-hover:hover {
+	/*background-color: rgba(55, 0, 0, 0.5);*/
+	background-color: rgba(55, 55, 0, 0.9);
 }
 
 .floating-content img {
