@@ -1,4 +1,4 @@
-angular.module("main", []);
+angular.module("main", ['ngAnimate']);
 
 angular.module("main").run(function($rootScope, $timeout) {
 
@@ -9,6 +9,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 	FormValidation.init();
 
 	$rootScope.showGraphic = false;
+	$rootScope.showControlsWindow = false;
 
 	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
 	var graphicCanvas = null;
@@ -28,6 +29,12 @@ angular.module("main").run(function($rootScope, $timeout) {
 			}
 		});
 	});
+
+	$rootScope.toggleControlsWindow = function() {
+		if($rootScope.showGraphic) {
+	    	$rootScope.showControlsWindow = !$rootScope.showControlsWindow;
+	    }
+	}
 
     $rootScope.flipLogo = function() {
 		if(!$rootScope.showGraphic) {
