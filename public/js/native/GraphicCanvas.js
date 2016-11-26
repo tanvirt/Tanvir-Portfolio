@@ -6,6 +6,9 @@ function GraphicCanvas(elementId) {
 	this._showGraphic = false;
 	this._showLogo = false;
 
+	this._inVRView = false;
+	this._backgroundSphere = null;
+
 	this._init();
 }
 
@@ -20,6 +23,7 @@ GraphicCanvas.prototype.render = function() {
 
 GraphicCanvas.prototype._reset = function() {
 	this._canvas.useRegularProjector();
+	this._exitVRView();
 	this._resetLogo();
 }
 
@@ -85,6 +89,7 @@ GraphicCanvas.prototype._addUseRegularProjectorEventHandler = function() {
 	EventDispatcher.addEventHandler("useRegularProjector", function(event) {
 		self._logoMovement.jump();
     	self._canvas.useRegularProjector();
+    	self._exitVRView();
 	});
 }
 
@@ -94,6 +99,7 @@ GraphicCanvas.prototype._addUseRedCyanProjectorEventHandler = function() {
 	EventDispatcher.addEventHandler("useRedCyanProjector", function(event) {
 		self._logoMovement.jump();
     	self._canvas.useRedCyanProjector();
+    	self._exitVRView();
 	});
 }
 
@@ -103,6 +109,7 @@ GraphicCanvas.prototype._addUseVRProjectorEventHandler = function() {
 	EventDispatcher.addEventHandler("useVRProjector", function(event) {
 		self._logoMovement.jump();
     	self._canvas.useOculusProjector();
+    	self._enterVRView();
 	});
 }
 
@@ -111,8 +118,21 @@ GraphicCanvas.prototype._addUseARProjectorEventHandler = function() {
 
 	EventDispatcher.addEventHandler("useARProjector", function(event) {
 		self._logoMovement.jump();
+		self._exitVRView();
     	// TODO
 	});
+}
+
+GraphicCanvas.prototype._enterVRView = function() {
+	this._setVRCanvasDragEvent();
+	this._inVRView = true;
+}
+
+GraphicCanvas.prototype._exitVRView = function() {
+	if(this._inVRView) {
+		this._setCanvasDragEvent();
+		this._inVRView = false;
+	}
 }
 
 GraphicCanvas.prototype._addSetDrawModeTrainglesEventHandler = function() {
@@ -148,6 +168,8 @@ GraphicCanvas.prototype._setCanvasSetupEvent = function() {
 	this._canvas.onSetup = function() {
 		self._keys.addEventListener(self._canvas);
 		self._createLogo();
+		self._backgroundSphere = new HDRISphere(self._canvas, 35);
+		self._backgroundSphere.setTexture("js/img/galaxy_hdri.jpg");
 
 		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
 		//self._canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
@@ -179,6 +201,17 @@ GraphicCanvas.prototype._setCanvasDragEvent = function() {
 	};
 }
 
+GraphicCanvas.prototype._setVRCanvasDragEvent = function() {
+	var self = this;
+
+	this._canvas.onDrag = function(event) {
+		self._canvas.getCamera().oneFingerRotate(
+			event,
+			{ radius: 2, type: 'free' }
+		);
+	};
+}
+
 GraphicCanvas.prototype._setCanvasDrawEvent = function() {
 	var self = this;
 
@@ -194,6 +227,10 @@ GraphicCanvas.prototype._setCanvasDrawEvent = function() {
 			self._logoMovement.rotateTowardInitialYaw();
 		}
 		self._logoMovement.update();
+
+		if(self._inVRView) {
+			self._backgroundSphere.draw();
+		}
 		self._logo.draw();
 	};
 }
