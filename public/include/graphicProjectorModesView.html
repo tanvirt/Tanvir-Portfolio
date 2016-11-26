@@ -1,7 +1,7 @@
 <div ng-if="showProjectorModesWindow" class="horizontal-vertical-center center-window fade-animation">
     <div>
         <div class="green-background center-window-header">
-            <div class="horizontal-vertical-center center-window-title">
+            <div class="center-window-title">
                 Viewing Mode
             </div>
         </div>
@@ -20,7 +20,7 @@
             </div>
             <img src="img/creative/red_cyan_icon.png" alt="">
         </div>
-        <div ng-click="hideProjectorModesWindow(); useVRProjector();" class="icon-menu-item purple-hover">
+        <div ng-click="hideProjectorModesWindow(); useVRProjector(); showFullScreenDialog();" class="icon-menu-item purple-hover">
             <div>
                 VR
             </div>

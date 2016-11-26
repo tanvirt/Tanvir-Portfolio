@@ -12,6 +12,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 	$rootScope.showControlsWindow = false;
 	$rootScope.showDrawModesWindow = false;
 	$rootScope.showProjectorModesWindow = false;
+	$rootScope.showFullScreen = false;
 	$rootScope.isDesktop = Device.isDesktop();
 
 	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
@@ -33,11 +34,30 @@ angular.module("main").run(function($rootScope, $timeout) {
 		});
 	});
 
+	$rootScope.requestFullScreen = function() {
+		if($rootScope.showGraphic) {
+			EventDispatcher.dispatch(new Event("requestFullScreen"));
+		}
+	}
+
+	$rootScope.showFullScreenDialog = function() {
+		if($rootScope.showGraphic) {
+			$rootScope.showFullScreen = true;
+		}
+	}
+
+	$rootScope.hideFullScreenDialog = function() {
+		if($rootScope.showGraphic) {
+			$rootScope.showFullScreen = false;
+		}
+	}
+
 	$rootScope.hideGraphicWindows = function() {
 		if($rootScope.showGraphic) {
 			$rootScope.hideControlsWindow();
 			$rootScope.hideDrawModesWindow();
 			$rootScope.hideProjectorModesWindow();
+			$rootScope.hideFullScreenDialog();
 		}
 	}
 

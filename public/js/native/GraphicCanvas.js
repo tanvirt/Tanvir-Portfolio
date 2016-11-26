@@ -35,6 +35,8 @@ GraphicCanvas.prototype._resetLogo = function() {
 }
 
 GraphicCanvas.prototype._addEventHandlers = function() {
+	this._addRequestFullScreenEventHandler();
+
 	this._addToggleGraphicEventHandler();
 	this._addResetGraphicEventHandler();
 	this._addJumpLogoEventHandler();
@@ -54,6 +56,15 @@ GraphicCanvas.prototype._setCanvasEvents = function() {
 	this._setCanvasDrawEvent();
 	this._setCanvasKeyDownEvent();
 }
+
+GraphicCanvas.prototype._addRequestFullScreenEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("requestFullScreen", function(event) {
+		FullScreen.request(self._canvas.getDiv());
+	});
+}
+
 
 GraphicCanvas.prototype._addToggleGraphicEventHandler = function() {
 	var self = this;
@@ -132,6 +143,7 @@ GraphicCanvas.prototype._exitVRView = function() {
 	if(this._inVRView) {
 		this._setCanvasDragEvent();
 		this._inVRView = false;
+		FullScreen.exit();
 	}
 }
 

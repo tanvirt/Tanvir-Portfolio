@@ -96,11 +96,13 @@
 .center-window-header {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	height: 4rem;
+	padding: 1rem;
 }
 
 .center-window-title {
 	position: relative;
+	padding-left: 4rem;
+	padding-right: 4rem;
 }
 
 .center-window-content {
@@ -112,9 +114,9 @@
 	height: 2rem;
 	width: 2rem;
 	cursor: pointer;
-	float:right;
-	margin-top: -3rem;
-	margin-right: 1rem;
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
 }
 
 .black-background {

@@ -1,0 +1,23 @@
+<div ng-if="showFullScreen" class="horizontal-vertical-center center-window fade-animation">
+    <div>
+        <div class="green-background center-window-header">
+            <div class="center-window-title">
+                Enter Fullscreen Mode?
+            </div>
+        </div>
+        <img ng-click="hideFullScreenDialog();" src="img/creative/close_window_icon.png" class="close-icon" style="filter: invert(100%);" alt="">
+    </div>
+    <div class="black-background center-window-content clickable">
+        <div ng-click="hideFullScreenDialog(); requestFullScreen();" class="icon-menu-item purple-hover">
+            <div>
+                Yes
+            </div>
+            <img src="img/creative/yes_icon.png" alt="">
+        </div>
+        <div ng-click="hideFullScreenDialog();" class="icon-menu-item purple-hover">
+            <div>
+                No
+            </div>
+            <img src="img/creative/no_icon.png" alt="">
+        </div>
+</div>
