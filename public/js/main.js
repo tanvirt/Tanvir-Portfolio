@@ -65,18 +65,27 @@ angular.module("main").run(function($rootScope, $timeout) {
     $rootScope.toggleGraphic = function() {
     	if($rootScope.showGraphic) {
     		$rootScope.hideGraphicWindows();
+    		$rootScope.showGraphic = false;
+    		setTimeout(function() {
+    			$rootScope.dispatchToggleGraphicEvent();
+	    	}, 200);
     	}
-    	$rootScope.showGraphic = !$rootScope.showGraphic;
-	    EventDispatcher.dispatch(new Event(
-	    	"toggleGraphic",
-	    	{ showGraphic: $rootScope.showGraphic }
-	    ));
+    	else {
+    		$rootScope.showGraphic = true;
+			$rootScope.dispatchToggleGraphicEvent();
+    	}
     }
 
     $rootScope.hideGraphic = function() {
     	$rootScope.hideGraphicWindows();
     	$rootScope.showGraphic = false;
-	    EventDispatcher.dispatch(new Event(
+	    setTimeout(function() {
+    		$rootScope.dispatchToggleGraphicEvent();
+    	}, 200);
+    }
+
+    $rootScope.dispatchToggleGraphicEvent = function() {
+		EventDispatcher.dispatch(new Event(
 	    	"toggleGraphic",
 	    	{ showGraphic: $rootScope.showGraphic }
 	    ));
