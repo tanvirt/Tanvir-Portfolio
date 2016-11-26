@@ -1105,6 +1105,34 @@ GLCanvas.prototype.setLoadingStatus=function(flag)
 };
 
 /**
+ * Sets a watermark to be displayed in the lower right corner of the canvas
+ * $param filePath A string that indicates the watermark file path.
+ */
+GLCanvas.prototype.setWatermark=function(filePath)
+{
+  this.watermark=new GLWatermark(this);
+  this.watermark.setTexture(filePath);
+};
+
+/**
+ * Show watermark
+ */
+GLCanvas.prototype.showWatermark=function()
+{
+  this.watermark.hide=false;
+};
+
+
+/**
+ * Hide watermark
+ */
+GLCanvas.prototype.hideWatermark=function()
+{
+  this.watermark.hide=true;
+};
+
+
+/**
  * Creates a progress bar on the top border of the canvas that shows the loading progress while loading your assets.  
  */
 GLCanvas.prototype.createProgressBar=function()
@@ -4663,10 +4691,11 @@ function GLWatermark(canvas)
 {
 	this.canvas=canvas;
 	this.logo_obj=null;
+  this.hide=false;
 	
 	this.logo_obj=new GLObject(canvas);
 	this.logo_obj.createRect(0.2,0.2,1,1);
-	this.logo_obj.setTexture(vn.hosturl+'js/img/VNlogo_mask.png',true);
+  this.logo_obj.setTexture(vn.hosturl+'js/img/watermark.png',true);
 	this.logo_obj.getShader().useLighting(false);
 	this.logo_obj.getShader().useTexture(true);
 	var m=mat4.create();
@@ -4681,11 +4710,19 @@ function GLWatermark(canvas)
 
 GLWatermark.prototype.draw=function()
 {
+  if(this.hide) {
+    return;
+  }
 	var gl=this.canvas.gl;
 	gl.disable(gl.DEPTH_TEST);
 	gl.enable(gl.BLEND);
 	this.logo_obj.draw();
 	gl.enable(gl.DEPTH_TEST);
+};
+
+GLWatermark.prototype.setTexture=function(filePath)
+{
+  this.logo_obj.setTexture(vn.hosturl+filePath,true);
 };
 
 function GLBackground(canvas)

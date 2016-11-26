@@ -175,6 +175,8 @@ GraphicCanvas.prototype._setCanvasSetupEvent = function() {
 		//self._canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
 
 		self._canvas.setLoadingStatus(false);
+		self._canvas.setWatermark("js/img/watermark.png");
+		//self._canvas.hideWatermark();
 		self._setCanvasDragEvent();
 	};
 }
