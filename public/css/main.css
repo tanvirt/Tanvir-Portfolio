@@ -17,11 +17,44 @@
 	cursor: url(../img/creative/cross.PNG) 40 40, auto;
 }
 
+.fade-animation.ng-hide {
+  opacity: 0;
+}
+
+.fade-animation.ng-hide-remove,
+.fade-animation.ng-hide-add {
+  display: block !important;
+}
+
+.fade-animation.ng-hide-remove {
+  transition: all linear .2s;
+}
+
+.fade-animation.ng-hide-add {
+  transition: all linear .2s;
+}
+
+.fade-animation.ng-enter,
+.fade-animation.ng-leave {
+  transition: all linear .2s;
+}
+
+.fade-animation.ng-enter,
+.fade-animation.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+.fade-animation.ng-leave,
+.fade-animation.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
 .horizontal-vertical-center {
 	position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
+    text-align: center;
 }
 
 .icon-menu-container {
@@ -38,17 +71,72 @@
 	color: white;
 	text-align: center;
 	width: 31.72rem;
+	cursor: pointer;
 }
 
 .icon-menu-item {
+	text-align: center;
 	display: inline-block;
 	padding: 1rem;
-	cursor: pointer;
 }
 
 .icon-menu-item img {
 	height: 4rem;
 	width: 4rem;
+}
+
+.center-window {
+	color: white;
+	z-index: 1029;
+}
+
+.center-window-header {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	height: 4rem;
+}
+
+.center-window-title {
+	position: relative;
+}
+
+.center-window-content {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.close-icon {
+	height: 2rem;
+	width: 2rem;
+	cursor: pointer;
+	float:right;
+	margin-top: -3rem;
+	margin-right: 1rem;
+}
+
+.black-background {
+	background-color: rgba(0, 0, 0, 0.9);
+}
+
+.blue-background {
+	background-color: rgba(4, 27, 55, 1);
+}
+
+.green-background {
+	background-color: rgba(0, 55, 0, 0.9);
+}
+
+.yellow-background {
+	background-color: rgba(55, 55, 0, 1);
+}
+
+.red-background {
+	background-color: rgba(55, 0, 0, 1);
+}
+
+.center-window .icon-menu-item img {
+	height: 6rem;
+	width: 6rem;
 }
 
 #graphic-canvas {
@@ -73,6 +161,11 @@
 .yellow-hover:hover {
 	/*background-color: rgba(55, 0, 0, 0.5);*/
 	background-color: rgba(55, 55, 0, 0.9);
+}
+
+.green-hover:hover {
+	/*background-color: rgba(0, 55, 0, 0.5);*/
+	background-color: rgba(0, 55, 0, 0.9);
 }
 
 .floating-content img {

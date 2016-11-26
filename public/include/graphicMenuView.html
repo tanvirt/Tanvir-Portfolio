@@ -1,19 +1,22 @@
-<div ng-show="showGraphic" class="icon-menu-container">
-    <div class="icon-menu dark-transparent">
-        <div ng-click="resetGraphic();" class="icon-menu-item yellow-hover">
-            <img src="img/creative/reset_icon.png" style="filter: invert(100%);" alt="">
-        </div>
-        <div class="icon-menu-item blue-hover">
-            <img src="img/creative/solid_icon.png" alt="">
-        </div>
-        <div class="icon-menu-item blue-hover">
-            <img src="img/creative/eye_icon.png" alt="">
-        </div>
-        <div class="icon-menu-item blue-hover">
-            <img src="img/creative/controls_icon.svg" style="filter: invert(100%);" alt="">
-        </div>
-        <div ng-click="toggleGraphic();" class="icon-menu-item red-hover">
-            <img src="img/creative/close_icon.svg" style="filter: invert(100%);" alt="">
+<div ng-if="showGraphic" class="fade-animation">
+    <ng-include class="include" src="'include/graphicControlsView.html'"></ng-include>
+    <div class="icon-menu-container">
+        <div class="icon-menu dark-transparent">
+            <div ng-click="hideGraphicWindows(); resetGraphic();" class="icon-menu-item yellow-hover">
+                <img src="img/creative/reset_icon.png" style="filter: invert(100%);" alt="">
+            </div>
+            <div class="icon-menu-item blue-hover">
+                <img src="img/creative/solid_icon.png" alt="">
+            </div>
+            <div class="icon-menu-item blue-hover">
+                <img src="img/creative/eye_icon.png" alt="">
+            </div>
+            <div ng-if="isDesktop" ng-click="toggleControlsWindow();" class="icon-menu-item blue-hover">
+                <img src="img/creative/controls_icon.svg" style="filter: invert(100%);" alt="">
+            </div>
+            <div ng-click="hideGraphic(); flipLogo();" class="icon-menu-item red-hover">
+                <img src="img/creative/close_icon.svg" style="filter: invert(100%);" alt="">
+            </div>
         </div>
     </div>
 </div>

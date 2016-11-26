@@ -10,6 +10,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 
 	$rootScope.showGraphic = false;
 	$rootScope.showControlsWindow = false;
+	$rootScope.isDesktop = Device.isDesktop();
 
 	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
 	var graphicCanvas = null;
@@ -21,7 +22,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 				AnimatedHeader.init();
 				ContactForm.init();
 				Theme.init();
-				if(Device.isDesktop()) {
+				if($rootScope.isDesktop) {
 					Particles.init("app-header");
 				}
 				graphicCanvas = new GraphicCanvas("graphic-canvas");
@@ -30,9 +31,28 @@ angular.module("main").run(function($rootScope, $timeout) {
 		});
 	});
 
+	$rootScope.hideGraphicWindows = function() {
+		if($rootScope.showGraphic) {
+			$rootScope.hideControlsWindow();
+		}
+	}
+
 	$rootScope.toggleControlsWindow = function() {
 		if($rootScope.showGraphic) {
-	    	$rootScope.showControlsWindow = !$rootScope.showControlsWindow;
+			if(!$rootScope.showControlsWindow) {
+				$rootScope.hideGraphicWindows();
+				$rootScope.showControlsWindow = true;
+			}
+			else {
+				$rootScope.hideGraphicWindows();
+				$rootScope.showControlsWindow = false;
+			}
+	    }
+	}
+
+	$rootScope.hideControlsWindow = function() {
+		if($rootScope.showGraphic) {
+	    	$rootScope.showControlsWindow = false;
 	    }
 	}
 
@@ -43,7 +63,19 @@ angular.module("main").run(function($rootScope, $timeout) {
     }
 
     $rootScope.toggleGraphic = function() {
+    	if($rootScope.showGraphic) {
+    		$rootScope.hideGraphicWindows();
+    	}
     	$rootScope.showGraphic = !$rootScope.showGraphic;
+	    EventDispatcher.dispatch(new Event(
+	    	"toggleGraphic",
+	    	{ showGraphic: $rootScope.showGraphic }
+	    ));
+    }
+
+    $rootScope.hideGraphic = function() {
+    	$rootScope.hideGraphicWindows();
+    	$rootScope.showGraphic = false;
 	    EventDispatcher.dispatch(new Event(
 	    	"toggleGraphic",
 	    	{ showGraphic: $rootScope.showGraphic }
