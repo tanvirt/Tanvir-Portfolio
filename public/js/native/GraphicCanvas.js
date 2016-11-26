@@ -3,7 +3,6 @@ function GraphicCanvas(elementId) {
 	this._keys = new Keys();
 	this._logo = null;
 	this._logoMovement = null;
-	this._projectorToggle = false;
 	this._showGraphic = false;
 	this._showLogo = false;
 
@@ -35,7 +34,15 @@ GraphicCanvas.prototype._addEventHandlers = function() {
 	this._addToggleGraphicEventHandler();
 	this._addResetGraphicEventHandler();
 	this._addJumpLogoEventHandler();
-	this._addViewRedCyanEventHandler();
+
+	this._addUseRegularProjectorEventHandler();
+	this._addUseRedCyanProjectorEventHandler();
+	this._addUseVRProjectorEventHandler();
+	this._addUseARProjectorEventHandler();
+
+	this._addSetDrawModeTrainglesEventHandler();
+	this._addSetDrawModeLinesEventHandler();
+	this._addSetDrawModePointsEventHandler();
 }
 
 GraphicCanvas.prototype._setCanvasEvents = function() {
@@ -72,18 +79,66 @@ GraphicCanvas.prototype._addJumpLogoEventHandler = function() {
 	});
 }
 
-GraphicCanvas.prototype._addViewRedCyanEventHandler = function() {
+GraphicCanvas.prototype._addUseRegularProjectorEventHandler = function() {
 	var self = this;
 
-	EventDispatcher.addEventHandler("viewRedCyan", function(event) {
+	EventDispatcher.addEventHandler("useRegularProjector", function(event) {
 		self._logoMovement.jump();
-		if(self._projectorToggle) {
-    		self._canvas.useRegularProjector();
-    	}
-    	else {
-    		self._canvas.useRedCyanProjector();
-    	}
-    	self._projectorToggle = !self._projectorToggle;
+    	self._canvas.useRegularProjector();
+	});
+}
+
+GraphicCanvas.prototype._addUseRedCyanProjectorEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("useRedCyanProjector", function(event) {
+		self._logoMovement.jump();
+    	self._canvas.useRedCyanProjector();
+	});
+}
+
+GraphicCanvas.prototype._addUseVRProjectorEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("useVRProjector", function(event) {
+		self._logoMovement.jump();
+    	self._canvas.useOculusProjector();
+	});
+}
+
+GraphicCanvas.prototype._addUseARProjectorEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("useARProjector", function(event) {
+		self._logoMovement.jump();
+    	// TODO
+	});
+}
+
+GraphicCanvas.prototype._addSetDrawModeTrainglesEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("setDrawModeTriangles", function(event) {
+		self._logoMovement.jump();
+		self._logo.getGraphic().setDrawModeTriangles();
+	});
+}
+
+GraphicCanvas.prototype._addSetDrawModeLinesEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("setDrawModeLines", function(event) {
+		self._logoMovement.jump();
+    	self._logo.getGraphic().setDrawModeLines();
+	});
+}
+
+GraphicCanvas.prototype._addSetDrawModePointsEventHandler = function() {
+	var self = this;
+
+	EventDispatcher.addEventHandler("setDrawModePoints", function(event) {
+		self._logoMovement.jump();
+    	self._logo.getGraphic().setDrawModePoints();
 	});
 }
 

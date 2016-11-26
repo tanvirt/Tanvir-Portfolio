@@ -1,0 +1,30 @@
+<div ng-if="showDrawModesWindow" class="horizontal-vertical-center center-window fade-animation">
+    <div>
+        <div class="green-background center-window-header">
+            <div class="horizontal-vertical-center center-window-title">
+                Rendering Mode
+            </div>
+        </div>
+        <img ng-click="hideDrawModesWindow();" src="img/creative/close_window_icon.png" class="close-icon" style="filter: invert(100%);" alt="">
+    </div>
+    <div class="black-background center-window-content clickable">
+        <div ng-click="hideDrawModesWindow(); setDrawModeTriangles();" class="icon-menu-item purple-hover">
+            <div>
+                Surface
+            </div>
+            <img src="img/creative/solid_icon.png" alt="">
+        </div>
+        <div ng-click="hideDrawModesWindow(); setDrawModeLines();" class="icon-menu-item purple-hover">
+            <div>
+                Edge
+            </div>
+            <img src="img/creative/edges_icon.png" alt="">
+        </div>
+        <div ng-click="hideDrawModesWindow(); setDrawModePoints();" class="icon-menu-item purple-hover">
+            <div>
+                Vertex
+            </div>
+            <img src="img/creative/points_icon.png" alt="">
+        </div>
+    </div>
+</div>

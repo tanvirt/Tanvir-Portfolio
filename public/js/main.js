@@ -10,6 +10,8 @@ angular.module("main").run(function($rootScope, $timeout) {
 
 	$rootScope.showGraphic = false;
 	$rootScope.showControlsWindow = false;
+	$rootScope.showDrawModesWindow = false;
+	$rootScope.showProjectorModesWindow = false;
 	$rootScope.isDesktop = Device.isDesktop();
 
 	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
@@ -34,6 +36,8 @@ angular.module("main").run(function($rootScope, $timeout) {
 	$rootScope.hideGraphicWindows = function() {
 		if($rootScope.showGraphic) {
 			$rootScope.hideControlsWindow();
+			$rootScope.hideDrawModesWindow();
+			$rootScope.hideProjectorModesWindow();
 		}
 	}
 
@@ -53,6 +57,44 @@ angular.module("main").run(function($rootScope, $timeout) {
 	$rootScope.hideControlsWindow = function() {
 		if($rootScope.showGraphic) {
 	    	$rootScope.showControlsWindow = false;
+	    }
+	}
+
+	$rootScope.toggleDrawModesWindow = function() {
+		if($rootScope.showGraphic) {
+			if(!$rootScope.showDrawModesWindow) {
+				$rootScope.hideGraphicWindows();
+				$rootScope.showDrawModesWindow = true;
+			}
+			else {
+				$rootScope.hideGraphicWindows();
+				$rootScope.showDrawModesWindow = false;
+			}
+	    }
+	}
+
+	$rootScope.hideDrawModesWindow = function() {
+		if($rootScope.showGraphic) {
+	    	$rootScope.showDrawModesWindow = false;
+	    }
+	}
+
+	$rootScope.toggleProjectorModesWindow = function() {
+		if($rootScope.showGraphic) {
+			if(!$rootScope.showProjectorModesWindow) {
+				$rootScope.hideGraphicWindows();
+				$rootScope.showProjectorModesWindow = true;
+			}
+			else {
+				$rootScope.hideGraphicWindows();
+				$rootScope.showProjectorModesWindow = false;
+			}
+	    }
+	}
+
+	$rootScope.hideProjectorModesWindow = function() {
+		if($rootScope.showGraphic) {
+	    	$rootScope.showProjectorModesWindow = false;
 	    }
 	}
 
@@ -103,9 +145,59 @@ angular.module("main").run(function($rootScope, $timeout) {
 	    }
     }
 
-    $rootScope.viewRedCyan = function() {
+    $rootScope.useRegularProjector = function() {
     	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("viewRedCyan"));
+	    	EventDispatcher.dispatch(new Event("useRegularProjector"));
+	    	var image = document.getElementById("viewModeIcon");
+	    	image.src = "img/creative/eye_icon.png";
+	    }
+    }
+
+    $rootScope.useRedCyanProjector = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("useRedCyanProjector"));
+	    	var image = document.getElementById("viewModeIcon");
+	    	image.src = "img/creative/red_cyan_icon.png";
+	    }
+    }
+
+    $rootScope.useVRProjector = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("useVRProjector"));
+	    	var image = document.getElementById("viewModeIcon");
+	    	image.src = "img/creative/vr_icon.png";
+	    }
+    }
+
+    $rootScope.useARProjector = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("useARProjector"));
+	    	var image = document.getElementById("viewModeIcon");
+	    	image.src = "img/creative/lens_icon.png";
+	    }
+    }
+
+    $rootScope.setDrawModeTriangles = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("setDrawModeTriangles"));
+	    	var image = document.getElementById("renderModeIcon");
+	    	image.src = "img/creative/solid_icon.png";
+	    }
+    }
+
+    $rootScope.setDrawModeLines = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("setDrawModeLines"));
+	    	var image = document.getElementById("renderModeIcon");
+	    	image.src = "img/creative/edges_icon.png";
+	    }
+    }
+
+    $rootScope.setDrawModePoints = function() {
+    	if($rootScope.showGraphic) {
+	    	EventDispatcher.dispatch(new Event("setDrawModePoints"));
+	    	var image = document.getElementById("renderModeIcon");
+	    	image.src = "img/creative/points_icon.png";
 	    }
     }
 

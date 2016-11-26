@@ -149,23 +149,27 @@
 }
 
 .blue-hover:hover {
-	/*background-color: rgba(4, 27, 55, 0.5);*/
 	background-color: rgba(4, 27, 55, 0.9);
 }
 
 .red-hover:hover {
-	/*background-color: rgba(55, 0, 0, 0.5);*/
 	background-color: rgba(55, 0, 0, 0.9);
 }
 
 .yellow-hover:hover {
-	/*background-color: rgba(55, 0, 0, 0.5);*/
 	background-color: rgba(55, 55, 0, 0.9);
 }
 
 .green-hover:hover {
-	/*background-color: rgba(0, 55, 0, 0.5);*/
 	background-color: rgba(0, 55, 0, 0.9);
+}
+
+.purple-hover:hover {
+	background-color: rgba(55, 0, 55, 0.9);
+}
+
+.clickable {
+	cursor: pointer;
 }
 
 .floating-content img {

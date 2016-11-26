@@ -1,0 +1,36 @@
+<div ng-if="showProjectorModesWindow" class="horizontal-vertical-center center-window fade-animation">
+    <div>
+        <div class="green-background center-window-header">
+            <div class="horizontal-vertical-center center-window-title">
+                Viewing Mode
+            </div>
+        </div>
+        <img ng-click="hideProjectorModesWindow();" src="img/creative/close_window_icon.png" class="close-icon" style="filter: invert(100%);" alt="">
+    </div>
+    <div class="black-background center-window-content clickable">
+        <div ng-click="hideProjectorModesWindow(); useRegularProjector();" class="icon-menu-item purple-hover">
+            <div>
+                Regular
+            </div>
+            <img src="img/creative/eye_icon.png" alt="">
+        </div>
+        <div ng-click="hideProjectorModesWindow(); useRedCyanProjector();" class="icon-menu-item purple-hover">
+            <div>
+                Red-Cyan
+            </div>
+            <img src="img/creative/red_cyan_icon.png" alt="">
+        </div>
+        <div ng-click="hideProjectorModesWindow(); useVRProjector();" class="icon-menu-item purple-hover">
+            <div>
+                VR
+            </div>
+            <img src="img/creative/vr_icon.png" alt="">
+        </div>
+        <div ng-click="hideProjectorModesWindow(); useARProjector();" class="icon-menu-item purple-hover">
+            <div>
+                AR
+            </div>
+            <img src="img/creative/lens_icon.png" alt="">
+        </div>
+    </div>
+</div>
