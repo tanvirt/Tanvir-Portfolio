@@ -20,7 +20,9 @@ angular.module("main").run(function($rootScope, $timeout) {
 				AnimatedHeader.init();
 				ContactForm.init();
 				Theme.init();
-				Particles.init("app-header");
+				if(Device.isDesktop()) {
+					Particles.init("app-header");
+				}
 				graphicCanvas = new GraphicCanvas("graphic-canvas");
 				graphicCanvas.render();
 			}
