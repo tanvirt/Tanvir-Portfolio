@@ -5,6 +5,8 @@ angular.module("main").run(function($rootScope, $timeout) {
 	ClassHelpers.init();
 	FormValidation.init();
 
+	var speechRecognition = new SpeechRecognition();
+
 	$rootScope.showGraphic = false;
 	$rootScope.showControlsWindow = false;
 	$rootScope.showDrawModesWindow = false;
