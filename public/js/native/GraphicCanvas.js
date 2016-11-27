@@ -65,7 +65,6 @@ GraphicCanvas.prototype._addRequestFullScreenEventHandler = function() {
 	});
 }
 
-
 GraphicCanvas.prototype._addToggleGraphicEventHandler = function() {
 	var self = this;
 
