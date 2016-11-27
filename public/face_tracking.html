@@ -23,5 +23,13 @@
 	<script src="vendor/tracking.js/tracking-min.js"></script>
 	<script src="vendor/tracking.js/face-min.js"></script>
 	<script src="js/native/FaceTracker.js"></script>
+
+	<script>
+		var loadFaceTracker = function() {
+			var faceTracker = new FaceTracker('video');
+			faceTracker.start();
+			//faceTracker.stop();
+		}
+	</script>
 </body>
 </html>

@@ -121,9 +121,3 @@ FaceTracker.prototype._getValueFromNewRange = function(value, oldMin, oldMax, ne
 
 	return newValue;
 }
-
-var loadFaceTracker = function() {
-	var faceTracker = new FaceTracker('video');
-	faceTracker.start();
-	//faceTracker.stop();
-}
