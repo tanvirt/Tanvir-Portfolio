@@ -24,6 +24,7 @@ GraphicCanvas.prototype.render = function() {
 
 GraphicCanvas.prototype._reset = function() {
 	this._canvas.getCamera().reset();
+	this._canvas.setBackgroundColor(0, 0, 0, 0.75);
 	this._canvas.useRegularProjector();
 	this._exitVRView();
 	this._deviceOrientation.stopTracking();
@@ -31,9 +32,11 @@ GraphicCanvas.prototype._reset = function() {
 }
 
 GraphicCanvas.prototype._resetLogo = function() {
+	this._logoMovement.setTranslationSpeed(0.5);
+	this._logoMovement.setRotationSpeed(1);
 	this._logoMovement.reset();
 	this._logo.reset();
-	this._logo.translateZ(-4);
+	this._logo.translateZ(-1);
 	this._logo.getGraphic().setDrawModeTriangles();
 }
 
@@ -100,7 +103,10 @@ GraphicCanvas.prototype._addUseRegularProjectorEventHandler = function() {
 	var self = this;
 
 	EventDispatcher.addEventHandler("useRegularProjector", function(event) {
+		self._logoMovement.setTranslationSpeed(0.5);
+		self._logoMovement.setRotationSpeed(1);
 		self._logoMovement.jump();
+		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
     	self._canvas.useRegularProjector();
     	self._exitVRView();
 	});
@@ -110,7 +116,10 @@ GraphicCanvas.prototype._addUseRedCyanProjectorEventHandler = function() {
 	var self = this;
 
 	EventDispatcher.addEventHandler("useRedCyanProjector", function(event) {
+		self._logoMovement.setTranslationSpeed(0.25);
+		self._logoMovement.setRotationSpeed(0.5);
 		self._logoMovement.jump();
+		self._canvas.setBackgroundColor(0, 0, 0, 1);
     	self._canvas.useRedCyanProjector();
     	self._exitVRView();
 	});
@@ -120,7 +129,10 @@ GraphicCanvas.prototype._addUseVRProjectorEventHandler = function() {
 	var self = this;
 
 	EventDispatcher.addEventHandler("useVRProjector", function(event) {
+		self._logoMovement.setTranslationSpeed(0.25);
+		self._logoMovement.setRotationSpeed(0.5);
 		self._logoMovement.jump();
+		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
     	self._canvas.useOculusProjector();
     	self._enterVRView();
 	});
@@ -130,7 +142,10 @@ GraphicCanvas.prototype._addUseARProjectorEventHandler = function() {
 	var self = this;
 
 	EventDispatcher.addEventHandler("useARProjector", function(event) {
+		self._logoMovement.setTranslationSpeed(0.5);
+		self._logoMovement.setRotationSpeed(1);
 		self._logoMovement.jump();
+		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
 		self._exitVRView();
     	// TODO
 	});
@@ -202,9 +217,10 @@ GraphicCanvas.prototype._setCanvasSetupEvent = function() {
 GraphicCanvas.prototype._createLogo = function() {
 	var self = this;
 
-	this._logo = new Logo(self._canvas, 1, 0.05);
+	this._logo = new Logo(self._canvas, 0.25, 0.0125);
     this._logoMovement = new MovementDirector(this._logo);
-    this._logo.translateZ(-4);
+    this._logoMovement.setJumpHeight(0.1);
+    this._logo.translateZ(-1);
     this._logo.getGraphic().onTap = function(event) {
     	self._logoMovement.jump();
     }

@@ -7,6 +7,9 @@ function MovementDirector(movingObject) {
 
 	this._movementSpeed = 1; // default
 
+    this._translationSpeed = 1;
+    this._rotationSpeed = 1;
+
 	this._translationDelta = 0.1;
 	this._rotationDelta = 0.03;
 }
@@ -30,9 +33,15 @@ MovementDirector.prototype.setJumpHeight = function(height) {
     }
 }
 
-MovementDirector.prototype.setMovementSpeed = function(speed) {
+MovementDirector.prototype.setTranslationSpeed = function(speed) {
     if(speed >= 0) {
-        this._movementSpeed = speed;
+        this._translationSpeed = speed;
+    }
+}
+
+MovementDirector.prototype.setRotationSpeed = function(speed) {
+    if(speed >= 0) {
+        this._rotationSpeed = speed;
     }
 }
 
@@ -45,8 +54,8 @@ MovementDirector.prototype.jump = function() {
 
 MovementDirector.prototype.update = function() {
     if(this._jumpDir > -this._jumpHeight) {
-        this._jumpDir -= 0.01*this._movementSpeed;
-        this._movingObject.translateY(this._jumpDir*this._movementSpeed);
+        this._jumpDir -= 0.01*this._translationSpeed;
+        this._movingObject.translateY(this._jumpDir*this._translationSpeed);
     }
     else {
         this._jumpDir = -this._jumpHeight;
@@ -59,19 +68,19 @@ MovementDirector.prototype.update = function() {
 
 MovementDirector.prototype.moveForward = function() {
     this._movingObject.translateX(
-    	Math.cos(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
+    	Math.cos(this._movingObject.getYRotation())*this._translationDelta*this._translationSpeed
     );
     this._movingObject.translateZ(
-    	-Math.sin(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
+    	-Math.sin(this._movingObject.getYRotation())*this._translationDelta*this._translationSpeed
     );
 }
 
 MovementDirector.prototype.moveBackward = function() {
     this._movingObject.translateX(
-    	-Math.cos(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
+    	-Math.cos(this._movingObject.getYRotation())*this._translationDelta*this._translationSpeed
     );
     this._movingObject.translateZ(
-    	Math.sin(this._movingObject.getYRotation())*this._translationDelta*this._movementSpeed
+    	Math.sin(this._movingObject.getYRotation())*this._translationDelta*this._translationSpeed
     );
 }
 
@@ -84,31 +93,31 @@ MovementDirector.prototype.turnRight = function() {
 }
 
 MovementDirector.prototype.rollForward = function() {
-    this._movingObject.rotateX(-this._rotationDelta*this._movementSpeed);
+    this._movingObject.rotateX(-this._rotationDelta*this._rotationSpeed);
 }
 
 MovementDirector.prototype.rollBackward = function() {
-    this._movingObject.rotateX(this._rotationDelta*this._movementSpeed);
+    this._movingObject.rotateX(this._rotationDelta*this._rotationSpeed);
 }
 
 MovementDirector.prototype.pitchForward = function() {
-    this._movingObject.rotateY(this._rotationDelta*this._movementSpeed);
+    this._movingObject.rotateY(this._rotationDelta*this._rotationSpeed);
 }
 
 MovementDirector.prototype.pitchBackward = function() {
-    this._movingObject.rotateY(-this._rotationDelta*this._movementSpeed);
+    this._movingObject.rotateY(-this._rotationDelta*this._rotationSpeed);
 }
 
 MovementDirector.prototype.yawForward = function() {
-    this._movingObject.rotateZ(-this._rotationDelta*this._movementSpeed);
+    this._movingObject.rotateZ(-this._rotationDelta*this._rotationSpeed);
 }
 
 MovementDirector.prototype.yawBackward = function() {
-    this._movingObject.rotateZ(this._rotationDelta*this._movementSpeed);
+    this._movingObject.rotateZ(this._rotationDelta*this._rotationSpeed);
 }
 
 MovementDirector.prototype.rotateTowardInitialRoll = function() {
-    if(Math.abs(this._movingObject.getXRotation()) >= this._rotationDelta*this._movementSpeed) {
+    if(Math.abs(this._movingObject.getXRotation()) >= this._rotationDelta*this._rotationSpeed) {
         this._movingObject.rotateX(
         	-this._rotationDelta*Math.sign(this._movingObject.getXRotation())
         );
@@ -119,7 +128,7 @@ MovementDirector.prototype.rotateTowardInitialRoll = function() {
 }
 
 MovementDirector.prototype.rotateTowardInitialPitch = function() {
-    if(Math.abs(this._movingObject.getYRotation()) >= this._rotationDelta*this._movementSpeed) {
+    if(Math.abs(this._movingObject.getYRotation()) >= this._rotationDelta*this._rotationSpeed) {
         this._movingObject.rotateY(
         	-this._rotationDelta*Math.sign(this._movingObject.getYRotation())
         );
@@ -130,7 +139,7 @@ MovementDirector.prototype.rotateTowardInitialPitch = function() {
 }
 
 MovementDirector.prototype.rotateTowardInitialYaw = function() {
-    if(Math.abs(this._movingObject.getZRotation()) >= this._rotationDelta*this._movementSpeed) {
+    if(Math.abs(this._movingObject.getZRotation()) >= this._rotationDelta*this._rotationSpeed) {
         this._movingObject.rotateZ(
 			-this._rotationDelta*Math.sign(this._movingObject.getZRotation())
         );
