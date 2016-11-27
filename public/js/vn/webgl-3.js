@@ -3259,7 +3259,7 @@ GLCamera.prototype.reset = function() {
   this.speed_xTra=0;//UNITS PER SECOND
   this.speed_yTra=0;//UNITS PER SECOND
   
-  this.mvMatrixStack=[];
+  //this.mvMatrixStack=[];
   
   this.mvMatrix = mat4.create();
   mat4.identity(this.mvMatrix);
@@ -3271,9 +3271,9 @@ GLCamera.prototype.reset = function() {
   this.ixMatrix_mem = mat4.create();
   mat4.identity(this.ixMatrix_mem);
 
-  this.pMatrix = mat4.create();
+  /*this.pMatrix = mat4.create();
   mat4.perspective(45, this.gl.viewportWidth / this.gl.viewportHeight, 0.1, 100.0, this.pMatrix);
-  this._projection_changed=true;
+  this._projection_changed=true;*/
   this._view_changed=true;
 }
 

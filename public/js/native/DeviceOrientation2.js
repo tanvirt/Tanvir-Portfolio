@@ -1,27 +1,20 @@
-function DeviceOrientation(camera) {
+function DeviceOrientation() {
 	this._xRotation = 0;
 	this._yRotation = 0;
 	this._zRotation = 0;
 
-	this._isTracking = false;
-
-	this._camera = camera;
+	this._init();
 }
 
-DeviceOrientation.prototype.isTracking = function() {
-	return this._isTracking;
+DeviceOrientation.prototype._init = function() {
+	this._setOnDeviceOrientationEvent();
 }
 
-DeviceOrientation.prototype.update = function() {
-	if(this._isTracking) {
-		this._camera.reset();
-		this._camera.rotateX(this._xRotation);
-		this._camera.rotateY(this._yRotation);
-		this._camera.rotateZ(this._zRotation);
-	}
-}
+DeviceOrientation.prototype.getXRotation = function() { return this._xRotation; }
+DeviceOrientation.prototype.getYRotation = function() { return this._yRotation; }
+DeviceOrientation.prototype.getZRotation = function() { return this._zRotation; }
 
-DeviceOrientation.prototype.startTracking = function() {
+DeviceOrientation.prototype._setOnDeviceOrientationEvent = function() {
 	var self = this;
 	window.ondeviceorientation = function(event) {
 		var alpha = Math.round(event.alpha);
@@ -31,18 +24,12 @@ DeviceOrientation.prototype.startTracking = function() {
 		self._setXRotation(gamma);
 		self._setYRotation(alpha, gamma);
 		self._setZRotation(beta, gamma);
+
+		document.getElementById("xRotation").innerHTML = "xRotation: " + self._xRotation.toFixed(2);
+		document.getElementById("yRotation").innerHTML = "yRotation: " + self._yRotation.toFixed(2);
+		document.getElementById("zRotation").innerHTML = "zRotation: " + self._zRotation.toFixed(2);
 	}
-	this._isTracking = true;
 }
-
-DeviceOrientation.prototype.stopTracking = function() {
-	window.ondeviceorientation = null;
-	this._isTracking = false;
-}
-
-DeviceOrientation.prototype.getXRotation = function() { return this._xRotation; }
-DeviceOrientation.prototype.getYRotation = function() { return this._yRotation; }
-DeviceOrientation.prototype.getZRotation = function() { return this._zRotation; }
 
 DeviceOrientation.prototype._setXRotation = function(gamma) {
 	var angle = 0;
@@ -80,6 +67,14 @@ DeviceOrientation.prototype._setZRotation = function(beta, gamma) {
 		angle = -1*beta;
 	}
 	this._zRotation = this._toRadians(angle);
+}
+
+DeviceOrientation.prototype._getValueFromNewRange = function(value, oldMin, oldMax, newMin, newMax) {
+	var oldRange = oldMax - oldMin; 
+	var newRange = newMax - newMin;
+	var newValue = (((value - oldMin)*newRange)/oldRange) + newMin;
+
+	return newValue;
 }
 
 DeviceOrientation.prototype._toDegrees = function(radians) {

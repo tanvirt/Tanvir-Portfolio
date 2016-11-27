@@ -1,6 +1,6 @@
 function GraphicCanvas(elementId) {
 	this._canvas = new GLCanvas(elementId);
-	this._deviceOrientation = new DeviceOrientation(this._canvas.getCamera());
+	this._deviceOrientation = null;
 	this._keys = new Keys();
 	this._logo = null;
 	this._logoMovement = null;
@@ -187,6 +187,8 @@ GraphicCanvas.prototype._setCanvasSetupEvent = function() {
 		self._backgroundSphere = new HDRISphere(self._canvas, 35);
 		self._backgroundSphere.setTexture("js/img/galaxy_hdri.jpg");
 
+		self._deviceOrientation = new DeviceOrientation(self._canvas.getCamera());
+
 		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
 		//self._canvas.setBackgroundColor(0, 0.05, 0.16, 0.95);
 
@@ -238,6 +240,7 @@ GraphicCanvas.prototype._setCanvasDrawEvent = function() {
 		if(self._canvasNotVisible()) {
 			return;
 		}
+
 		self._handleKeys();
 		if(!self._interactiveKeyDown()) {
 			self._logoMovement.pitchForward();
@@ -247,6 +250,9 @@ GraphicCanvas.prototype._setCanvasDrawEvent = function() {
 		self._logoMovement.update();
 
 		if(self._inVRView) {
+			if(Device.isPhone()) {
+				self._deviceOrientation.update();
+			}
 			self._backgroundSphere.draw();
 		}
 		self._logo.draw();
