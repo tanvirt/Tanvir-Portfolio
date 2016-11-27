@@ -1,5 +1,6 @@
 function GraphicCanvas(elementId) {
 	this._canvas = new GLCanvas(elementId);
+	this._deviceOrientation = new DeviceOrientation(this._canvas.getCamera());
 	this._keys = new Keys();
 	this._logo = null;
 	this._logoMovement = null;
@@ -22,8 +23,10 @@ GraphicCanvas.prototype.render = function() {
 }
 
 GraphicCanvas.prototype._reset = function() {
+	this._canvas.getCamera().reset();
 	this._canvas.useRegularProjector();
 	this._exitVRView();
+	this._deviceOrientation.stopTracking();
 	this._resetLogo();
 }
 
@@ -136,13 +139,15 @@ GraphicCanvas.prototype._addUseARProjectorEventHandler = function() {
 GraphicCanvas.prototype._enterVRView = function() {
 	this._setVRCanvasDragEvent();
 	this._inVRView = true;
+	this._deviceOrientation.startTracking();
 }
 
 GraphicCanvas.prototype._exitVRView = function() {
 	if(this._inVRView) {
 		this._setCanvasDragEvent();
 		this._inVRView = false;
-		FullScreen.exit();
+		this._deviceOrientation.stopTracking();
+		//FullScreen.exit();
 	}
 }
 

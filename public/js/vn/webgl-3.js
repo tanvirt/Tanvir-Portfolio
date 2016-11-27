@@ -3235,6 +3235,48 @@ function GLCamera(gl_canvas)
 	this.setStandardPointerInteraction();
 }
 
+GLCamera.prototype.reset = function() {
+  this.zoom=1;
+  this.zoom_mem=1;
+  this.working_zoom=1;
+  this.working_zRot=0;
+  this.xRot=0;
+  this.yRot=0;
+  this.zRot=0;
+  this.xRot2=0;
+  this.yRot2=0;
+  this.enable_rotateZ=false;
+  this.xTra=0;
+  this.yTra=0;
+  this.rot_center_z=0;
+  
+  this.xLig = 0.6;
+    this.yLig = -0.3;
+    
+    this.speed_yRot=0;
+  this.speed_xRot=0;//UNITS PER SECOND
+  this.speed_zRot=0;//UNITS PER SECOND
+  this.speed_xTra=0;//UNITS PER SECOND
+  this.speed_yTra=0;//UNITS PER SECOND
+  
+  this.mvMatrixStack=[];
+  
+  this.mvMatrix = mat4.create();
+  mat4.identity(this.mvMatrix);
+  this.mvMatrix_init = [1,0,0,0,1,0,0,0,1];
+  
+  this.ixMatrix = mat4.create();
+  mat4.identity(this.ixMatrix);
+  
+  this.ixMatrix_mem = mat4.create();
+  mat4.identity(this.ixMatrix_mem);
+
+  this.pMatrix = mat4.create();
+  mat4.perspective(45, this.gl.viewportWidth / this.gl.viewportHeight, 0.1, 100.0, this.pMatrix);
+  this._projection_changed=true;
+  this._view_changed=true;
+}
+
 /**
  * Sets the vertical FOV of the camera. Default value is 45.
  * @param fov The vertical FOV given in degrees. 

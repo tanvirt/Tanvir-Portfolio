@@ -1,20 +1,12 @@
-function DeviceOrientation() {
+function DeviceOrientation(camera) {
 	this._xRotation = 0;
 	this._yRotation = 0;
 	this._zRotation = 0;
 
-	this._init();
+	this._camera = camera;
 }
 
-DeviceOrientation.prototype._init = function() {
-	this._setOnDeviceOrientationEvent();
-}
-
-DeviceOrientation.prototype.getXRotation = function() { return this._xRotation; }
-DeviceOrientation.prototype.getYRotation = function() { return this._yRotation; }
-DeviceOrientation.prototype.getZRotation = function() { return this._zRotation; }
-
-DeviceOrientation.prototype._setOnDeviceOrientationEvent = function() {
+DeviceOrientation.prototype.startTracking = function() {
 	var self = this;
 	window.ondeviceorientation = function(event) {
 		var alpha = Math.round(event.alpha);
@@ -25,11 +17,20 @@ DeviceOrientation.prototype._setOnDeviceOrientationEvent = function() {
 		self._setYRotation(alpha, gamma);
 		self._setZRotation(beta, gamma);
 
-		document.getElementById("xRotation").innerHTML = "xRotation: " + self._xRotation.toFixed(2);
-		document.getElementById("yRotation").innerHTML = "yRotation: " + self._yRotation.toFixed(2);
-		document.getElementById("zRotation").innerHTML = "zRotation: " + self._zRotation.toFixed(2);
+		self._camera.reset();
+		self._camera.rotateX(self._xRotation);
+		self._camera.rotateX(self._xRotation);
+		self._camera.rotateX(self._xRotation);
 	}
 }
+
+DeviceOrientation.prototype.stopTracking = function() {
+	window.ondeviceorientation = null;
+}
+
+DeviceOrientation.prototype.getXRotation = function() { return this._xRotation; }
+DeviceOrientation.prototype.getYRotation = function() { return this._yRotation; }
+DeviceOrientation.prototype.getZRotation = function() { return this._zRotation; }
 
 DeviceOrientation.prototype._setXRotation = function(gamma) {
 	var angle = 0;
