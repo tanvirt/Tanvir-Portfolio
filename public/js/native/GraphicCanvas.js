@@ -22,7 +22,7 @@ GraphicCanvas.prototype.render = function() {
 	this._canvas.start();
 }
 
-GraphicCanvas.prototype._reset = function() {
+GraphicCanvas.prototype.reset = function() {
 	this._canvas.getCamera().reset();
 	this._canvas.setBackgroundColor(0, 0, 0, 0.75);
 	this._canvas.useRegularProjector();
@@ -41,20 +41,8 @@ GraphicCanvas.prototype._resetLogo = function() {
 }
 
 GraphicCanvas.prototype._addEventHandlers = function() {
-	this._addRequestFullScreenEventHandler();
-
 	this._addToggleGraphicEventHandler();
-	this._addResetGraphicEventHandler();
 	this._addJumpLogoEventHandler();
-
-	this._addUseRegularProjectorEventHandler();
-	this._addUseRedCyanProjectorEventHandler();
-	this._addUseVRProjectorEventHandler();
-	this._addUseARProjectorEventHandler();
-
-	this._addSetDrawModeTrainglesEventHandler();
-	this._addSetDrawModeLinesEventHandler();
-	this._addSetDrawModePointsEventHandler();
 }
 
 GraphicCanvas.prototype._setCanvasEvents = function() {
@@ -63,12 +51,8 @@ GraphicCanvas.prototype._setCanvasEvents = function() {
 	this._setCanvasKeyDownEvent();
 }
 
-GraphicCanvas.prototype._addRequestFullScreenEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("requestFullScreen", function(event) {
-		FullScreen.request(self._canvas.getDiv());
-	});
+GraphicCanvas.prototype.requestFullScreen = function() {
+	FullScreen.request(this._canvas.getDiv());
 }
 
 GraphicCanvas.prototype._addToggleGraphicEventHandler = function() {
@@ -80,17 +64,6 @@ GraphicCanvas.prototype._addToggleGraphicEventHandler = function() {
 	});
 }
 
-GraphicCanvas.prototype._addResetGraphicEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("resetGraphic", function(event) {
-		/*if(self._logo.getXPosition() != 0 || self._logo.getYPosition() != 0 || self._logo.getZPosition() == 0) {
-			self._reset();
-		}*/
-		self._reset();
-	});
-}
-
 GraphicCanvas.prototype._addJumpLogoEventHandler = function() {
 	var self = this;
 
@@ -99,56 +72,40 @@ GraphicCanvas.prototype._addJumpLogoEventHandler = function() {
 	});
 }
 
-GraphicCanvas.prototype._addUseRegularProjectorEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("useRegularProjector", function(event) {
-		self._logoMovement.setTranslationSpeed(0.5);
-		self._logoMovement.setRotationSpeed(1);
-		self._logoMovement.jump();
-		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
-    	self._canvas.useRegularProjector();
-    	self._exitVRView();
-	});
+GraphicCanvas.prototype.useRegularProjector = function() {
+	this._logoMovement.setTranslationSpeed(0.5);
+	this._logoMovement.setRotationSpeed(1);
+	this._logoMovement.jump();
+	this._canvas.setBackgroundColor(0, 0, 0, 0.75);
+	this._canvas.useRegularProjector();
+	this._exitVRView();
 }
 
-GraphicCanvas.prototype._addUseRedCyanProjectorEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("useRedCyanProjector", function(event) {
-		self._logoMovement.setTranslationSpeed(0.25);
-		self._logoMovement.setRotationSpeed(0.5);
-		self._logoMovement.jump();
-		self._canvas.setBackgroundColor(0, 0, 0, 1);
-    	self._canvas.useRedCyanProjector();
-    	self._exitVRView();
-	});
+GraphicCanvas.prototype.useRedCyanProjector = function() {
+	this._logoMovement.setTranslationSpeed(0.25);
+	this._logoMovement.setRotationSpeed(0.5);
+	this._logoMovement.jump();
+	this._canvas.setBackgroundColor(0, 0, 0, 1);
+	this._canvas.useRedCyanProjector();
+	this._exitVRView();
 }
 
-GraphicCanvas.prototype._addUseVRProjectorEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("useVRProjector", function(event) {
-		self._logoMovement.setTranslationSpeed(0.25);
-		self._logoMovement.setRotationSpeed(0.5);
-		self._logoMovement.jump();
-		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
-    	self._canvas.useOculusProjector();
-    	self._enterVRView();
-	});
+GraphicCanvas.prototype.useVRProjector = function() {
+	this._logoMovement.setTranslationSpeed(0.25);
+	this._logoMovement.setRotationSpeed(0.5);
+	this._logoMovement.jump();
+	this._canvas.setBackgroundColor(0, 0, 0, 0.75);
+	this._canvas.useOculusProjector();
+	this._enterVRView();
 }
 
-GraphicCanvas.prototype._addUseARProjectorEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("useARProjector", function(event) {
-		self._logoMovement.setTranslationSpeed(0.5);
-		self._logoMovement.setRotationSpeed(1);
-		self._logoMovement.jump();
-		self._canvas.setBackgroundColor(0, 0, 0, 0.75);
-		self._exitVRView();
-    	// TODO
-	});
+GraphicCanvas.prototype.useARProjector = function() {
+	this._logoMovement.setTranslationSpeed(0.5);
+	this._logoMovement.setRotationSpeed(1);
+	this._logoMovement.jump();
+	this._canvas.setBackgroundColor(0, 0, 0, 0.75);
+	this._canvas.useRegularProjector();
+	this._exitVRView();
 }
 
 GraphicCanvas.prototype._enterVRView = function() {
@@ -166,31 +123,19 @@ GraphicCanvas.prototype._exitVRView = function() {
 	}
 }
 
-GraphicCanvas.prototype._addSetDrawModeTrainglesEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("setDrawModeTriangles", function(event) {
-		self._logoMovement.jump();
-		self._logo.getGraphic().setDrawModeTriangles();
-	});
+GraphicCanvas.prototype.setDrawModeTriangles = function() {
+	this._logoMovement.jump();
+	this._logo.getGraphic().setDrawModeTriangles();
 }
 
-GraphicCanvas.prototype._addSetDrawModeLinesEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("setDrawModeLines", function(event) {
-		self._logoMovement.jump();
-    	self._logo.getGraphic().setDrawModeLines();
-	});
+GraphicCanvas.prototype.setDrawModeLines = function() {
+	this._logoMovement.jump();
+    this._logo.getGraphic().setDrawModeLines();
 }
 
-GraphicCanvas.prototype._addSetDrawModePointsEventHandler = function() {
-	var self = this;
-
-	EventDispatcher.addEventHandler("setDrawModePoints", function(event) {
-		self._logoMovement.jump();
-    	self._logo.getGraphic().setDrawModePoints();
-	});
+GraphicCanvas.prototype.setDrawModePoints = function() {
+	this._logoMovement.jump();
+    this._logo.getGraphic().setDrawModePoints();
 }
 
 GraphicCanvas.prototype._setCanvasSetupEvent = function() {
@@ -333,7 +278,7 @@ GraphicCanvas.prototype._interactiveKeyDown = function() {
 GraphicCanvas.prototype._updateCanvasVisibility = function() {
 	if(this._showGraphic && this._showLogo && !isVisibleInViewport(this._canvas.getDiv())) {
 		this._showLogo = false;
-		this._reset();
+		this.reset();
 	}
 	else if(this._showGraphic && !this._showLogo && isVisibleInViewport(this._canvas.getDiv())) {
 		this._showLogo = true;

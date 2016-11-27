@@ -16,7 +16,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 	$rootScope.isDesktop = Device.isDesktop();
 
 	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
-	var graphicCanvas = null;
+	$rootScope.graphicCanvas = null;
 
 	$rootScope.$on('$includeContentLoaded', function(event, templateName) {
 		$timeout(function() {
@@ -28,94 +28,74 @@ angular.module("main").run(function($rootScope, $timeout) {
 				if($rootScope.isDesktop) {
 					Particles.init("app-header");
 				}
-				graphicCanvas = new GraphicCanvas("graphic-canvas");
-				graphicCanvas.render();
+				$rootScope.graphicCanvas = new GraphicCanvas("graphic-canvas");
+				$rootScope.graphicCanvas.render();
 			}
 		});
 	});
 
 	$rootScope.requestFullScreen = function() {
-		if($rootScope.showGraphic) {
-			EventDispatcher.dispatch(new Event("requestFullScreen"));
-		}
+		$rootScope.graphicCanvas.requestFullScreen();
 	}
 
 	$rootScope.showFullScreenDialog = function() {
-		if($rootScope.showGraphic) {
-			$rootScope.showFullScreen = true;
-		}
+		$rootScope.showFullScreen = true;
 	}
 
 	$rootScope.hideFullScreenDialog = function() {
-		if($rootScope.showGraphic) {
-			$rootScope.showFullScreen = false;
-		}
+		$rootScope.showFullScreen = false;
 	}
 
 	$rootScope.hideGraphicWindows = function() {
-		if($rootScope.showGraphic) {
-			$rootScope.hideControlsWindow();
-			$rootScope.hideDrawModesWindow();
-			$rootScope.hideProjectorModesWindow();
-			$rootScope.hideFullScreenDialog();
-		}
+		$rootScope.hideControlsWindow();
+		$rootScope.hideDrawModesWindow();
+		$rootScope.hideProjectorModesWindow();
+		$rootScope.hideFullScreenDialog();
 	}
 
 	$rootScope.toggleControlsWindow = function() {
-		if($rootScope.showGraphic) {
-			if(!$rootScope.showControlsWindow) {
-				$rootScope.hideGraphicWindows();
-				$rootScope.showControlsWindow = true;
-			}
-			else {
-				$rootScope.hideGraphicWindows();
-				$rootScope.showControlsWindow = false;
-			}
-	    }
+		if(!$rootScope.showControlsWindow) {
+			$rootScope.hideGraphicWindows();
+			$rootScope.showControlsWindow = true;
+		}
+		else {
+			$rootScope.hideGraphicWindows();
+			$rootScope.showControlsWindow = false;
+		}
 	}
 
 	$rootScope.hideControlsWindow = function() {
-		if($rootScope.showGraphic) {
-	    	$rootScope.showControlsWindow = false;
-	    }
+    	$rootScope.showControlsWindow = false;
 	}
 
 	$rootScope.toggleDrawModesWindow = function() {
-		if($rootScope.showGraphic) {
-			if(!$rootScope.showDrawModesWindow) {
-				$rootScope.hideGraphicWindows();
-				$rootScope.showDrawModesWindow = true;
-			}
-			else {
-				$rootScope.hideGraphicWindows();
-				$rootScope.showDrawModesWindow = false;
-			}
-	    }
+		if(!$rootScope.showDrawModesWindow) {
+			$rootScope.hideGraphicWindows();
+			$rootScope.showDrawModesWindow = true;
+		}
+		else {
+			$rootScope.hideGraphicWindows();
+			$rootScope.showDrawModesWindow = false;
+		}
 	}
 
 	$rootScope.hideDrawModesWindow = function() {
-		if($rootScope.showGraphic) {
-	    	$rootScope.showDrawModesWindow = false;
-	    }
+	    $rootScope.showDrawModesWindow = false;
 	}
 
 	$rootScope.toggleProjectorModesWindow = function() {
-		if($rootScope.showGraphic) {
-			if(!$rootScope.showProjectorModesWindow) {
-				$rootScope.hideGraphicWindows();
-				$rootScope.showProjectorModesWindow = true;
-			}
-			else {
-				$rootScope.hideGraphicWindows();
-				$rootScope.showProjectorModesWindow = false;
-			}
-	    }
+		if(!$rootScope.showProjectorModesWindow) {
+			$rootScope.hideGraphicWindows();
+			$rootScope.showProjectorModesWindow = true;
+		}
+		else {
+			$rootScope.hideGraphicWindows();
+			$rootScope.showProjectorModesWindow = false;
+		}
 	}
 
 	$rootScope.hideProjectorModesWindow = function() {
-		if($rootScope.showGraphic) {
-	    	$rootScope.showProjectorModesWindow = false;
-	    }
+	    $rootScope.showProjectorModesWindow = false;
 	}
 
     $rootScope.flipLogo = function() {
@@ -154,71 +134,47 @@ angular.module("main").run(function($rootScope, $timeout) {
     }
 
     $rootScope.resetGraphic = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("resetGraphic"));
-	    }
+    	$rootScope.graphicCanvas.reset();
     }
 
     $rootScope.clickJump = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("jumpLogo"));
-	    }
+	    EventDispatcher.dispatch(new Event("jumpLogo"));
     }
 
     $rootScope.useRegularProjector = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("useRegularProjector"));
-	    	var image = document.getElementById("viewModeIcon");
-	    	image.src = "img/creative/eye_icon.png";
-	    }
+    	$rootScope.graphicCanvas.useRegularProjector();
+    	var image = document.getElementById("viewModeIcon");
+    	image.src = "img/creative/eye_icon.png";
     }
 
     $rootScope.useRedCyanProjector = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("useRedCyanProjector"));
-	    	var image = document.getElementById("viewModeIcon");
-	    	image.src = "img/creative/red_cyan_icon.png";
-	    }
+    	$rootScope.graphicCanvas.useRedCyanProjector();
+    	var image = document.getElementById("viewModeIcon");
+    	image.src = "img/creative/red_cyan_icon.png";
     }
 
     $rootScope.useVRProjector = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("useVRProjector"));
-	    	var image = document.getElementById("viewModeIcon");
-	    	image.src = "img/creative/vr_icon.png";
-	    }
+    	$rootScope.graphicCanvas.useVRProjector();
+    	var image = document.getElementById("viewModeIcon");
+    	image.src = "img/creative/vr_icon.png";
     }
 
     $rootScope.useARProjector = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("useARProjector"));
-	    	var image = document.getElementById("viewModeIcon");
-	    	image.src = "img/creative/lens_icon.png";
-	    }
+    	$rootScope.graphicCanvas.useARProjector();
+    	var image = document.getElementById("viewModeIcon");
+    	image.src = "img/creative/lens_icon.png";
     }
 
     $rootScope.setDrawModeTriangles = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("setDrawModeTriangles"));
-	    	var image = document.getElementById("renderModeIcon");
-	    	image.src = "img/creative/solid_icon.png";
-	    }
+	    $rootScope.graphicCanvas.setDrawModeTriangles();
     }
 
     $rootScope.setDrawModeLines = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("setDrawModeLines"));
-	    	var image = document.getElementById("renderModeIcon");
-	    	image.src = "img/creative/edges_icon.png";
-	    }
+	    $rootScope.graphicCanvas.setDrawModeLines();
     }
 
     $rootScope.setDrawModePoints = function() {
-    	if($rootScope.showGraphic) {
-	    	EventDispatcher.dispatch(new Event("setDrawModePoints"));
-	    	var image = document.getElementById("renderModeIcon");
-	    	image.src = "img/creative/points_icon.png";
-	    }
+	    $rootScope.graphicCanvas.setDrawModePoints();
     }
 
 });
