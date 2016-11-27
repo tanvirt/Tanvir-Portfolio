@@ -24,7 +24,7 @@ FullScreen.exit = function() {
     	document.msExitFullscreen;
 
     if(exitMethod)
-        requestMethod.call(document);
+        exitMethod.call(document);
     else if(window.ActiveXObject == undefined) { // Older IE.
         var wscript = new ActiveXObject("WScript.Shell");
         if(wscript !== null)
