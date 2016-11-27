@@ -345,7 +345,7 @@ header .scroll-down .btn:hover {
   header .intro-content {
     color: white;
     text-align: center;
-    width: 50%;
+    /*width: 50%;*/
     margin: auto;
     position: absolute;
     top: 50%;
