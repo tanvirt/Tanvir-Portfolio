@@ -58,7 +58,7 @@ FaceTracker.prototype._updateXPositionMagnitude = function() {
 	var faceDistance = this.getXPosition() - minimum;
 	var magnitude = faceDistance/distance;
 
-	this._positionMagnitude[0] = magnitude;
+	this._positionMagnitude[0] = this._getValueFromNewRange(magnitude, 0, 1, -1, 1);
 }
 
 FaceTracker.prototype._updateYPositionMagnitude = function() {
@@ -69,7 +69,7 @@ FaceTracker.prototype._updateYPositionMagnitude = function() {
 	var faceDistance = this.getYPosition() - minimum;
 	var magnitude = faceDistance/distance;
 
-	this._positionMagnitude[1] = magnitude;
+	this._positionMagnitude[1] = -this._getValueFromNewRange(magnitude, 0, 1, -1, 1);
 }
 
 FaceTracker.prototype.getVideoWidth = function() { return this._videoWidth; }
@@ -96,13 +96,6 @@ FaceTracker.prototype._setOnTrackEvent = function() {
 		event.data.forEach(function(rect) {
 			//console.log([rect.x, rect.y, rect.width, rect.height]);
 
-			context.strokeStyle = '#a64ceb';
-			context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-			context.font = '11px Helvetica';
-			context.fillStyle = "#fff";
-			context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
-			context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
-
 			self._faceWidth = rect.width;
 			self._faceHeight = rect.height;
 			self._position = [
@@ -110,8 +103,23 @@ FaceTracker.prototype._setOnTrackEvent = function() {
 				rect.y + rect.height/2
 			];
 			self._updatePositionMagnitude();
+
+			context.strokeStyle = '#a64ceb';
+			context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+			context.font = '11px Helvetica';
+			context.fillStyle = "#fff";
+			context.fillText('x: ' + self.getXPositionMagnitude().toFixed(2), rect.x + rect.width + 5, rect.y + 11);
+			context.fillText('y: ' + self.getYPositionMagnitude().toFixed(2), rect.x + rect.width + 5, rect.y + 22);
 		});
 	});
+}
+
+FaceTracker.prototype._getValueFromNewRange = function(value, oldMin, oldMax, newMin, newMax) {
+	var oldRange = oldMax - oldMin; 
+	var newRange = newMax - newMin;
+	var newValue = (((value - oldMin)*newRange)/oldRange) + newMin;
+
+	return newValue;
 }
 
 var loadFaceTracker = function() {
