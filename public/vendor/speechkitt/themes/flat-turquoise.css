@@ -9,7 +9,7 @@
 #skitt-ui{
 	height:50px;
 	display:inline-block;
-	background-color:#16A085;
+	background-color:rgba(22,160,133,0.75);
 	z-index:200;
 	border-radius:25px;
 	position:fixed;
@@ -42,7 +42,7 @@ label#skitt-toggle-button__label{
 }
 
 .skitt-ui--not-listening #skitt-toggle-button{
-	background-color:#16A085;
+	background-color:rgba(22,160,133,0.75);
 }
 
 .skitt-ui--listening #skitt-toggle-button{
@@ -51,22 +51,22 @@ label#skitt-toggle-button__label{
 
 @-webkit-keyframes "listen_pulse"{
 	0%{
-		background-color:#16A085;
+		background-color:rgba(22,160,133,0.75);
 	}
 	50%{
-		background-color:#1ABC9C;
+		background-color:rgba(26,188,156,0.75);
 	}
 	100%{
-		background-color:#16A085;
+		background-color:rgba(22,160,133,0.75);
 	}
 }
 
 .skitt-ui--not-listening #skitt-toggle-button:hover{
-	background-color:#1ABC9C;
+	background-color:rgba(26,188,156,0.75);
 }
 
 .skitt-ui--listening #skitt-toggle-button:hover{
-	background-color:#1ABC9C;
+	background-color:rgba(26,188,156,0.75);
 }
 
 #skitt-listening-box{
@@ -100,7 +100,7 @@ label#skitt-toggle-button__label{
 	display:none;
 }
 
-@media (max-width: 1200px) and (orientation: portrait){
+/*@media (max-width: 1200px) and (orientation: portrait){
 	#skitt-ui{
 		border-radius:62.5px;
 		font-size:35px;
@@ -130,6 +130,6 @@ label#skitt-toggle-button__label{
 	#skitt-listening-box{
 		line-height:80px;
 	}
-}
+}*/
 
 /*# sourceMappingURL=flat-turquoise.css.map */
