@@ -4,8 +4,13 @@ angular.module("main").run(function($rootScope, $timeout) {
 
 	ClassHelpers.init();
 	FormValidation.init();
+	SpeechRecognition.init();
 
-	var speechRecognition = new SpeechRecognition();
+	SpeechRecognition.addCommand({
+		'hello': function() { 
+			alert('Hello World!'); 
+		}
+	});
 
 	$rootScope.showGraphic = false;
 	$rootScope.showControlsWindow = false;

@@ -1,23 +1,15 @@
-function SpeechRecognition() {
-	this._init();
+function SpeechRecognition() {}
+
+SpeechRecognition.init = function() {
+	if(annyang) {
+		SpeechKITT.annyang();
+		SpeechKITT.setStylesheet("vendor/speechkitt/themes/flat-turquoise.css");
+		SpeechKITT.render();
+	}
 }
 
-SpeechRecognition.prototype._init = function() {
+SpeechRecognition.addCommand = function(command) {
 	if(annyang) {
-		// Add our commands to annyang
-		annyang.addCommands({
-			'hello': function() { 
-				alert('Hello world!'); 
-			}
-		});
-
-		// Tell KITT to use annyang
-		SpeechKITT.annyang();
-
-		// Define a stylesheet for KITT to use
-		SpeechKITT.setStylesheet("vendor/speechkitt/themes/flat-turquoise.css");
-
-		// Render KITT's interface
-		SpeechKITT.vroom();
+		annyang.addCommands(command);
 	}
 }
