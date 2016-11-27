@@ -3,6 +3,11 @@ function DeviceOrientation() {
 	this._yRotation = 0;
 	this._zRotation = 0;
 
+	this._smoothingWeight = 0.2;
+	this._smoothXRotation = 0;
+	this._smoothYRotation = 0;
+	this._smoothZRotation = 0;
+
 	this._init();
 }
 
@@ -28,6 +33,16 @@ DeviceOrientation.prototype._setOnDeviceOrientationEvent = function() {
 		document.getElementById("xRotation").innerHTML = "xRotation: " + self._xRotation.toFixed(2);
 		document.getElementById("yRotation").innerHTML = "yRotation: " + self._yRotation.toFixed(2);
 		document.getElementById("zRotation").innerHTML = "zRotation: " + self._zRotation.toFixed(2);
+
+		self._smoothXRotation = (1 - self._smoothingWeight)*self._smoothXRotation +
+			self._smoothingWeight*self._xRotation;
+		self._smoothYRotation = (1 - self._smoothingWeight)*self._smoothYRotation +
+			self._smoothingWeight*self._yRotation;
+		self._smoothZRotation = (1 - self._smoothingWeight)*self._smoothZRotation +
+			self._smoothingWeight*self._zRotation;
+		document.getElementById("smoothXRotation").innerHTML = "smoothXRotation: " + self._smoothXRotation.toFixed(2);
+		document.getElementById("smoothYRotation").innerHTML = "smoothYRotation: " + self._smoothYRotation.toFixed(2);
+		document.getElementById("smoothZRotation").innerHTML = "smoothZRotation: " + self._smoothZRotation.toFixed(2);
 	}
 }
 
