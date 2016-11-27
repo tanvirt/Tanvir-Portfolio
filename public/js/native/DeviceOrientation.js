@@ -3,6 +3,11 @@ function DeviceOrientation(camera) {
 	this._yRotation = 0;
 	this._zRotation = 0;
 
+	this._smoothingWeight = 0.2;
+	this._smoothXRotation = 0;
+	this._smoothYRotation = 0;
+	this._smoothZRotation = 0;
+
 	this._isTracking = false;
 
 	this._camera = camera;
@@ -15,9 +20,9 @@ DeviceOrientation.prototype.isTracking = function() {
 DeviceOrientation.prototype.update = function() {
 	if(this._isTracking) {
 		this._camera.reset();
-		this._camera.rotateX(this._xRotation);
-		this._camera.rotateY(this._yRotation);
-		this._camera.rotateZ(this._zRotation);
+		this._camera.rotateX(this._smoothXRotation);
+		this._camera.rotateY(this._smoothYRotation);
+		this._camera.rotateZ(this._smoothZRotation);
 	}
 }
 
@@ -31,6 +36,10 @@ DeviceOrientation.prototype.startTracking = function() {
 		self._setXRotation(gamma);
 		self._setYRotation(alpha, gamma);
 		self._setZRotation(beta, gamma);
+
+		self._setSmoothXRotation();
+		self._setSmoothYRotation();
+		self._setSmoothZRotation();
 	}
 	this._isTracking = true;
 }
@@ -40,10 +49,6 @@ DeviceOrientation.prototype.stopTracking = function() {
 	this._isTracking = false;
 }
 
-DeviceOrientation.prototype.getXRotation = function() { return this._xRotation; }
-DeviceOrientation.prototype.getYRotation = function() { return this._yRotation; }
-DeviceOrientation.prototype.getZRotation = function() { return this._zRotation; }
-
 DeviceOrientation.prototype._setXRotation = function(gamma) {
 	var angle = 0;
 	if(Math.sign(gamma) >= 0) {
@@ -52,7 +57,7 @@ DeviceOrientation.prototype._setXRotation = function(gamma) {
 	else {
 		angle = -1*(90 + gamma);
 	}
-	this._xRotation = this._toRadians(angle);
+	this._xRotation = -1*this._toRadians(angle);
 }
 
 DeviceOrientation.prototype._setYRotation = function(alpha, gamma) {
@@ -63,7 +68,7 @@ DeviceOrientation.prototype._setYRotation = function(alpha, gamma) {
 	else {
 		angle = alpha;
 	}
-	this._yRotation = this._toRadians(angle);
+	this._yRotation = -1*this._toRadians(angle);
 }
 
 DeviceOrientation.prototype._setZRotation = function(beta, gamma) {
@@ -80,6 +85,36 @@ DeviceOrientation.prototype._setZRotation = function(beta, gamma) {
 		angle = -1*beta;
 	}
 	this._zRotation = this._toRadians(angle);
+}
+
+DeviceOrientation.prototype._setSmoothXRotation = function() {
+	if(Math.abs(this._xRotation - this._smoothXRotation) < 6) {
+		this._smoothXRotation = (1 - this._smoothingWeight)*this._smoothXRotation +
+				this._smoothingWeight*this._xRotation;
+	}
+	else {
+		this._smoothXRotation = this._xRotation;
+	}
+}
+
+DeviceOrientation.prototype._setSmoothYRotation = function() {
+	if(Math.abs(this._yRotation - this._smoothYRotation) < 6) {
+		this._smoothYRotation = (1 - this._smoothingWeight)*this._smoothYRotation +
+				this._smoothingWeight*this._yRotation;
+	}
+	else {
+		this._smoothYRotation = this._yRotation;
+	}
+}
+
+DeviceOrientation.prototype._setSmoothZRotation = function() {
+	if(Math.abs(this._zRotation - this._smoothZRotation) < 6) {
+		this._smoothZRotation = (1 - this._smoothingWeight)*this._smoothZRotation +
+				this._smoothingWeight*this._zRotation;
+	}
+	else {
+		this._smoothZRotation = this._zRotation;
+	}
 }
 
 DeviceOrientation.prototype._toDegrees = function(radians) {
