@@ -25,9 +25,9 @@ DeviceOrientation.prototype._setOnDeviceOrientationEvent = function() {
 		self._setYRotation(alpha, gamma);
 		self._setZRotation(beta, gamma);
 
-		document.getElementById("xRotation").innerHTML = "xRotation: " + this._xRotation;
-		document.getElementById("yRotation").innerHTML = "yRotation: " + this._yRotation;
-		document.getElementById("zRotation").innerHTML = "zRotation: " + this._zRotation;
+		document.getElementById("xRotation").innerHTML = "xRotation: " + self._xRotation.toFixed(2);
+		document.getElementById("yRotation").innerHTML = "yRotation: " + self._yRotation.toFixed(2);
+		document.getElementById("zRotation").innerHTML = "zRotation: " + self._zRotation.toFixed(2);
 	}
 }
 
@@ -67,14 +67,6 @@ DeviceOrientation.prototype._setZRotation = function(beta, gamma) {
 		angle = -1*beta;
 	}
 	this._zRotation = this._toRadians(angle);
-}
-
-DeviceOrientation.prototype._getValueFromNewRange = function(value, oldMin, oldMax, newMin, newMax) {
-	var oldRange = oldMax - oldMin; 
-	var newRange = newMax - newMin;
-	var newValue = (((value - oldMin)*newRange)/oldRange) + newMin;
-
-	return newValue;
 }
 
 DeviceOrientation.prototype._toDegrees = function(radians) {
