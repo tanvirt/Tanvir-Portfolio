@@ -84,7 +84,7 @@ DeviceOrientation.prototype._setZRotation = function(beta, gamma) {
 	else {
 		angle = -1*beta;
 	}
-	this._zRotation = this._toRadians(angle);
+	this._zRotation = -1*this._toRadians(angle);
 }
 
 DeviceOrientation.prototype._setSmoothXRotation = function() {
@@ -104,6 +104,35 @@ DeviceOrientation.prototype._setSmoothYRotation = function() {
 	}
 	else {
 		this._smoothYRotation = this._yRotation;
+
+		/*var targetRotation = 0;
+		if(this._yRotation > this._smoothYRotation) {
+			// yRot = 2pi, smoothYRot = 0
+			// moving left to right
+			// pretend yRot = 0
+
+			if(this._smoothYRotation < 0.03) {
+				this._smoothYRotation = 2*Math.PI;
+				return;
+			}
+
+			targetRotation = 0;
+		}
+		else {
+			// yRot = 0, smoothYRot = 2pi
+			// moving right to left
+			// pretend yRot = 2pi
+
+			if(2*Math.PI - this._smoothYRotation < 0.03) {
+				this._smoothYRotation = 0;
+				return;
+			}
+
+			targetRotation = 2*Math.PI;
+		}
+
+		this._smoothYRotation = (1 - this._smoothingWeight)*this._smoothYRotation +
+				this._smoothingWeight*targetRotation;*/
 	}
 }
 
