@@ -4,14 +4,8 @@ angular.module("main").run(function($rootScope, $timeout) {
 
 	ClassHelpers.init();
 	FormValidation.init();
-	SpeechRecognition.init();
 
-	SpeechRecognition.addCommand({
-		'hello': function() { 
-			alert('Hello World!'); 
-		}
-	});
-
+	$rootScope.graphicCanvas = null;
 	$rootScope.showGraphic = false;
 	$rootScope.showControlsWindow = false;
 	$rootScope.showDrawModesWindow = false;
@@ -20,7 +14,50 @@ angular.module("main").run(function($rootScope, $timeout) {
 	$rootScope.isDesktop = Device.isDesktop();
 
 	var numIncludesToBeLoaded = document.querySelectorAll('.include').length;
-	$rootScope.graphicCanvas = null;
+
+	var initSpeechRecognition = function() {
+		SpeechRecognition.init();
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) graphic (section) (information)': function() {
+				$('.nav-name').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) top (section) (information)': function() {
+				$('.nav-page-top').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) header (section) (information)': function() {
+				$('.nav-page-top').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) about (section) (information)': function() {
+				$('.nav-about').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) skills (section) (information)': function() {
+				$('.nav-skills').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) process (section) (information)': function() {
+				$('.nav-process').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) work (section) (information)': function() {
+				$('.nav-work').click();
+			}
+		});
+		SpeechRecognition.addCommand({
+			'(look at) (see) (view) (go to) (show) contact (section) (information)': function() {
+				$('.nav-contact').click();
+			}
+		});
+	}
 
 	$rootScope.$on('$includeContentLoaded', function(event, templateName) {
 		$timeout(function() {
@@ -34,6 +71,7 @@ angular.module("main").run(function($rootScope, $timeout) {
 				}
 				$rootScope.graphicCanvas = new GraphicCanvas("graphic-canvas");
 				$rootScope.graphicCanvas.render();
+				initSpeechRecognition();
 			}
 		});
 	});
