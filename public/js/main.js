@@ -260,3 +260,18 @@ var isVisibleInViewport = function(element) {
 
     return isVisible; 
 }
+
+var noSleep = new NoSleep();
+window.addEventListener('resize', function(){
+	var fullscreenElement = document.fullscreenElement || 
+			document.mozFullScreenElement || 
+			document.webkitFullscreenElement || 
+			document.msFullscreenElement;
+
+	if(fullscreenElement) {
+		noSleep.enable();
+	}
+	else {
+		noSleep.disable();
+	}
+});
