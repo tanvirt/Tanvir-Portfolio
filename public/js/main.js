@@ -22,41 +22,43 @@ angular.module("main").run(function($rootScope, $timeout) {
 				$('.nav-name').click();
 			}
 		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) top (section) (information)': function() {
-				$('.nav-page-top').click();
-			}
-		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) header (section) (information)': function() {
-				$('.nav-page-top').click();
-			}
-		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) about (section) (information)': function() {
-				$('.nav-about').click();
-			}
-		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) skills (section) (information)': function() {
-				$('.nav-skills').click();
-			}
-		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) process (section) (information)': function() {
-				$('.nav-process').click();
-			}
-		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) work (section) (information)': function() {
-				$('.nav-work').click();
-			}
-		});
-		SpeechRecognition.addCommand({
-			'(look at) (see) (view) (go to) (show) contact (section) (information)': function() {
-				$('.nav-contact').click();
-			}
-		});
+		if(Device.isDesktop()) {
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) top (section) (information)': function() {
+					$('.nav-page-top').click();
+				}
+			});
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) header (section) (information)': function() {
+					$('.nav-page-top').click();
+				}
+			});
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) about (section) (information)': function() {
+					$('.nav-about').click();
+				}
+			});
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) skills (section) (information)': function() {
+					$('.nav-skills').click();
+				}
+			});
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) process (section) (information)': function() {
+					$('.nav-process').click();
+				}
+			});
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) work (section) (information)': function() {
+					$('.nav-work').click();
+				}
+			});
+			SpeechRecognition.addCommand({
+				'(look at) (see) (view) (go to) (show) contact (section) (information)': function() {
+					$('.nav-contact').click();
+				}
+			});
+		}
 	}
 
 	$rootScope.$on('$includeContentLoaded', function(event, templateName) {
